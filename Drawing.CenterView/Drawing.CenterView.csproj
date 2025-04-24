@@ -210,7 +210,6 @@
         <None Include="App.config"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Include="IconHandlerClass" />
         <Content Include="Resources\element_catalog_cross_section.bmp"/>
         <Content Include="Resources\element_catalog_cross_section_sketch.bmp"/>
         <Content Include="Resources\element_catalog_cross_section_user.bmp"/>

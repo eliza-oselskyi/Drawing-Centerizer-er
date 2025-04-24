@@ -11,12 +11,12 @@ using Drawing.CenterView.Properties;
 
 namespace Drawing.CenterView;
 
-public class SvgIcon 
+public class SvgIcon
 {
-    public SvgDocument SvgDoc {get; set;}
-    public bool Clicked  {get; set;}
-    public Bitmap Bmp {get; set;}
-    
+    public SvgDocument SvgDoc { get; set; }
+    public bool Clicked { get; set; }
+    public Bitmap? Bmp { get; set; }
+
     public SvgIcon(string svgFilePath)
     {
         try
@@ -47,15 +47,15 @@ public class SvgIcon
         string sPath = System.IO.Path.Combine(sCurrentDirectory + @"..\..\Resources\svgs\");
         var iconPath = _iconPaths[icon];
         var combinedPath = System.IO.Path.Combine(sPath, iconPath);
-        
+
         GetBitmap(combinedPath);
         this.SvgDoc = SvgDocument.Open(combinedPath);
     }
-    
-    public Bitmap GetBitmap(string svgFilePath)
+
+    public Bitmap? GetBitmap(string svgFilePath)
     {
         var svgDoc = SvgDocument.Open<SvgDocument>(svgFilePath);
-        Bitmap bmp = svgDoc.Draw();
+        Bitmap? bmp = svgDoc.Draw();
         this.Bmp = bmp;
         return bmp;
     }
@@ -66,7 +66,7 @@ public class SvgIcon
         this.SvgDoc.Width = new SvgUnit(width);
         this.Bmp = this.SvgDoc.Draw();
     }
-    
+
     public Bitmap ChangeIconColors(Color sourceColor, Color targetColor)
     {
         var svgDoc = this.SvgDoc;
@@ -75,6 +75,7 @@ public class SvgIcon
         {
             ChangeFill(item, sourceColor, targetColor);
         }
+
         var convertedImage = SvgDoc.Draw();
         this.Bmp = convertedImage;
         return convertedImage;
@@ -82,21 +83,20 @@ public class SvgIcon
 
     private static void ChangeFill(SvgElement element, Color sourceColor, Color targetColor)
     {
-        var sourceColorServer = new SvgColourServer(sourceColor);
         var targetColorServer = new SvgColourServer(targetColor);
 
-        //Console.WriteLine(col.Colour.ToArgb() == sourceColor.ToArgb());
-        
         if (element.Fill is SvgColourServer col && col.Colour.ToArgb() == sourceColor.ToArgb())
         {
             element.Fill = targetColorServer;
         }
+
         if (element.Children.Count <= 0) return;
         foreach (var item in element.Children)
         {
             ChangeFill(item, sourceColor, targetColor);
         }
     }
+
     public enum Icon
     {
         RightChevron,
@@ -114,17 +114,16 @@ public class SvgIcon
 
     private readonly Dictionary<Enum, string> _iconPaths = new Dictionary<Enum, string>()
     {
-        
-        {Icon.RightChevron, "arrow-chevron-right.svg"},
-        {Icon.LeftChevron, "arrow-chevron-left.svg"},
-        {Icon.TopChevron, "arrow-chevron-up.svg"},
-        {Icon.BottomChevron, "arrow-chevron-down.svg"},
-        {Icon.RightArrow, "arrow-forward.svg"},
-        {Icon.LeftArrow, "arrow-backward.svg"},
-        {Icon.TopArrow, "arrow-upward.svg"},
-        {Icon.BottomArrow, "arrow-downward.svg"},
-        {Icon.Paper, "paper_orig.svg"},
-        {Icon.PaperAlt, "paper_alt.svg"},
-        {Icon.Center, "center.svg"},
+        { Icon.RightChevron, "arrow-chevron-right.svg" },
+        { Icon.LeftChevron, "arrow-chevron-left.svg" },
+        { Icon.TopChevron, "arrow-chevron-up.svg" },
+        { Icon.BottomChevron, "arrow-chevron-down.svg" },
+        { Icon.RightArrow, "arrow-forward.svg" },
+        { Icon.LeftArrow, "arrow-backward.svg" },
+        { Icon.TopArrow, "arrow-upward.svg" },
+        { Icon.BottomArrow, "arrow-downward.svg" },
+        { Icon.Paper, "paper_orig.svg" },
+        { Icon.PaperAlt, "paper_alt.svg" },
+        { Icon.Center, "center.svg" },
     };
 }

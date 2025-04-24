@@ -54,7 +54,7 @@ public partial class PluginForm
                 selectedObjectsButton.Text = @"Get Selected Objects";
             }
         }
-        private void getViewButton_Click(object sender, EventArgs e)
+        private void centerViewButton_Click(object sender, EventArgs e)
         {
             GetViewsToCenter();
         }
@@ -80,5 +80,25 @@ public partial class PluginForm
             icon.Resize(pictureBox.Width, pictureBox.Height);
             icon.ChangeIconColors(sourceColor, targetColor);
             pictureBox.Image = icon.Bmp;
+        }
+        private void centerImage_Click(object sender, EventArgs e)
+        {
+            GetViewsToCenter();
+        }
+        // Create a timer, instead of using sleep, to not lock up the UI. (Sleep pauses the entire thread for a given amount of milliseconds)
+        private static void Wait(int milliseconds)
+        {
+            if (milliseconds == 0 | milliseconds < 0) return;
+
+            var timer = new Timer();
+            timer.Interval = milliseconds;
+            timer.Enabled = true;
+            timer.Start();
+            timer.Tick += (_, _) => // this is the event. All it does is stop the timer after 1 second.
+            {
+                timer.Enabled = false; // Stops the while loop
+                timer.Stop();
+            };
+            while (timer.Enabled) Application.DoEvents(); // Goes to the event
         }
 }

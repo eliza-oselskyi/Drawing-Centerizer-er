@@ -17,7 +17,8 @@ public partial class PluginForm
         private SvgIcon _bottomChevron;
         private SvgIcon _paper;
         private SvgIcon _center;
-        private Dictionary<string, SvgIcon> _svgIcons  = new Dictionary<string, SvgIcon>();
+        private readonly Dictionary<string, SvgIcon> _svgIcons  = new Dictionary<string, SvgIcon>(); // used to get associated SvgIcon from PictureBox
+        // ReSharper disable once InconsistentNaming
         private void UI()
         {
             try

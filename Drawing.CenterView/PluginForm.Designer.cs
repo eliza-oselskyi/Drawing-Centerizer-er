@@ -41,7 +41,7 @@ namespace Drawing.CenterView
             this.infoBox = new System.Windows.Forms.Label();
             this.selectedObjectsButton = new System.Windows.Forms.Button();
             this.infoPanel = new System.Windows.Forms.Panel();
-            this.getViewButton = new System.Windows.Forms.Button();
+            this.centerViewButton = new System.Windows.Forms.Button();
             this.scrambleViewsButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.paperImage = new System.Windows.Forms.PictureBox();
@@ -156,19 +156,19 @@ namespace Drawing.CenterView
             this.infoPanel.Size = new System.Drawing.Size(585, 53);
             this.infoPanel.TabIndex = 30;
             // 
-            // getViewButton
+            // centerViewButton
             // 
-            this.structuresExtender.SetAttributeName(this.getViewButton, null);
-            this.structuresExtender.SetAttributeTypeName(this.getViewButton, null);
-            this.structuresExtender.SetBindPropertyName(this.getViewButton, null);
-            this.getViewButton.ForeColor = System.Drawing.Color.Black;
-            this.getViewButton.Location = new System.Drawing.Point(636, 230);
-            this.getViewButton.Name = "getViewButton";
-            this.getViewButton.Size = new System.Drawing.Size(118, 23);
-            this.getViewButton.TabIndex = 31;
-            this.getViewButton.Text = "Center View";
-            this.getViewButton.UseVisualStyleBackColor = true;
-            this.getViewButton.Click += new System.EventHandler(this.getViewButton_Click);
+            this.structuresExtender.SetAttributeName(this.centerViewButton, null);
+            this.structuresExtender.SetAttributeTypeName(this.centerViewButton, null);
+            this.structuresExtender.SetBindPropertyName(this.centerViewButton, null);
+            this.centerViewButton.ForeColor = System.Drawing.Color.Black;
+            this.centerViewButton.Location = new System.Drawing.Point(636, 230);
+            this.centerViewButton.Name = "centerViewButton";
+            this.centerViewButton.Size = new System.Drawing.Size(118, 23);
+            this.centerViewButton.TabIndex = 31;
+            this.centerViewButton.Text = "Center View";
+            this.centerViewButton.UseVisualStyleBackColor = true;
+            this.centerViewButton.Click += new System.EventHandler(this.centerViewButton_Click);
             // 
             // scrambleViewsButton
             // 
@@ -338,6 +338,7 @@ namespace Drawing.CenterView
             this.centerImage.Size = new System.Drawing.Size(25, 25);
             this.centerImage.TabIndex = 44;
             this.centerImage.TabStop = false;
+            this.centerImage.Click += new System.EventHandler(this.centerImage_Click);
             this.centerImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.centerImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 
@@ -364,7 +365,7 @@ namespace Drawing.CenterView
             this.Controls.Add(this.paperImage);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.scrambleViewsButton);
-            this.Controls.Add(this.getViewButton);
+            this.Controls.Add(this.centerViewButton);
             this.Controls.Add(this.infoPanel);
             this.Controls.Add(this.selectedObjectsButton);
             this.Controls.Add(this.header);
@@ -411,7 +412,7 @@ namespace Drawing.CenterView
 
         private System.Windows.Forms.Button scrambleViewsButton;
 
-        private System.Windows.Forms.Button getViewButton;
+        private System.Windows.Forms.Button centerViewButton;
 
         private System.Windows.Forms.Panel infoPanel;
 

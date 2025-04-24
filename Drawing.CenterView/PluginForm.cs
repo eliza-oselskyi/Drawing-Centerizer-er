@@ -38,7 +38,7 @@ namespace Drawing.CenterView
         public PluginForm() // Main entry point for the form.
         {
             InitializeComponent();
-            //base.InitializeForm(); // Required for TeklaAPI
+            base.InitializeForm(); // Required for TeklaAPI
 
             // Set up the private, read-only fields. Can do only in here (the constructor method).
             _myModel = new Model();
@@ -221,24 +221,6 @@ namespace Drawing.CenterView
                                                        "\n Currently, there is no way to reestablish connection. " +
                                                        "You must restart this application to do so."));
             }
-        }
-
-
-        // Create a timer, instead of using sleep, to not lock up the UI. (Sleep pauses the entire thread for a given amount of milliseconds)
-        private static void Wait(int milliseconds)
-        {
-            if (milliseconds == 0 | milliseconds < 0) return;
-
-            var timer = new Timer();
-            timer.Interval = milliseconds;
-            timer.Enabled = true;
-            timer.Start();
-            timer.Tick += (_, _) => // this is the event. All it does is stop the timer after 1 second.
-            {
-                timer.Enabled = false; // Stops the while loop
-                timer.Stop();
-            };
-            while (timer.Enabled) Application.DoEvents(); // Goes to the event
         }
     }
 }

@@ -14,7 +14,7 @@ public abstract partial class QuickCenterClass
     private static void GenerateAndDisplayReport(string reportTemplate, string reportString)
     {
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Generating Report...");
-
+        
         var formattedReportString = String.Join(
             Environment.NewLine,
             "pagefooter _tmp_1",
@@ -52,10 +52,10 @@ public abstract partial class QuickCenterClass
         var firmFolder = "";
         TeklaStructuresSettings.GetAdvancedOption("XS_FIRM", ref firmFolder);
         var reportsTemplateFolder = Path.Combine(firmFolder, @"Reports\");
-        var tempTemplate = File.Open($@"{Directory.GetCurrentDirectory()}\report_template\{reportTemplate}_temp.rpt",
+        var tempTemplate = File.Open($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}_temp.rpt",
             FileMode.Create);
         var template =
-            File.Open($@"{Directory.GetCurrentDirectory().ToString()}\report_template\{reportTemplate}_test.rpt",
+            File.Open($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}_test.rpt",
                 FileMode.Open);
 
         //tempTemplate.Close();

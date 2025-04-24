@@ -35,7 +35,9 @@ namespace Drawing.CenterView
         private readonly Model _myModel;
         private readonly DrawingHandler _drawingHandler;
 
+#pragma warning disable CS8618, CS9264
         public PluginForm() // Main entry point for the form.
+#pragma warning restore CS8618, CS9264
         {
             InitializeComponent();
             base.InitializeForm(); // Required for TeklaAPI
@@ -56,6 +58,7 @@ namespace Drawing.CenterView
             InfoBox.OnInfo(infoBox, $"Shifting Right => {(ViewType)GetViewTypeEnum(viewType)}");
             _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Right");
         }
+
         private void ShiftViewUp(int amount)
         {
             var view = GetValidViewInActiveDrawing();
@@ -67,6 +70,7 @@ namespace Drawing.CenterView
             InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)}\nShifting Up =^");
             _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Up");
         }
+
         private void ShiftViewDown(int amount)
         {
             var view = GetValidViewInActiveDrawing();
@@ -78,6 +82,7 @@ namespace Drawing.CenterView
             InfoBox.OnInfo(infoBox, $"Shifting Down=v\n{(ViewType)GetViewTypeEnum(viewType)}");
             _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Down");
         }
+
         private void ShiftViewLeft(int amount)
         {
             var view = GetValidViewInActiveDrawing();
@@ -93,7 +98,7 @@ namespace Drawing.CenterView
         private ViewBase? GetValidViewInActiveDrawing()
         {
             var allViews = _drawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
-            int memberCount = 0;
+            var memberCount = 0;
             while (allViews.MoveNext())
             {
                 allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
@@ -102,23 +107,22 @@ namespace Drawing.CenterView
                 //Console.WriteLine(PluginForm.GetViewTypeEnum(viewTypes).ToString());
             }
 
-            if (memberCount == 1)
+            if (memberCount != 1) return null;
+            allViews.Reset();
+            while (allViews.MoveNext())
             {
-                allViews.Reset();
-                while (allViews.MoveNext())
+                allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewType);
+                var currentView = (ViewBase)allViews.Current;
+                try
                 {
-                    allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewType);
-                    var currentView = (ViewBase)allViews.Current;
-                    try
-                    {
-                        return currentView;
-                    }
-                    catch (Exception e) when (e is KeyNotFoundException)
-                    {
-                        Console.WriteLine(@"Invalid View: " + currentView.ToString());
-                    }
+                    return currentView;
+                }
+                catch (Exception e) when (e is KeyNotFoundException)
+                {
+                    Console.WriteLine(@"Invalid View: " + currentView.ToString());
                 }
             }
+
             return null;
         }
 
@@ -163,7 +167,7 @@ namespace Drawing.CenterView
             view.Origin = sheet.Origin;
             Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
             var viewCenterPoint = view.GetAxisAlignedBoundingBox().GetCenterPoint();
-            
+
             var sheetHeight = sheet.Height / 2;
             var sheetWidth = (sheet.Width - 33.274) / 2;
             var xOffset = sheetWidth - viewCenterPoint.X;
@@ -174,10 +178,10 @@ namespace Drawing.CenterView
                 $"Sheet Height: {sheetHeight.ToString(CultureInfo.InvariantCulture)}\nSheet Width: {sheetWidth.ToString(CultureInfo.InvariantCulture)}");
             Console.WriteLine($"View Origin: {view.Origin.ToString()}");
             Console.WriteLine($"x offset: {xOffset}, y offset: {yOffset}");
-            
 
-            if ((Math.Abs(originalOriginX - xOffset) < 0.0001) &&
-                (Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001))
+
+            if (Math.Abs(originalOriginX - xOffset) < 0.0001 &&
+                Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001)
             {
                 InfoBox.OnInfo(infoBox, @"Nothing To Do.");
             }
@@ -266,6 +270,7 @@ namespace Drawing.CenterView
                 _ => ViewType.None
             };
         }
+
         // NOTE: Overloads default Windows Forms OnLoad() method.
         // I'm setting up the environment for the application, here.
         // NOTE: for sake debugging purposes, the property PluginForm.ShowInTaskbar is set to TRUE.
@@ -288,7 +293,7 @@ namespace Drawing.CenterView
                 if (!_myModel.GetConnectionStatus())
                     // Disable buttons if no connection found
                     selectedObjectsButton.Enabled = false;
-                
+
                 if (onTopCheckBox.Checked) this.TopMost = true;
             }
             catch (Exception)
@@ -298,46 +303,6 @@ namespace Drawing.CenterView
                                                        "\n Currently, there is no way to reestablish connection. " +
                                                        "You must restart this application to do so."));
             }
-        }
-
-        private void leftChevronImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewLeft(5);
-        }
-
-        private void leftArrowImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewLeft(15);
-        }
-
-        private void topChevronImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewUp(5);
-        }
-
-        private void topArrowImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewUp(15);
-        }
-
-        private void rightChevronImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewRight(5);
-        }
-
-        private void rightArrowImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewRight(15);
-        }
-
-        private void bottomChevronImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewDown(5);
-        }
-
-        private void bottomArrowImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewDown(20);
         }
     }
 }

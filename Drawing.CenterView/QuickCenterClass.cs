@@ -22,7 +22,6 @@ namespace Drawing.CenterView;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public abstract partial class QuickCenterClass
 {
-
     //private static readonly Model Model = new Model();
     private static readonly DrawingHandler DrawingHandler = new DrawingHandler();
 
@@ -30,7 +29,7 @@ public abstract partial class QuickCenterClass
     {
         var drawingSelector = DrawingHandler.GetDrawingSelector();
         var selectedSize = drawingSelector.GetSelected().GetSize();
-        
+
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Centering Drawings...");
         if (selectedSize <= 0)
         {
@@ -68,6 +67,7 @@ public abstract partial class QuickCenterClass
 
             CenterSelectedDrawings(drawingSelector.GetSelected());
         }
+
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Done.");
     }
 
@@ -117,6 +117,7 @@ public abstract partial class QuickCenterClass
 
             //Console.WriteLine(views.Current);
         }
+
         GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
     }
 
@@ -209,12 +210,13 @@ public abstract partial class QuickCenterClass
         var yOffset = sheetHeight - viewCenterPoint.Y;
 
         Console.WriteLine($"View Center:  {viewCenterPoint.ToString()}");
-        Console.WriteLine($"Sheet Height: {sheetHeight.ToString(CultureInfo.InvariantCulture)}\nSheet Width: {sheetWidth.ToString(CultureInfo.InvariantCulture)}");
+        Console.WriteLine(
+            $"Sheet Height: {sheetHeight.ToString(CultureInfo.InvariantCulture)}\nSheet Width: {sheetWidth.ToString(CultureInfo.InvariantCulture)}");
         Console.WriteLine($"View Origin: {view.Origin.ToString()}");
         Console.WriteLine($"x offset: {xOffset}, y offset: {yOffset}");
-        
-        if ((Math.Abs(originalOriginX - xOffset) < 0.0001) &&
-            (Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001))
+
+        if (Math.Abs(originalOriginX - xOffset) < 0.0001 &&
+            Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001)
         {
             return $@"Nothing To Do. {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
         }
@@ -229,71 +231,7 @@ public abstract partial class QuickCenterClass
             Console.WriteLine(view.Origin.ToString());
             return $"Centering {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
         }
+
         return $"Something Went Wrong At {view.GetDrawing().Name} => " + (PluginForm.ViewType)viewType;
     }
-
 }
-
-/*
-public static void CenterView(ref ViewBase? view, int viewType)
-{
-    //DrawingHandler.SetActiveDrawing(view.GetDrawing());
-    var sheet = view?.GetDrawing().GetSheet();
-    double sheetHeightOffset = 0;
-    switch (viewType)
-    {
-        case 1:
-            sheetHeightOffset = 25.4; // 1"
-            break;
-        case >=2 and <= 24:
-            sheetHeightOffset = 22.225; // 7/8"
-            break;
-        default: break;
-    }
-
-    // Console.WriteLine($"View Origin: {view.Origin.ToString()}");
-    sheet.Origin.Y = sheetHeightOffset;
-    sheet.Modify();
-    view.Origin = sheet.Origin;
-    view.Modify();
-    //Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
-    // Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
-    //Console.WriteLine($"View Origin: {view.Origin.ToString()}");
-
-    //var cent = new Point(view.Origin.X + (view.GetView().Width)/2, view.Origin.Y + (view.GetView().Height)/2, 0.0);
-    var viewCenterPoint = view.GetAxisAlignedBoundingBox().GetCenterPoint();
-
-    //Console.WriteLine($"view height: {view.GetView().Height}, view width: {view.GetView().Width}");
-
-    var sheetHeight = (sheet.Height)/2;
-    var sheetWidth = (sheet.Width - 33.274)/2;
-    var xOffset =  sheetWidth - viewCenterPoint.X;
-    var yOffset = sheetHeight - viewCenterPoint.Y;
-
-    // Console.WriteLine($"View Center:  {viewCenterPoint.ToString()}");
-    //  Console.WriteLine($"Sheet Height: {sheetHeight.ToString()}\nSheet Width: {sheetWidth.ToString()}");
-    //  Console.WriteLine($"View Origin: {view.Origin.ToString()}");
-    // Console.WriteLine($"xoffset: {xOffset}, yoffset: {yOffset}");
-
-
-    switch (Math.Abs(viewCenterPoint.X - sheetWidth))
-    {
-        case > 0.0001 when Math.Abs(viewCenterPoint.Y - sheetHeight) > 0.0001:
-            view.Origin.X += xOffset;
-            Console.WriteLine(view.Origin.X);
-            view.Origin.Y += yOffset;
-            Console.WriteLine(view.Origin.Y);
-            view.Modify();
-            Operation.DisplayPrompt("Centered view in: " + view.GetDrawing().Name);
-            sheet.GetDrawing().CommitChanges("Center View: " + view.GetDrawing().Name);
-            sheet.GetDrawing().Modify();
-            //Console.WriteLine($"View Origin Final: {view.Origin.ToString()}");
-            //DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
-            break;
-        default:
-            Operation.DisplayPrompt(@"Nothing To Do. => " + view.GetDrawing().Name);
-            break;
-    }
-}
-*/
-//}

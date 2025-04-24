@@ -13,9 +13,10 @@ namespace Drawing.CenterView;
 
 public class SvgIcon
 {
+    // ReSharper disable once MemberCanBePrivate.Global
     public SvgDocument SvgDoc { get; set; }
     public bool Clicked { get; set; }
-    public Bitmap? Bmp { get; set; }
+    public Bitmap? Bmp { get; private set; }
 
     public SvgIcon(string svgFilePath)
     {
@@ -26,9 +27,7 @@ public class SvgIcon
             Clicked = false;
 
             if (this.SvgDoc.Fill.ToString() == string.Empty)
-            {
                 SvgDoc.Fill = new SvgColourServer(System.Drawing.Color.Black);
-            }
         }
         catch (FileNotFoundException e)
         {
@@ -43,9 +42,9 @@ public class SvgIcon
 
     public SvgIcon(SvgIcon.Icon icon)
     {
-        string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        var sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
         //string sPath = System.IO.Path.Combine(sCurrentDirectory + @"..\..\Resources\svgs\");
-        string sPath = System.IO.Path.Combine(sCurrentDirectory + @"\svgs\");
+        var sPath = System.IO.Path.Combine(sCurrentDirectory + @"\svgs\");
         var iconPath = _iconPaths[icon];
         var combinedPath = System.IO.Path.Combine(sPath, iconPath);
 
@@ -53,10 +52,11 @@ public class SvgIcon
         this.SvgDoc = SvgDocument.Open(combinedPath);
     }
 
+    // ReSharper disable once MemberCanBePrivate.Global
     public Bitmap? GetBitmap(string svgFilePath)
     {
         var svgDoc = SvgDocument.Open<SvgDocument>(svgFilePath);
-        Bitmap? bmp = svgDoc.Draw();
+        var bmp = svgDoc.Draw();
         this.Bmp = bmp;
         return bmp;
     }
@@ -72,10 +72,7 @@ public class SvgIcon
     {
         var svgDoc = this.SvgDoc;
         Console.WriteLine(svgDoc.Children.Count.ToString());
-        foreach (SvgElement item in svgDoc.Children)
-        {
-            ChangeFill(item, sourceColor, targetColor);
-        }
+        foreach (var item in svgDoc.Children) ChangeFill(item, sourceColor, targetColor);
 
         var convertedImage = SvgDoc.Draw();
         this.Bmp = convertedImage;
@@ -87,15 +84,10 @@ public class SvgIcon
         var targetColorServer = new SvgColourServer(targetColor);
 
         if (element.Fill is SvgColourServer col && col.Colour.ToArgb() == sourceColor.ToArgb())
-        {
             element.Fill = targetColorServer;
-        }
 
         if (element.Children.Count <= 0) return;
-        foreach (var item in element.Children)
-        {
-            ChangeFill(item, sourceColor, targetColor);
-        }
+        foreach (var item in element.Children) ChangeFill(item, sourceColor, targetColor);
     }
 
     public enum Icon
@@ -125,6 +117,6 @@ public class SvgIcon
         { Icon.BottomArrow, "arrow-downward.svg" },
         { Icon.Paper, "paper_orig.svg" },
         { Icon.PaperAlt, "paper_alt.svg" },
-        { Icon.Center, "center.svg" },
+        { Icon.Center, "center.svg" }
     };
 }

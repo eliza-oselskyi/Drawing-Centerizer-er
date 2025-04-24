@@ -45,8 +45,84 @@ namespace Drawing.CenterView
             _drawingHandler = new DrawingHandler();
         }
 
+        private void ShiftViewRight(int amount)
+        {
+            var view = GetValidViewInActiveDrawing();
+            if (view == null) return;
+            view.Origin.X += amount;
+            view.Modify();
+            view.GetStringUserProperties(out Dictionary<string, string> viewType);
+            GetViewTypeEnum(viewType);
+            InfoBox.OnInfo(infoBox, $"Shifting Right => {(ViewType)GetViewTypeEnum(viewType)}");
+            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Right");
+        }
+        private void ShiftViewUp(int amount)
+        {
+            var view = GetValidViewInActiveDrawing();
+            if (view == null) return;
+            view.Origin.Y += amount;
+            view.Modify();
+            view.GetStringUserProperties(out Dictionary<string, string> viewType);
+            GetViewTypeEnum(viewType);
+            InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)}\nShifting Up =^");
+            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Up");
+        }
+        private void ShiftViewDown(int amount)
+        {
+            var view = GetValidViewInActiveDrawing();
+            if (view == null) return;
+            view.Origin.Y -= amount;
+            view.Modify();
+            view.GetStringUserProperties(out Dictionary<string, string> viewType);
+            GetViewTypeEnum(viewType);
+            InfoBox.OnInfo(infoBox, $"Shifting Down=v\n{(ViewType)GetViewTypeEnum(viewType)}");
+            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Down");
+        }
+        private void ShiftViewLeft(int amount)
+        {
+            var view = GetValidViewInActiveDrawing();
+            if (view == null) return;
+            view.Origin.X -= amount;
+            view.Modify();
+            view.GetStringUserProperties(out Dictionary<string, string> viewType);
+            GetViewTypeEnum(viewType);
+            InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)} <= Shifting Left");
+            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Left");
+        }
 
-        private void GetViewsToCenter()
+        private ViewBase? GetValidViewInActiveDrawing()
+        {
+            var allViews = _drawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
+            int memberCount = 0;
+            while (allViews.MoveNext())
+            {
+                allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
+                var type = PluginForm.GetViewTypeEnum(viewTypes);
+                if (type is not PluginForm.ViewType.None) memberCount++;
+                //Console.WriteLine(PluginForm.GetViewTypeEnum(viewTypes).ToString());
+            }
+
+            if (memberCount == 1)
+            {
+                allViews.Reset();
+                while (allViews.MoveNext())
+                {
+                    allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewType);
+                    var currentView = (ViewBase)allViews.Current;
+                    try
+                    {
+                        return currentView;
+                    }
+                    catch (Exception e) when (e is KeyNotFoundException)
+                    {
+                        Console.WriteLine(@"Invalid View: " + currentView.ToString());
+                    }
+                }
+            }
+            return null;
+        }
+
+        private void CenterViewsInDrawing()
         {
             var allViews = _drawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
 
@@ -82,13 +158,12 @@ namespace Drawing.CenterView
 
             Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
             sheet.Origin.Y = sheetHeightOffset;
-            //sheet.Modify();
+            var originalOriginX = view.Origin.X;
+            var originalOriginY = view.Origin.Y;
             view.Origin = sheet.Origin;
-            //view.Modify();
             Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
-
             var viewCenterPoint = view.GetAxisAlignedBoundingBox().GetCenterPoint();
-
+            
             var sheetHeight = sheet.Height / 2;
             var sheetWidth = (sheet.Width - 33.274) / 2;
             var xOffset = sheetWidth - viewCenterPoint.X;
@@ -99,21 +174,23 @@ namespace Drawing.CenterView
                 $"Sheet Height: {sheetHeight.ToString(CultureInfo.InvariantCulture)}\nSheet Width: {sheetWidth.ToString(CultureInfo.InvariantCulture)}");
             Console.WriteLine($"View Origin: {view.Origin.ToString()}");
             Console.WriteLine($"x offset: {xOffset}, y offset: {yOffset}");
+            
 
-            switch (Math.Abs(view.ExtremaCenter.X - sheetWidth))
+            if ((Math.Abs(originalOriginX - xOffset) < 0.0001) &&
+                (Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001))
             {
-                case > 0.0001 when Math.Abs(view.ExtremaCenter.Y - sheetHeight) > 0.0001:
-                    InfoBox.OnInfo(infoBox, $"Centering {(ViewType)viewType}");
-                    view.Origin.X += xOffset;
-                    view.Origin.Y += yOffset;
+                InfoBox.OnInfo(infoBox, @"Nothing To Do.");
+            }
+            else if (Math.Abs(view.ExtremaCenter.X - sheetWidth) > 0.0001 ||
+                     Math.Abs(view.ExtremaCenter.Y - sheetHeight) > 0.0001)
+            {
+                InfoBox.OnInfo(infoBox, $"Centering {(ViewType)viewType}");
+                view.Origin.X += xOffset;
+                view.Origin.Y += yOffset;
 
-                    view.Modify();
-                    _drawingHandler.GetActiveDrawing().CommitChanges("Center View");
-                    Console.WriteLine(view.Origin.ToString());
-                    break;
-                default:
-                    InfoBox.OnInfo(infoBox, @"Nothing To Do.");
-                    break;
+                view.Modify();
+                _drawingHandler.GetActiveDrawing().CommitChanges("Center View");
+                Console.WriteLine(view.Origin.ToString());
             }
         }
 
@@ -221,6 +298,46 @@ namespace Drawing.CenterView
                                                        "\n Currently, there is no way to reestablish connection. " +
                                                        "You must restart this application to do so."));
             }
+        }
+
+        private void leftChevronImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewLeft(5);
+        }
+
+        private void leftArrowImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewLeft(15);
+        }
+
+        private void topChevronImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewUp(5);
+        }
+
+        private void topArrowImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewUp(15);
+        }
+
+        private void rightChevronImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewRight(5);
+        }
+
+        private void rightArrowImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewRight(15);
+        }
+
+        private void bottomChevronImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewDown(5);
+        }
+
+        private void bottomArrowImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewDown(20);
         }
     }
 }

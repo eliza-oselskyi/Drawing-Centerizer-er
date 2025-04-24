@@ -233,6 +233,7 @@ namespace Drawing.CenterView
             this.rightChevronImage.Size = new System.Drawing.Size(25, 25);
             this.rightChevronImage.TabIndex = 36;
             this.rightChevronImage.TabStop = false;
+            this.rightChevronImage.Click += new System.EventHandler(this.rightChevronImage_Click);
             this.rightChevronImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.rightChevronImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 
@@ -246,6 +247,7 @@ namespace Drawing.CenterView
             this.bottomChevronImage.Size = new System.Drawing.Size(25, 25);
             this.bottomChevronImage.TabIndex = 37;
             this.bottomChevronImage.TabStop = false;
+            this.bottomChevronImage.Click += new System.EventHandler(this.bottomChevronImage_Click);
             this.bottomChevronImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.bottomChevronImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 
@@ -259,6 +261,7 @@ namespace Drawing.CenterView
             this.topChevronImage.Size = new System.Drawing.Size(25, 25);
             this.topChevronImage.TabIndex = 38;
             this.topChevronImage.TabStop = false;
+            this.topChevronImage.Click += new System.EventHandler(this.topChevronImage_Click);
             this.topChevronImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.topChevronImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 
@@ -272,6 +275,7 @@ namespace Drawing.CenterView
             this.leftChevronImage.Size = new System.Drawing.Size(25, 25);
             this.leftChevronImage.TabIndex = 39;
             this.leftChevronImage.TabStop = false;
+            this.leftChevronImage.Click += new System.EventHandler(this.leftChevronImage_Click);
             this.leftChevronImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.leftChevronImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 
@@ -285,6 +289,7 @@ namespace Drawing.CenterView
             this.topArrowImage.Size = new System.Drawing.Size(25, 25);
             this.topArrowImage.TabIndex = 40;
             this.topArrowImage.TabStop = false;
+            this.topArrowImage.Click += new System.EventHandler(this.topArrowImage_Click);
             this.topArrowImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.topArrowImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 
@@ -298,6 +303,7 @@ namespace Drawing.CenterView
             this.rightArrowImage.Size = new System.Drawing.Size(25, 25);
             this.rightArrowImage.TabIndex = 41;
             this.rightArrowImage.TabStop = false;
+            this.rightArrowImage.Click += new System.EventHandler(this.rightArrowImage_Click);
             this.rightArrowImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.rightArrowImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 
@@ -311,6 +317,7 @@ namespace Drawing.CenterView
             this.bottomArrowImage.Size = new System.Drawing.Size(25, 25);
             this.bottomArrowImage.TabIndex = 42;
             this.bottomArrowImage.TabStop = false;
+            this.bottomArrowImage.Click += new System.EventHandler(this.bottomArrowImage_Click);
             this.bottomArrowImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.bottomArrowImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 
@@ -324,6 +331,7 @@ namespace Drawing.CenterView
             this.leftArrowImage.Size = new System.Drawing.Size(25, 25);
             this.leftArrowImage.TabIndex = 43;
             this.leftArrowImage.TabStop = false;
+            this.leftArrowImage.Click += new System.EventHandler(this.leftArrowImage_Click);
             this.leftArrowImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.leftArrowImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 

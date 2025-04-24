@@ -56,7 +56,7 @@ public partial class PluginForm
         }
         private void centerViewButton_Click(object sender, EventArgs e)
         {
-            GetViewsToCenter();
+            CenterViewsInDrawing();
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
@@ -83,7 +83,7 @@ public partial class PluginForm
         }
         private void centerImage_Click(object sender, EventArgs e)
         {
-            GetViewsToCenter();
+            CenterViewsInDrawing();
         }
         // Create a timer, instead of using sleep, to not lock up the UI. (Sleep pauses the entire thread for a given amount of milliseconds)
         private static void Wait(int milliseconds)

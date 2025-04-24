@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 using Tekla.Structures;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Drawing.UI;
@@ -30,32 +31,62 @@ public abstract partial class QuickCenterClass
         var drawingSelector = DrawingHandler.GetDrawingSelector();
         var selectedSize = drawingSelector.GetSelected().GetSize();
 
-        Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Centering Drawings...");
         if (selectedSize <= 0)
         {
-            var allDrawings = DrawingHandler.GetDrawings();
-            var allGADrawings = new ArrayList();
-            while (allDrawings.MoveNext())
-                if (allDrawings.Current is GADrawing)
-                    allGADrawings.Add(allDrawings.Current);
+            const string boxTitle = "Center All Drawings?";
+            const string boxQuestion = "No drawings are currently selected.\n\n" +
+                                       "Proceeding will affect all erection drawings.";
+            var boxResult = MessageBox.Show(boxQuestion,
+                boxTitle,
+                MessageBoxButtons.OKCancel,
+                0,
+                0,
+                MessageBoxOptions.DefaultDesktopOnly);
 
-            CenterAllDrawings(allGADrawings);
+            switch (boxResult)
+            {
+                case DialogResult.OK:
+                    GotoCenterAll();
+                    break;
+                case DialogResult.Cancel:
+                    Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Aborting.");
+                    return;
+            }
+            
         }
         else
         {
-            Console.WriteLine("Selected size is " + selectedSize);
-            var selectedList = new ArrayList();
-            if (selectedList == null) throw new ArgumentNullException(nameof(selectedList));
-            var selectedDrawings = drawingSelector.GetSelected();
-
-            while (selectedDrawings.MoveNext())
+            const string boxTitle = "Center All Drawings?";
+            const string boxQuestion = "Should ONLY the selected erection drawings be centered?\n\n" + 
+                                       "  Yes = Center only selected\n" +
+                                       "  No = Center all";
+            var boxResult = MessageBox.Show(boxQuestion,
+                boxTitle,
+                MessageBoxButtons.YesNoCancel,
+                0,
+                0,
+                MessageBoxOptions.DefaultDesktopOnly);
+            
+            switch (boxResult)
             {
-                var drawing = selectedDrawings.Current as GADrawing;
-                //Console.WriteLine(drawing.Name.ToString());
-                selectedList.Add(drawing);
-                //selectedList.Add(drawingSelector.GetSelected().Current);
+                case DialogResult.Yes:
+                    CenterSelectedDrawings(drawingSelector.GetSelected());
+                    break;
+                case DialogResult.No:
+                    GotoCenterAll();
+                    break;
+                case DialogResult.Cancel:
+                    Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Aborting.");
+                    return;
+                case DialogResult.None:
+                case DialogResult.OK:
+                case DialogResult.Abort:
+                case DialogResult.Retry:
+                case DialogResult.Ignore:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
             //var testArray = selectedList.ToArray(typeof(GADrawing));
 
             // foreach (GADrawing dwg in testArray)
@@ -65,15 +96,26 @@ public abstract partial class QuickCenterClass
 
             //CenterSelectedDrawings(selectedList);
 
-            CenterSelectedDrawings(drawingSelector.GetSelected());
         }
 
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Done.");
     }
 
+    private static void GotoCenterAll()
+    {
+        Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Centering Drawings...");
+        var allDrawings = DrawingHandler.GetDrawings();
+        var allGADrawings = new ArrayList();
+        while (allDrawings.MoveNext())
+            if (allDrawings.Current is GADrawing)
+                allGADrawings.Add(allDrawings.Current);
+        CenterAllDrawings(allGADrawings);
+    }
+
     private static void CenterSelectedDrawings(DrawingEnumerator selectedGADrawings)
     {
         var reportStringBuilder = new StringBuilder();
+        Tuple<Tekla.Structures.Drawing.Drawing, string> s = null;
         while (selectedGADrawings.MoveNext())
         {
             var memberCount = 0;
@@ -102,8 +144,10 @@ public abstract partial class QuickCenterClass
                     var currentView = (ViewBase)allViews.Current;
                     try
                     {
-                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType));
+                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType), out s);
                         reportStringBuilder.AppendLine(reportString);
+                        s.Item1.Title3 = s.Item2.ToString();
+                        s.Item1.Modify();
                     }
                     catch (Exception e) when (e is KeyNotFoundException)
                     {
@@ -111,7 +155,13 @@ public abstract partial class QuickCenterClass
                     }
                 }
 
+
                 DrawingHandler.CloseActiveDrawing();
+                if (s != null)
+                {
+                    s.Item1.Title3 = s.Item2.ToString();
+                    s.Item1.Modify();
+                }
             }
             //Console.WriteLine("Candidate for centering drawing");
 
@@ -119,11 +169,18 @@ public abstract partial class QuickCenterClass
         }
 
         GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
+        selectedGADrawings.Reset();
+        while (selectedGADrawings.MoveNext())
+        {
+            selectedGADrawings.Current.Title3 = "";
+            selectedGADrawings.Current.Modify();
+        }
     }
 
     private static void CenterAllDrawings(ArrayList drawings)
     {
         var reportStringBuilder = new StringBuilder();
+        Tuple<Tekla.Structures.Drawing.Drawing, string> s;
         foreach (var gaDwg in drawings)
         {
             var dwg = (Tekla.Structures.Drawing.Drawing)gaDwg;
@@ -153,8 +210,10 @@ public abstract partial class QuickCenterClass
                     var currentView = (ViewBase)allViews.Current;
                     try
                     {
-                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType));
+                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType), out s);
                         reportStringBuilder.AppendLine(reportString);
+                        s.Item1.Title3 = s.Item2.ToString();
+                        s.Item1.Modify();
                     }
                     catch (Exception e) when (e is KeyNotFoundException)
                     {
@@ -176,9 +235,14 @@ public abstract partial class QuickCenterClass
 
         DrawingHandler.CloseActiveDrawing();
         GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
+        foreach (GADrawing drawing in drawings)
+        {
+            drawing.Title3 = "";
+            drawing.Modify();
+        }
     }
 
-    private static string CenterView(ViewBase view, int viewType)
+    private static string CenterView(ViewBase view, int viewType, out Tuple<Tekla.Structures.Drawing.Drawing, string> s)
     {
         var sheet = view.GetDrawing().GetSheet();
         double sheetHeightOffset = 0;
@@ -218,6 +282,7 @@ public abstract partial class QuickCenterClass
         if (Math.Abs(originalOriginX - xOffset) < 0.0001 &&
             Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001)
         {
+            s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "NC");
             return $@"Nothing To Do. {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
         }
         else if (Math.Abs(view.ExtremaCenter.X - sheetWidth) > 0.0001 ||
@@ -226,12 +291,14 @@ public abstract partial class QuickCenterClass
             view.Origin.X += xOffset;
             view.Origin.Y += yOffset;
             view.Modify();
+            s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "C");
             DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
             DrawingHandler.SaveActiveDrawing();
             Console.WriteLine(view.Origin.ToString());
             return $"Centering {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
         }
 
+        s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "X");
         return $"Something Went Wrong At {view.GetDrawing().Name} => " + (PluginForm.ViewType)viewType;
     }
 }

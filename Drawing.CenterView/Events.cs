@@ -56,10 +56,12 @@ public partial class PluginForm
         }
     }
 
+/*
     private void centerViewButton_Click(object sender, EventArgs e)
     {
         CenterViewsInDrawing();
     }
+*/
 
     private void refreshButton_Click(object sender, EventArgs e)
     {
@@ -68,12 +70,28 @@ public partial class PluginForm
 
     private void iconImage_MouseHover(object sender, EventArgs e)
     {
-        ChangePictureBoxIconColor(sender, Color.White, Color.Aquamarine);
+        if (((PictureBox)sender).Equals(centerImage))
+        {
+            
+            ChangePictureBoxIconColor(sender, Color.White, Color.Aquamarine);
+        }
+        else
+        {
+            ChangePictureBoxIconColor(sender, Color.White, Color.Tomato);
+        }
     }
 
     private void iconImage_MouseLeave(object sender, EventArgs e)
     {
-        ChangePictureBoxIconColor(sender, Color.Aquamarine, Color.White);
+        if (((PictureBox)sender).Equals(centerImage))
+        {
+            
+            ChangePictureBoxIconColor(sender, Color.Aquamarine, Color.White);
+        }
+        else
+        {
+            ChangePictureBoxIconColor(sender, Color.Tomato, Color.White);
+        }
     }
 
     private void ChangePictureBoxIconColor(object sender, Color sourceColor, Color targetColor)
@@ -107,43 +125,43 @@ public partial class PluginForm
         };
         while (timer.Enabled) Application.DoEvents(); // Goes to the event
     }
-        private void leftChevronImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewLeft(5);
-        }
+    private void leftChevronImage_Click(object sender, EventArgs e)
+    {
+        ShiftViewLeft(5);
+    }
 
-        private void leftArrowImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewLeft(20);
-        }
+    private void leftArrowImage_Click(object sender, EventArgs e)
+    {
+        ShiftViewLeft(20);
+    }
 
-        private void topChevronImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewUp(5);
-        }
+    private void topChevronImage_Click(object sender, EventArgs e)
+    {
+        ShiftViewUp(5);
+    }
 
-        private void topArrowImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewUp(20);
-        }
+    private void topArrowImage_Click(object sender, EventArgs e)
+    {
+        ShiftViewUp(20);
+    }
 
-        private void rightChevronImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewRight(5);
-        }
+    private void rightChevronImage_Click(object sender, EventArgs e)
+    {
+        ShiftViewRight(5);
+    }
 
-        private void rightArrowImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewRight(20);
-        }
+    private void rightArrowImage_Click(object sender, EventArgs e)
+    {
+        ShiftViewRight(20);
+    }
 
-        private void bottomChevronImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewDown(5);
-        }
+    private void bottomChevronImage_Click(object sender, EventArgs e)
+    {
+        ShiftViewDown(5);
+    }
 
-        private void bottomArrowImage_Click(object sender, EventArgs e)
-        {
-            ShiftViewDown(20);
-        }
+    private void bottomArrowImage_Click(object sender, EventArgs e)
+    {
+        ShiftViewDown(20);
+    }
 }

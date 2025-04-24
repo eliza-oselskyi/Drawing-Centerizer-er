@@ -15,45 +15,16 @@ public abstract partial class QuickCenterClass
     {
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Generating Report...");
         
-        var formattedReportString = String.Join(
-            Environment.NewLine,
-            "pagefooter _tmp_1",
-            "{",
-            "name = \"PageFooter\";",
-            "height = 200;",
-            "outputpolicy = NONE;",
-            " ",
-            "text _tmp_4",
-            "{",
-            "name = \"text_1\";",
-            "x1 = 37;",
-            "y1 = 10;",
-            "x2 = 37;",
-            "y2 = 10;",
-            $"string = \"{reportString}\";",
-            "fontname = \"Arial\";",
-            "fontcolor = 161;",
-            "fonttype = 2;",
-            "fontsize = 2.38;",
-            "fontratio = 1;",
-            "fontslant = 0;",
-            "fontstyle = 0;",
-            "angle = 0;",
-            "justify = LEFT;",
-            "pen = 0;",
-            "isalwaysvisible = TRUE;",
-            "visibilityrule = \"\";",
-            "};",
-            "};",
-            "};"
-        );
-
         var reportsFolder = Model.GetInfo().ModelPath + @"\Reports\";
         var firmFolder = "";
         TeklaStructuresSettings.GetAdvancedOption("XS_FIRM", ref firmFolder);
         var reportsTemplateFolder = Path.Combine(firmFolder, @"Reports\");
+        if (!File.Exists(reportsTemplateFolder +  reportTemplate + ".rpt")) 
+            File.Copy($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}.rpt", 
+                $@"{reportsTemplateFolder}\{reportTemplate}.rpt");
+        /*
         var tempTemplate = File.Open($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}_temp.rpt",
-            FileMode.Create);
+            FileMode.Create);CommitChanges();
         var template =
             File.Open($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}_test.rpt",
                 FileMode.Open);
@@ -68,6 +39,7 @@ public abstract partial class QuickCenterClass
 
         File.Replace(tempTemplate.Name, reportsTemplateFolder + reportTemplate + ".rpt",
             Directory.GetCurrentDirectory().ToString() + "Report_backup.xsr");
+            */
 
         Directory.CreateDirectory(reportsFolder);
         if (File.Exists(reportsFolder + reportTemplate + ".xsr")) File.Delete(reportsFolder + reportTemplate + ".xsr");

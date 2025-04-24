@@ -71,27 +71,17 @@ public partial class PluginForm
     private void iconImage_MouseHover(object sender, EventArgs e)
     {
         if (((PictureBox)sender).Equals(centerImage))
-        {
-            
             ChangePictureBoxIconColor(sender, Color.White, Color.Aquamarine);
-        }
         else
-        {
             ChangePictureBoxIconColor(sender, Color.White, Color.Tomato);
-        }
     }
 
     private void iconImage_MouseLeave(object sender, EventArgs e)
     {
         if (((PictureBox)sender).Equals(centerImage))
-        {
-            
             ChangePictureBoxIconColor(sender, Color.Aquamarine, Color.White);
-        }
         else
-        {
             ChangePictureBoxIconColor(sender, Color.Tomato, Color.White);
-        }
     }
 
     private void ChangePictureBoxIconColor(object sender, Color sourceColor, Color targetColor)
@@ -125,6 +115,7 @@ public partial class PluginForm
         };
         while (timer.Enabled) Application.DoEvents(); // Goes to the event
     }
+
     private void leftChevronImage_Click(object sender, EventArgs e)
     {
         ShiftViewLeft(5);

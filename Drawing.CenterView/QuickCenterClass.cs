@@ -52,12 +52,11 @@ public abstract partial class QuickCenterClass
                     Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Aborting.");
                     return;
             }
-            
         }
         else
         {
             const string boxTitle = "Center All Drawings?";
-            const string boxQuestion = "Should ONLY the selected erection drawings be centered?\n\n" + 
+            const string boxQuestion = "Should ONLY the selected erection drawings be centered?\n\n" +
                                        "  Yes = Center only selected\n" +
                                        "  No = Center all";
             var boxResult = MessageBox.Show(boxQuestion,
@@ -66,7 +65,7 @@ public abstract partial class QuickCenterClass
                 0,
                 0,
                 MessageBoxOptions.DefaultDesktopOnly);
-            
+
             switch (boxResult)
             {
                 case DialogResult.Yes:
@@ -95,7 +94,6 @@ public abstract partial class QuickCenterClass
             // }
 
             //CenterSelectedDrawings(selectedList);
-
         }
 
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Done.");

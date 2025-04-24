@@ -14,13 +14,13 @@ public abstract partial class QuickCenterClass
     private static void GenerateAndDisplayReport(string reportTemplate, string reportString)
     {
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Generating Report...");
-        
+
         var reportsFolder = Model.GetInfo().ModelPath + @"\Reports\";
         var firmFolder = "";
         TeklaStructuresSettings.GetAdvancedOption("XS_FIRM", ref firmFolder);
         var reportsTemplateFolder = Path.Combine(firmFolder, @"Reports\");
-        if (!File.Exists(reportsTemplateFolder +  reportTemplate + ".rpt")) 
-            File.Copy($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}.rpt", 
+        if (!File.Exists(reportsTemplateFolder + reportTemplate + ".rpt"))
+            File.Copy($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}.rpt",
                 $@"{reportsTemplateFolder}\{reportTemplate}.rpt");
         /*
         var tempTemplate = File.Open($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}_temp.rpt",

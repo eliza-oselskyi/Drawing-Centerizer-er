@@ -304,6 +304,5 @@ namespace Drawing.CenterView
                                                        "You must restart this application to do so."));
             }
         }
-       
     }
 }

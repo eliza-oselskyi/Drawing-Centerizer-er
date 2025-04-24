@@ -107,44 +107,43 @@ public partial class PluginForm
         };
         while (timer.Enabled) Application.DoEvents(); // Goes to the event
     }
+        private void leftChevronImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewLeft(5);
+        }
 
-    private void leftChevronImage_Click(object sender, EventArgs e)
-    {
-        ShiftViewLeft(5);
-    }
+        private void leftArrowImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewLeft(20);
+        }
 
-    private void leftArrowImage_Click(object sender, EventArgs e)
-    {
-        ShiftViewLeft(15);
-    }
+        private void topChevronImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewUp(5);
+        }
 
-    private void topChevronImage_Click(object sender, EventArgs e)
-    {
-        ShiftViewUp(5);
-    }
+        private void topArrowImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewUp(20);
+        }
 
-    private void topArrowImage_Click(object sender, EventArgs e)
-    {
-        ShiftViewUp(15);
-    }
+        private void rightChevronImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewRight(5);
+        }
 
-    private void rightChevronImage_Click(object sender, EventArgs e)
-    {
-        ShiftViewRight(5);
-    }
+        private void rightArrowImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewRight(20);
+        }
 
-    private void rightArrowImage_Click(object sender, EventArgs e)
-    {
-        ShiftViewRight(15);
-    }
+        private void bottomChevronImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewDown(5);
+        }
 
-    private void bottomChevronImage_Click(object sender, EventArgs e)
-    {
-        ShiftViewDown(5);
-    }
-
-    private void bottomArrowImage_Click(object sender, EventArgs e)
-    {
-        ShiftViewDown(20);
-    }
+        private void bottomArrowImage_Click(object sender, EventArgs e)
+        {
+            ShiftViewDown(20);
+        }
 }

@@ -43,7 +43,7 @@ namespace Drawing.CenterView
             this.infoPanel = new System.Windows.Forms.Panel();
             this.centerViewButton = new System.Windows.Forms.Button();
             this.scrambleViewsButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.subheading = new System.Windows.Forms.Label();
             this.paperImage = new System.Windows.Forms.PictureBox();
             this.refreshButton = new System.Windows.Forms.Button();
             this.rightChevronImage = new System.Windows.Forms.PictureBox();
@@ -55,6 +55,7 @@ namespace Drawing.CenterView
             this.bottomArrowImage = new System.Windows.Forms.PictureBox();
             this.leftArrowImage = new System.Windows.Forms.PictureBox();
             this.centerImage = new System.Windows.Forms.PictureBox();
+            this.invertColorsCheckBox = new System.Windows.Forms.CheckBox();
             this.infoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paperImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightChevronImage)).BeginInit();
@@ -107,11 +108,11 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeTypeName(this.header, null);
             this.structuresExtender.SetBindPropertyName(this.header, null);
             this.header.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.header.Location = new System.Drawing.Point(307, 12);
+            this.header.Location = new System.Drawing.Point(287, 12);
             this.header.Name = "header";
-            this.header.Size = new System.Drawing.Size(182, 23);
+            this.header.Size = new System.Drawing.Size(219, 23);
             this.header.TabIndex = 25;
-            this.header.Text = "Drawing Goodizer";
+            this.header.Text = "Drawing Centerizer-er";
             // 
             // infoBox
             // 
@@ -183,17 +184,17 @@ namespace Drawing.CenterView
             this.scrambleViewsButton.Text = "Scramble Views";
             this.scrambleViewsButton.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // subheading
             // 
-            this.structuresExtender.SetAttributeName(this.label1, null);
-            this.structuresExtender.SetAttributeTypeName(this.label1, null);
-            this.structuresExtender.SetBindPropertyName(this.label1, null);
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(339, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 23);
-            this.label1.TabIndex = 33;
-            this.label1.Text = "Test Build";
+            this.structuresExtender.SetAttributeName(this.subheading, null);
+            this.structuresExtender.SetAttributeTypeName(this.subheading, null);
+            this.structuresExtender.SetBindPropertyName(this.subheading, null);
+            this.subheading.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.subheading.Location = new System.Drawing.Point(339, 35);
+            this.subheading.Name = "subheading";
+            this.subheading.Size = new System.Drawing.Size(109, 23);
+            this.subheading.TabIndex = 33;
+            this.subheading.Text = "Test Build";
             // 
             // paperImage
             // 
@@ -350,6 +351,22 @@ namespace Drawing.CenterView
             this.centerImage.MouseLeave += new System.EventHandler(this.iconImage_MouseLeave);
             this.centerImage.MouseHover += new System.EventHandler(this.iconImage_MouseHover);
             // 
+            // invertColorsCheckBox
+            // 
+            this.structuresExtender.SetAttributeName(this.invertColorsCheckBox, null);
+            this.structuresExtender.SetAttributeTypeName(this.invertColorsCheckBox, null);
+            this.invertColorsCheckBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.structuresExtender.SetBindPropertyName(this.invertColorsCheckBox, null);
+            this.invertColorsCheckBox.FlatAppearance.BorderSize = 3;
+            this.invertColorsCheckBox.ForeColor = System.Drawing.Color.Black;
+            this.invertColorsCheckBox.Location = new System.Drawing.Point(646, 38);
+            this.invertColorsCheckBox.Name = "invertColorsCheckBox";
+            this.invertColorsCheckBox.Padding = new System.Windows.Forms.Padding(3);
+            this.invertColorsCheckBox.Size = new System.Drawing.Size(142, 24);
+            this.invertColorsCheckBox.TabIndex = 45;
+            this.invertColorsCheckBox.Text = "Invert Colors (Broken!)";
+            this.invertColorsCheckBox.UseVisualStyleBackColor = false;
+            // 
             // PluginForm
             // 
             this.structuresExtender.SetAttributeName(this, null);
@@ -359,6 +376,7 @@ namespace Drawing.CenterView
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(57)))), ((int)(((byte)(56)))));
             this.structuresExtender.SetBindPropertyName(this, null);
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.invertColorsCheckBox);
             this.Controls.Add(this.centerImage);
             this.Controls.Add(this.watermark);
             this.Controls.Add(this.leftArrowImage);
@@ -371,7 +389,7 @@ namespace Drawing.CenterView
             this.Controls.Add(this.rightChevronImage);
             this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.paperImage);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.subheading);
             this.Controls.Add(this.scrambleViewsButton);
             this.Controls.Add(this.centerViewButton);
             this.Controls.Add(this.infoPanel);
@@ -385,7 +403,7 @@ namespace Drawing.CenterView
             this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "PluginForm";
             this.ShowInTaskbar = true;
-            this.Text = "Drawing Goodizer";
+            this.Text = "Drawing Centerizer-er";
             this.infoPanel.ResumeLayout(false);
             this.infoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paperImage)).EndInit();
@@ -400,6 +418,8 @@ namespace Drawing.CenterView
             ((System.ComponentModel.ISupportInitialize)(this.centerImage)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.CheckBox invertColorsCheckBox;
 
         private System.Windows.Forms.PictureBox centerImage;
 
@@ -416,7 +436,7 @@ namespace Drawing.CenterView
 
         private System.Windows.Forms.PictureBox paperImage;
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label subheading;
 
         private System.Windows.Forms.Button scrambleViewsButton;
 

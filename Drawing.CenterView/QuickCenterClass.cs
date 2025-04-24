@@ -3,19 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
+using System.Text;
+using System.Threading;
+using Tekla.Structures;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Drawing.UI;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.Operations;
+using Object = Tekla.Structures.Model.Object;
+using Operation = Tekla.Structures.Analysis.Operations.Operation;
 
 // ReSharper disable LocalizableElement
 
 namespace Drawing.CenterView;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public abstract class QuickCenterClass
+public abstract partial class QuickCenterClass
 {
+
     //private static readonly Model Model = new Model();
     private static readonly DrawingHandler DrawingHandler = new DrawingHandler();
 
@@ -23,7 +30,8 @@ public abstract class QuickCenterClass
     {
         var drawingSelector = DrawingHandler.GetDrawingSelector();
         var selectedSize = drawingSelector.GetSelected().GetSize();
-
+        
+        Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Centering Drawings...");
         if (selectedSize <= 0)
         {
             var allDrawings = DrawingHandler.GetDrawings();
@@ -60,10 +68,12 @@ public abstract class QuickCenterClass
 
             CenterSelectedDrawings(drawingSelector.GetSelected());
         }
+        Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Done.");
     }
 
     private static void CenterSelectedDrawings(DrawingEnumerator selectedGADrawings)
     {
+        var reportStringBuilder = new StringBuilder();
         while (selectedGADrawings.MoveNext())
         {
             var memberCount = 0;
@@ -92,7 +102,8 @@ public abstract class QuickCenterClass
                     var currentView = (ViewBase)allViews.Current;
                     try
                     {
-                        CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType));
+                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType));
+                        reportStringBuilder.AppendLine(reportString);
                     }
                     catch (Exception e) when (e is KeyNotFoundException)
                     {
@@ -106,10 +117,12 @@ public abstract class QuickCenterClass
 
             //Console.WriteLine(views.Current);
         }
+        GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
     }
 
     private static void CenterAllDrawings(ArrayList drawings)
     {
+        var reportStringBuilder = new StringBuilder();
         foreach (var gaDwg in drawings)
         {
             var dwg = (Tekla.Structures.Drawing.Drawing)gaDwg;
@@ -139,7 +152,8 @@ public abstract class QuickCenterClass
                     var currentView = (ViewBase)allViews.Current;
                     try
                     {
-                        CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType));
+                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType));
+                        reportStringBuilder.AppendLine(reportString);
                     }
                     catch (Exception e) when (e is KeyNotFoundException)
                     {
@@ -160,9 +174,10 @@ public abstract class QuickCenterClass
         }
 
         DrawingHandler.CloseActiveDrawing();
+        GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
     }
 
-    private static void CenterView(ViewBase view, int viewType)
+    private static string CenterView(ViewBase view, int viewType)
     {
         var sheet = view.GetDrawing().GetSheet();
         double sheetHeightOffset = 0;
@@ -180,6 +195,8 @@ public abstract class QuickCenterClass
         Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
         sheet.Origin.Y = sheetHeightOffset;
         //sheet.Modify();
+        var originalOriginX = view.Origin.X;
+        var originalOriginY = view.Origin.Y;
         view.Origin = sheet.Origin;
         //view.Modify();
         Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
@@ -195,23 +212,26 @@ public abstract class QuickCenterClass
         Console.WriteLine($"Sheet Height: {sheetHeight.ToString(CultureInfo.InvariantCulture)}\nSheet Width: {sheetWidth.ToString(CultureInfo.InvariantCulture)}");
         Console.WriteLine($"View Origin: {view.Origin.ToString()}");
         Console.WriteLine($"x offset: {xOffset}, y offset: {yOffset}");
-
-        switch (Math.Abs(view.ExtremaCenter.X - sheetWidth))
+        
+        if ((Math.Abs(originalOriginX - xOffset) < 0.0001) &&
+            (Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001))
         {
-            case > 0.0001 when Math.Abs(view.ExtremaCenter.Y - sheetHeight) > 0.0001:
-                //InfoBox.OnInfo(infoBox, $"Centering {(ViewType)viewType}");
-                view.Origin.X += xOffset;
-                view.Origin.Y += yOffset;
-                view.Modify();
-                DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
-                DrawingHandler.SaveActiveDrawing();
-                Console.WriteLine(view.Origin.ToString());
-                break;
-            default:
-                //InfoBox.OnInfo(infoBox, @"Nothing To Do.");
-                break;
+            return $@"Nothing To Do. {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
         }
+        else if (Math.Abs(view.ExtremaCenter.X - sheetWidth) > 0.0001 ||
+                 Math.Abs(view.ExtremaCenter.Y - sheetHeight) > 0.0001)
+        {
+            view.Origin.X += xOffset;
+            view.Origin.Y += yOffset;
+            view.Modify();
+            DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
+            DrawingHandler.SaveActiveDrawing();
+            Console.WriteLine(view.Origin.ToString());
+            return $"Centering {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
+        }
+        return $"Something Went Wrong At {view.GetDrawing().Name} => " + (PluginForm.ViewType)viewType;
     }
+
 }
 
 /*

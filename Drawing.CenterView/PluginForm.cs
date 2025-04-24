@@ -288,7 +288,7 @@ namespace Drawing.CenterView
                 if (!_myModel.GetConnectionStatus())
                     // Disable buttons if no connection found
                     selectedObjectsButton.Enabled = false;
-
+                
                 if (onTopCheckBox.Checked) this.TopMost = true;
             }
             catch (Exception)

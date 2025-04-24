@@ -44,7 +44,8 @@ public class SvgIcon
     public SvgIcon(SvgIcon.Icon icon)
     {
         string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        string sPath = System.IO.Path.Combine(sCurrentDirectory + @"..\..\Resources\svgs\");
+        //string sPath = System.IO.Path.Combine(sCurrentDirectory + @"..\..\Resources\svgs\");
+        string sPath = System.IO.Path.Combine(sCurrentDirectory + @"\svgs\");
         var iconPath = _iconPaths[icon];
         var combinedPath = System.IO.Path.Combine(sPath, iconPath);
 

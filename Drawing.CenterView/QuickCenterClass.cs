@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -19,9 +20,8 @@ using Operation = Tekla.Structures.Analysis.Operations.Operation;
 // ReSharper disable LocalizableElement
 
 namespace Drawing.CenterView;
-
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public abstract partial class QuickCenterClass
+abstract partial class QuickCenterClass
 {
     //private static readonly Model Model = new Model();
     private static readonly DrawingHandler DrawingHandler = new DrawingHandler();
@@ -240,7 +240,7 @@ public abstract partial class QuickCenterClass
         }
     }
 
-    private static string CenterView(ViewBase view, int viewType, out Tuple<Tekla.Structures.Drawing.Drawing, string> s)
+    public static string CenterView(ViewBase view, int viewType, out Tuple<Tekla.Structures.Drawing.Drawing, string> s)
     {
         var sheet = view.GetDrawing().GetSheet();
         double sheetHeightOffset = 0;

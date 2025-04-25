@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing.CenterView", "Drawing.CenterView\Drawing.CenterView.csproj", "{6856A54F-9F68-47DB-A81F-B30C4895300F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing.CenterView.UnitTests", "Drawing.CenterView.UnitTests\Drawing.CenterView.UnitTests.csproj", "{9F0E98DD-D24C-4E9E-AC28-885399AEE570}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{6856A54F-9F68-47DB-A81F-B30C4895300F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6856A54F-9F68-47DB-A81F-B30C4895300F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6856A54F-9F68-47DB-A81F-B30C4895300F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F0E98DD-D24C-4E9E-AC28-885399AEE570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0E98DD-D24C-4E9E-AC28-885399AEE570}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0E98DD-D24C-4E9E-AC28-885399AEE570}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0E98DD-D24C-4E9E-AC28-885399AEE570}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

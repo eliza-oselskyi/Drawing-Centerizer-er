@@ -326,6 +326,7 @@ abstract partial class QuickCenterClass
             view.Modify();
             s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "C");
             DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
+            DrawingHandler.SaveActiveDrawing();
             return $"Centering {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
         }
 

@@ -76,6 +76,7 @@ namespace Drawing.CenterView
             this.invertColorsCheckBox = new System.Windows.Forms.CheckBox();
             this.excludeCheckBox = new System.Windows.Forms.CheckBox();
             this.selectedObjectsButton = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.infoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paperImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightChevronImage)).BeginInit();
@@ -368,12 +369,13 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeTypeName(this.excludeCheckBox, null);
             this.excludeCheckBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.structuresExtender.SetBindPropertyName(this.excludeCheckBox, null);
+            this.excludeCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.excludeCheckBox.FlatAppearance.BorderSize = 3;
             this.excludeCheckBox.ForeColor = System.Drawing.Color.Black;
-            this.excludeCheckBox.Location = new System.Drawing.Point(12, 43);
+            this.excludeCheckBox.Location = new System.Drawing.Point(12, 59);
             this.excludeCheckBox.Name = "excludeCheckBox";
             this.excludeCheckBox.Padding = new System.Windows.Forms.Padding(3);
-            this.excludeCheckBox.Size = new System.Drawing.Size(144, 38);
+            this.excludeCheckBox.Size = new System.Drawing.Size(142, 40);
             this.excludeCheckBox.TabIndex = 46;
             this.excludeCheckBox.Text = "Exclude Drawing From Centering Macro?";
             this.excludeCheckBox.UseVisualStyleBackColor = false;
@@ -395,6 +397,26 @@ namespace Drawing.CenterView
             this.selectedObjectsButton.Visible = false;
             this.selectedObjectsButton.Click += new System.EventHandler(this.selectedObjectsButton_Click);
             // 
+            // checkBox1
+            // 
+            this.structuresExtender.SetAttributeName(this.checkBox1, null);
+            this.structuresExtender.SetAttributeTypeName(this.checkBox1, null);
+            this.checkBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.structuresExtender.SetBindPropertyName(this.checkBox1, null);
+            this.checkBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox1.FlatAppearance.BorderSize = 3;
+            this.checkBox1.ForeColor = System.Drawing.Color.Black;
+            this.checkBox1.Location = new System.Drawing.Point(12, 59);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Padding = new System.Windows.Forms.Padding(3);
+            this.checkBox1.Size = new System.Drawing.Size(142, 40);
+            this.checkBox1.TabIndex = 46;
+            this.checkBox1.Text = "Exclude Drawing From Centering Macro?";
+            this.checkBox1.UseVisualStyleBackColor = false;
+            this.checkBox1.CheckStateChanged += new System.EventHandler(this.excludeCheckBox_CheckStateChanged);
+            this.checkBox1.MouseLeave += new System.EventHandler(this.checkBox1_MouseLeave);
+            this.checkBox1.MouseHover += new System.EventHandler(this.checkBox1_MouseHover);
+            // 
             // PluginForm
             // 
             this.structuresExtender.SetAttributeName(this, null);
@@ -404,6 +426,7 @@ namespace Drawing.CenterView
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(57)))), ((int)(((byte)(56)))));
             this.structuresExtender.SetBindPropertyName(this, null);
             this.ClientSize = new System.Drawing.Size(392, 340);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.excludeCheckBox);
             this.Controls.Add(this.watermark);
             this.Controls.Add(this.invertColorsCheckBox);
@@ -446,6 +469,8 @@ namespace Drawing.CenterView
             ((System.ComponentModel.ISupportInitialize)(this.centerImage)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.CheckBox checkBox1;
 
         private System.Windows.Forms.CheckBox excludeCheckBox;
 

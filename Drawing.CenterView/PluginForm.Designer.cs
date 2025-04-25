@@ -187,9 +187,9 @@ namespace Drawing.CenterView
             this.subheading.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.subheading.Location = new System.Drawing.Point(0, 321);
             this.subheading.Name = "subheading";
-            this.subheading.Size = new System.Drawing.Size(53, 23);
+            this.subheading.Size = new System.Drawing.Size(60, 23);
             this.subheading.TabIndex = 33;
-            this.subheading.Text = "v1.0.0";
+            this.subheading.Text = "v1.0.0.1";
             // 
             // paperImage
             // 

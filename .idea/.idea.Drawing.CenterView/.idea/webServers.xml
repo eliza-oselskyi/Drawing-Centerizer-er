@@ -2,12 +2,21 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="d2310cc5-90ee-4890-8e6b-0ec71e4b8b03" name="ACAD" url="">
-        <fileTransfer mountedRoot="N:\EO\Remote Repos" accessType="MOUNT" port="0" />
-      </webServer>
       <webServer id="a8f03314-da71-45d5-b129-927b9963042c" name="EO_OneNote" url="">
         <fileTransfer mountedRoot="C:\Users\Ellie.Oselskyi\OneDrive - Nucor\Custom Made Tools\Drawing.CenterView\src" accessType="MOUNT" port="0" />
       </webServer>
+      <webServer id="d2310cc5-90ee-4890-8e6b-0ec71e4b8b03" name="ACAD" url="">
+        <fileTransfer mountedRoot="N:\EO\Remote Repos" accessType="MOUNT" port="0" />
+      </webServer>
     </option>
+    <groups>
+      <group>
+        <name>Drawing.CenterView.Repos</name>
+        <servers>
+          <name value="EO_OneNote" />
+          <name value="ACAD" />
+        </servers>
+      </group>
+    </groups>
   </component>
 </project>

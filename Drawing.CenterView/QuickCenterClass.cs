@@ -21,6 +21,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -51,6 +52,7 @@ abstract partial class QuickCenterClass
     {
         var drawingSelector = DrawingHandler.GetDrawingSelector();
         var selectedSize = drawingSelector.GetSelected().GetSize();
+        var stopWatch = new Stopwatch();
 
         if (selectedSize <= 0)
         {
@@ -67,6 +69,7 @@ abstract partial class QuickCenterClass
             switch (boxResult)
             {
                 case DialogResult.OK:
+                    stopWatch.Start();
                     _CenterAllDriver();
                     break;
                 case DialogResult.Cancel:
@@ -99,9 +102,11 @@ abstract partial class QuickCenterClass
             switch (boxResult)
             {
                 case DialogResult.Yes:
+                    stopWatch.Start();
                     CenterSelectedDriver(drawingSelector.GetSelected());
                     break;
                 case DialogResult.No:
+                    stopWatch.Start();
                     _CenterAllDriver();
                     break;
                 case DialogResult.Cancel:
@@ -119,6 +124,8 @@ abstract partial class QuickCenterClass
         }
 
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Done.");
+        stopWatch.Stop();
+        Tekla.Structures.Model.Operations.Operation.DisplayPrompt($@"Drawings centered. Time elapsed = {stopWatch.Elapsed.ToString(@"mm\:ss\:mss")}");
     }
 
     private static void _CenterAllDriver()
@@ -134,6 +141,7 @@ abstract partial class QuickCenterClass
 
     private static void CenterSelectedDriver(DrawingEnumerator selectedGADrawings)
     {
+        Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Centering Drawings...");
         var reportStringBuilder = new StringBuilder();
         while (selectedGADrawings.MoveNext())
         {
@@ -177,7 +185,7 @@ abstract partial class QuickCenterClass
                 }
 
 
-                DrawingHandler.CloseActiveDrawing();
+                DrawingHandler.CloseActiveDrawing(true);
                 s.Item1.Title3 = s.Item2.ToString();
                 s.Item1.Modify();
             }
@@ -238,7 +246,7 @@ abstract partial class QuickCenterClass
             }
         }
 
-        DrawingHandler.CloseActiveDrawing();
+        DrawingHandler.CloseActiveDrawing(true);
         GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
         foreach (GADrawing drawing in drawings)
         {

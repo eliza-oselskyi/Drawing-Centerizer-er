@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="ACAD" uploadOnCheckin="d2310cc5-90ee-4890-8e6b-0ec71e4b8b03" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="ACAD">
+        <serverdata>
+          <mappings>
+            <mapping deploy="Drawing.CenterView Origin" local="$PROJECT_DIR$" web="" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myUploadOnCheckinName" value="ACAD" />
+  </component>
+</project>

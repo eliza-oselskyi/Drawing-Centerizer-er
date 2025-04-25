@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="ACAD" uploadOnCheckin="d2310cc5-90ee-4890-8e6b-0ec71e4b8b03" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" serverName="ACAD" uploadOnCheckin="a8f03314-da71-45d5-b129-927b9963042c" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="ACAD">
         <serverdata>
@@ -9,7 +9,14 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="EO_OneNote">
+        <serverdata>
+          <mappings>
+            <mapping deploy="\" local="$PROJECT_DIR$" web="" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
-    <option name="myUploadOnCheckinName" value="ACAD" />
+    <option name="myUploadOnCheckinName" value="EO_OneNote" />
   </component>
 </project>

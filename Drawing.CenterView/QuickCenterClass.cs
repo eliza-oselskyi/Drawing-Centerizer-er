@@ -34,7 +34,7 @@ using Tekla.Structures.Drawing;
 using Tekla.Structures.Drawing.UI;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
-using Tekla.Structures.Model.Operations;
+using TSMO = Tekla.Structures.Model.Operations;
 using Object = Tekla.Structures.Model.Object;
 using Operation = Tekla.Structures.Analysis.Operations.Operation;
 
@@ -125,7 +125,8 @@ abstract partial class QuickCenterClass
 
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Done.");
         stopWatch.Stop();
-        Tekla.Structures.Model.Operations.Operation.DisplayPrompt($@"Drawings centered. Time elapsed = {stopWatch.Elapsed.ToString(@"mm\:ss\:mss")}");
+        Tekla.Structures.Model.Operations.Operation.DisplayPrompt(
+            $@"Drawings centered. Time elapsed = {stopWatch.Elapsed.ToString(@"mm\:ss\:mss")}");
     }
 
     private static void _CenterAllDriver()
@@ -143,6 +144,8 @@ abstract partial class QuickCenterClass
     {
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Centering Drawings...");
         var reportStringBuilder = new StringBuilder();
+        var counter = 1;
+        var total = selectedGADrawings.GetSize();
         while (selectedGADrawings.MoveNext())
         {
             var memberCount = 0;
@@ -172,20 +175,32 @@ abstract partial class QuickCenterClass
                     var currentView = (ViewBase)allViews.Current;
                     try
                     {
-                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType), out s);
-                        reportStringBuilder.AppendLine(reportString);
-                        s.Item1.Title3 = s.Item2.ToString();
-                        s.Item1.Modify();
+                        if (!currentView.GetDrawing().Title3.Equals("X"))
+                        {
+                            var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType),
+                                out s);
+                            reportStringBuilder.AppendLine(reportString);
+                            TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
+                            counter++;
+                            s.Item1.Title3 = s.Item2.ToString();
+                            s.Item1.Modify();
+                        }
+                        else
+                        {
+                            TSMO.Operation.DisplayPrompt(
+                                $@"({counter}/{total}) Skipping {currentView.GetDrawing().Name}.");
+                            counter++;
+                        }
                     }
                     catch (Exception e) when (e is KeyNotFoundException)
                     {
-                        Tekla.Structures.Model.Operations.Operation.DisplayPrompt(@"Invalid View: " +
-                            currentView.ToString());
+                        TSMO.Operation.DisplayPrompt(@"Invalid View: " +
+                                                     currentView.ToString());
                     }
                 }
 
-
                 DrawingHandler.CloseActiveDrawing(true);
+                if (s.Item1.Title3.Equals("X")) continue;
                 s.Item1.Title3 = s.Item2.ToString();
                 s.Item1.Modify();
             }
@@ -195,6 +210,7 @@ abstract partial class QuickCenterClass
         selectedGADrawings.Reset();
         while (selectedGADrawings.MoveNext())
         {
+            if (selectedGADrawings.Current.Title3.Equals("X")) continue;
             selectedGADrawings.Current.Title3 = "";
             selectedGADrawings.Current.Modify();
         }
@@ -203,6 +219,9 @@ abstract partial class QuickCenterClass
     private static void CenterAllDriver(ArrayList drawings)
     {
         var reportStringBuilder = new StringBuilder();
+        var counter = 1;
+        var total = drawings.Count; //TODO: Figure out how to remove not relevant drawings from this count.
+
         foreach (var gaDwg in drawings)
         {
             var dwg = (Tekla.Structures.Drawing.Drawing)gaDwg;
@@ -231,11 +250,21 @@ abstract partial class QuickCenterClass
                     var currentView = (ViewBase)allViews.Current;
                     try
                     {
-                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType),
-                            out var s);
-                        reportStringBuilder.AppendLine(reportString);
-                        s.Item1.Title3 = s.Item2.ToString();
-                        s.Item1.Modify();
+                        if (!currentView.GetDrawing().Title3.Equals("X"))
+                        {
+                            var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType),
+                                out var s);
+                            reportStringBuilder.AppendLine(reportString);
+                            TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
+                            counter++;
+                            s.Item1.Title3 = s.Item2.ToString();
+                            s.Item1.Modify();
+                        }
+                        else
+                        {
+                            Tekla.Structures.Model.Operations.Operation.DisplayPrompt(
+                                $@"({counter}/{total}) Skipping {currentView.GetDrawing().Name}.");
+                        }
                     }
                     catch (Exception e) when (e is KeyNotFoundException)
                     {
@@ -250,6 +279,7 @@ abstract partial class QuickCenterClass
         GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
         foreach (GADrawing drawing in drawings)
         {
+            if (drawing.Title3.Equals("X")) continue;
             drawing.Title3 = "";
             drawing.Modify();
         }

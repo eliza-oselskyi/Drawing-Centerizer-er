@@ -74,7 +74,7 @@ namespace Drawing.CenterView
             this.leftArrowImage = new System.Windows.Forms.PictureBox();
             this.centerImage = new System.Windows.Forms.PictureBox();
             this.invertColorsCheckBox = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.excludeCheckBox = new System.Windows.Forms.CheckBox();
             this.selectedObjectsButton = new System.Windows.Forms.Button();
             this.infoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paperImage)).BeginInit();
@@ -362,22 +362,22 @@ namespace Drawing.CenterView
             this.invertColorsCheckBox.UseVisualStyleBackColor = false;
             this.invertColorsCheckBox.Visible = false;
             // 
-            // checkBox1
+            // excludeCheckBox
             // 
-            this.structuresExtender.SetAttributeName(this.checkBox1, null);
-            this.structuresExtender.SetAttributeTypeName(this.checkBox1, null);
-            this.checkBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.structuresExtender.SetBindPropertyName(this.checkBox1, null);
-            this.checkBox1.FlatAppearance.BorderSize = 3;
-            this.checkBox1.ForeColor = System.Drawing.Color.Black;
-            this.checkBox1.Location = new System.Drawing.Point(323, 227);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.checkBox1.Size = new System.Drawing.Size(64, 50);
-            this.checkBox1.TabIndex = 46;
-            this.checkBox1.Text = "Exclude Current Drawing From Mass Centering Macro? (NOT IMPLEMENTED!)";
-            this.checkBox1.UseVisualStyleBackColor = false;
-            this.checkBox1.Visible = false;
+            this.structuresExtender.SetAttributeName(this.excludeCheckBox, null);
+            this.structuresExtender.SetAttributeTypeName(this.excludeCheckBox, null);
+            this.excludeCheckBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.structuresExtender.SetBindPropertyName(this.excludeCheckBox, null);
+            this.excludeCheckBox.FlatAppearance.BorderSize = 3;
+            this.excludeCheckBox.ForeColor = System.Drawing.Color.Black;
+            this.excludeCheckBox.Location = new System.Drawing.Point(12, 43);
+            this.excludeCheckBox.Name = "excludeCheckBox";
+            this.excludeCheckBox.Padding = new System.Windows.Forms.Padding(3);
+            this.excludeCheckBox.Size = new System.Drawing.Size(144, 38);
+            this.excludeCheckBox.TabIndex = 46;
+            this.excludeCheckBox.Text = "Exclude Drawing From Centering Macro?";
+            this.excludeCheckBox.UseVisualStyleBackColor = false;
+            this.excludeCheckBox.CheckStateChanged += new System.EventHandler(this.excludeCheckBox_CheckStateChanged);
             // 
             // selectedObjectsButton
             // 
@@ -404,7 +404,7 @@ namespace Drawing.CenterView
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(57)))), ((int)(((byte)(56)))));
             this.structuresExtender.SetBindPropertyName(this, null);
             this.ClientSize = new System.Drawing.Size(392, 340);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.excludeCheckBox);
             this.Controls.Add(this.watermark);
             this.Controls.Add(this.invertColorsCheckBox);
             this.Controls.Add(this.centerImage);
@@ -447,7 +447,7 @@ namespace Drawing.CenterView
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox excludeCheckBox;
 
         private System.Windows.Forms.CheckBox invertColorsCheckBox;
 

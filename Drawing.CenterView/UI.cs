@@ -56,6 +56,12 @@ public partial class PluginForm
     // ReSharper disable once InconsistentNaming
     private void UI()
     {
+        InfoBox.ToDefault(infoBox);
+        // Set some default values
+        infoBox.AutoSize = true;
+        infoBox.MinimumSize = new Size(245, 0);
+        infoBox.MaximumSize = new Size(245, 0);
+        infoBox.BringToFront();
         try
         {
             Color targetColor;
@@ -78,8 +84,10 @@ public partial class PluginForm
             {
                 targetColor = Color.White;
             }
-            
+
             version.Text = @"v" + Assembly.GetEntryAssembly()?.GetName().Version.ToString();
+
+            if (_drawingHandler.GetActiveDrawing().Title3.Equals("X")) excludeCheckBox.Checked = true;
 
             _rightArrow = new SvgIcon(SvgIcon.Icon.RightArrow);
             _rightArrow.ChangeIconColors(Color.Black, targetColor);
@@ -152,54 +160,54 @@ public partial class PluginForm
             InfoBox.OnError(infoBox, ex);
         }
     }
-    
-        private void ShiftViewRight(int amount)
-        {
-            var view = GetValidViewInActiveDrawing();
-            if (view == null) return;
-            view.Origin.X += amount;
-            view.Modify();
-            view.GetStringUserProperties(out Dictionary<string, string> viewType);
-            GetViewTypeEnum(viewType);
-            InfoBox.OnInfo(infoBox, $"Shifting Right => {(ViewType)GetViewTypeEnum(viewType)}");
-            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Right");
-        }
 
-        private void ShiftViewUp(int amount)
-        {
-            var view = GetValidViewInActiveDrawing();
-            if (view == null) return;
-            view.Origin.Y += amount;
-            view.Modify();
-            view.GetStringUserProperties(out Dictionary<string, string> viewType);
-            GetViewTypeEnum(viewType);
-            InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)}\nShifting Up =^");
-            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Up");
-        }
+    private void ShiftViewRight(int amount)
+    {
+        var view = GetValidViewInActiveDrawing();
+        if (view == null) return;
+        view.Origin.X += amount;
+        view.Modify();
+        view.GetStringUserProperties(out Dictionary<string, string> viewType);
+        GetViewTypeEnum(viewType);
+        InfoBox.OnInfo(infoBox, $"Shifting Right => {(ViewType)GetViewTypeEnum(viewType)}");
+        _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Right");
+    }
 
-        private void ShiftViewDown(int amount)
-        {
-            var view = GetValidViewInActiveDrawing();
-            if (view == null) return;
-            view.Origin.Y -= amount;
-            view.Modify();
-            view.GetStringUserProperties(out Dictionary<string, string> viewType);
-            GetViewTypeEnum(viewType);
-            InfoBox.OnInfo(infoBox, $"Shifting Down=v\n{(ViewType)GetViewTypeEnum(viewType)}");
-            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Down");
-        }
+    private void ShiftViewUp(int amount)
+    {
+        var view = GetValidViewInActiveDrawing();
+        if (view == null) return;
+        view.Origin.Y += amount;
+        view.Modify();
+        view.GetStringUserProperties(out Dictionary<string, string> viewType);
+        GetViewTypeEnum(viewType);
+        InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)}\nShifting Up =^");
+        _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Up");
+    }
 
-        private void ShiftViewLeft(int amount)
-        {
-            var view = GetValidViewInActiveDrawing();
-            if (view == null) return;
-            view.Origin.X -= amount;
-            view.Modify();
-            view.GetStringUserProperties(out Dictionary<string, string> viewType);
-            GetViewTypeEnum(viewType);
-            InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)} <= Shifting Left");
-            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Left");
-        }
+    private void ShiftViewDown(int amount)
+    {
+        var view = GetValidViewInActiveDrawing();
+        if (view == null) return;
+        view.Origin.Y -= amount;
+        view.Modify();
+        view.GetStringUserProperties(out Dictionary<string, string> viewType);
+        GetViewTypeEnum(viewType);
+        InfoBox.OnInfo(infoBox, $"Shifting Down=v\n{(ViewType)GetViewTypeEnum(viewType)}");
+        _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Down");
+    }
+
+    private void ShiftViewLeft(int amount)
+    {
+        var view = GetValidViewInActiveDrawing();
+        if (view == null) return;
+        view.Origin.X -= amount;
+        view.Modify();
+        view.GetStringUserProperties(out Dictionary<string, string> viewType);
+        GetViewTypeEnum(viewType);
+        InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)} <= Shifting Left");
+        _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Left");
+    }
 }
 
 public static class InfoBox

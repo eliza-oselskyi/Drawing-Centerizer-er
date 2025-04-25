@@ -247,12 +247,6 @@ namespace Drawing.CenterView
 
                 base.OnLoad(e);
                 UI();
-                InfoBox.ToDefault(infoBox);
-                // Set some default values
-                infoBox.AutoSize = true;
-                infoBox.MinimumSize = new Size(245, 0);
-                infoBox.MaximumSize = new Size(245, 0);
-                infoBox.BringToFront();
 
                 InfoBox.OnInfo(infoBox,
                     _myModel.GetConnectionStatus() ? "Connection succeeded" : "Connection failed");

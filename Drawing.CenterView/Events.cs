@@ -196,6 +196,23 @@ public partial class PluginForm
         if (label != null) label.BackColor = System.Drawing.Color.Transparent;
     }
 
+    private void excludeCheckBox_CheckStateChanged(object sender, EventArgs e)
+    {
+        if (sender is not CheckBox checkBox) return;
+
+        var currDrawing = _drawingHandler.GetActiveDrawing();
+        currDrawing.Title3 = checkBox.CheckState switch
+        {
+            CheckState.Unchecked => "",
+            CheckState.Checked => "X",
+            CheckState.Indeterminate => "",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        currDrawing.CommitChanges();
+        currDrawing.Modify();
+    }
+
     private void PluginForm_FormClosing(object sender, FormClosingEventArgs e)
     {
         _events.UnRegister();

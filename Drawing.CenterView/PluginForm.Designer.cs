@@ -73,15 +73,17 @@ namespace Drawing.CenterView
             // 
             this.structuresExtender.SetAttributeName(this.watermark, null);
             this.structuresExtender.SetAttributeTypeName(this.watermark, null);
-            this.watermark.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.watermark.BackColor = System.Drawing.Color.Transparent;
             this.structuresExtender.SetBindPropertyName(this.watermark, null);
-            this.watermark.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.watermark.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.watermark.Location = new System.Drawing.Point(300, 303);
+            this.watermark.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.watermark.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(57)))), ((int)(((byte)(56)))));
+            this.watermark.Location = new System.Drawing.Point(276, 321);
             this.watermark.Name = "watermark";
-            this.watermark.Size = new System.Drawing.Size(87, 31);
+            this.watermark.Size = new System.Drawing.Size(111, 13);
             this.watermark.TabIndex = 15;
             this.watermark.Text = "Written By: Eliza Oselskyi";
+            this.watermark.MouseLeave += new System.EventHandler(this.watermark_MouseLeave);
+            this.watermark.MouseHover += new System.EventHandler(this.watermark_MouseHover);
             // 
             // onTopCheckBox
             // 
@@ -93,10 +95,10 @@ namespace Drawing.CenterView
             this.onTopCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.onTopCheckBox.FlatAppearance.BorderSize = 3;
             this.onTopCheckBox.ForeColor = System.Drawing.Color.Black;
-            this.onTopCheckBox.Location = new System.Drawing.Point(279, 8);
+            this.onTopCheckBox.Location = new System.Drawing.Point(300, 8);
             this.onTopCheckBox.Name = "onTopCheckBox";
             this.onTopCheckBox.Padding = new System.Windows.Forms.Padding(3);
-            this.onTopCheckBox.Size = new System.Drawing.Size(108, 24);
+            this.onTopCheckBox.Size = new System.Drawing.Size(87, 36);
             this.onTopCheckBox.TabIndex = 21;
             this.onTopCheckBox.Text = "Always On Top";
             this.onTopCheckBox.UseVisualStyleBackColor = false;
@@ -108,7 +110,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeTypeName(this.header, null);
             this.structuresExtender.SetBindPropertyName(this.header, null);
             this.header.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.header.Location = new System.Drawing.Point(55, 8);
+            this.header.Location = new System.Drawing.Point(72, 11);
             this.header.Name = "header";
             this.header.Size = new System.Drawing.Size(219, 23);
             this.header.TabIndex = 25;
@@ -135,11 +137,12 @@ namespace Drawing.CenterView
             this.infoPanel.BackColor = System.Drawing.Color.Transparent;
             this.structuresExtender.SetBindPropertyName(this.infoPanel, null);
             this.infoPanel.Controls.Add(this.infoBox);
-            this.infoPanel.Location = new System.Drawing.Point(76, 289);
-            this.infoPanel.MaximumSize = new System.Drawing.Size(198, 45);
-            this.infoPanel.MinimumSize = new System.Drawing.Size(198, 45);
+            this.infoPanel.Enabled = false;
+            this.infoPanel.Location = new System.Drawing.Point(68, 266);
+            this.infoPanel.MaximumSize = new System.Drawing.Size(249, 45);
+            this.infoPanel.MinimumSize = new System.Drawing.Size(249, 45);
             this.infoPanel.Name = "infoPanel";
-            this.infoPanel.Size = new System.Drawing.Size(198, 45);
+            this.infoPanel.Size = new System.Drawing.Size(249, 45);
             this.infoPanel.TabIndex = 30;
             // 
             // scrambleViewsButton
@@ -148,9 +151,9 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeTypeName(this.scrambleViewsButton, null);
             this.structuresExtender.SetBindPropertyName(this.scrambleViewsButton, null);
             this.scrambleViewsButton.ForeColor = System.Drawing.Color.Black;
-            this.scrambleViewsButton.Location = new System.Drawing.Point(200, 75);
+            this.scrambleViewsButton.Location = new System.Drawing.Point(323, 75);
             this.scrambleViewsButton.Name = "scrambleViewsButton";
-            this.scrambleViewsButton.Size = new System.Drawing.Size(187, 38);
+            this.scrambleViewsButton.Size = new System.Drawing.Size(64, 38);
             this.scrambleViewsButton.TabIndex = 32;
             this.scrambleViewsButton.Text = "Scramble Views [For Testing Only]  (NOT IMPLEMENTED!)";
             this.scrambleViewsButton.UseVisualStyleBackColor = true;
@@ -162,10 +165,10 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeTypeName(this.subheading, null);
             this.subheading.BackColor = System.Drawing.Color.Transparent;
             this.structuresExtender.SetBindPropertyName(this.subheading, null);
-            this.subheading.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.subheading.Location = new System.Drawing.Point(143, 32);
+            this.subheading.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.subheading.Location = new System.Drawing.Point(0, 321);
             this.subheading.Name = "subheading";
-            this.subheading.Size = new System.Drawing.Size(69, 23);
+            this.subheading.Size = new System.Drawing.Size(53, 23);
             this.subheading.TabIndex = 33;
             this.subheading.Text = "v1.0.0";
             // 
@@ -175,7 +178,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeTypeName(this.paperImage, null);
             this.paperImage.BackColor = System.Drawing.Color.Transparent;
             this.structuresExtender.SetBindPropertyName(this.paperImage, null);
-            this.paperImage.Location = new System.Drawing.Point(117, 128);
+            this.paperImage.Location = new System.Drawing.Point(130, 105);
             this.paperImage.Name = "paperImage";
             this.paperImage.Size = new System.Drawing.Size(125, 95);
             this.paperImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -202,7 +205,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeName(this.rightChevronImage, null);
             this.structuresExtender.SetAttributeTypeName(this.rightChevronImage, null);
             this.structuresExtender.SetBindPropertyName(this.rightChevronImage, null);
-            this.rightChevronImage.Location = new System.Drawing.Point(248, 166);
+            this.rightChevronImage.Location = new System.Drawing.Point(261, 143);
             this.rightChevronImage.Name = "rightChevronImage";
             this.rightChevronImage.Size = new System.Drawing.Size(25, 25);
             this.rightChevronImage.TabIndex = 36;
@@ -216,7 +219,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeName(this.bottomChevronImage, null);
             this.structuresExtender.SetAttributeTypeName(this.bottomChevronImage, null);
             this.structuresExtender.SetBindPropertyName(this.bottomChevronImage, null);
-            this.bottomChevronImage.Location = new System.Drawing.Point(168, 227);
+            this.bottomChevronImage.Location = new System.Drawing.Point(181, 204);
             this.bottomChevronImage.Name = "bottomChevronImage";
             this.bottomChevronImage.Size = new System.Drawing.Size(25, 25);
             this.bottomChevronImage.TabIndex = 37;
@@ -230,7 +233,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeName(this.topChevronImage, null);
             this.structuresExtender.SetAttributeTypeName(this.topChevronImage, null);
             this.structuresExtender.SetBindPropertyName(this.topChevronImage, null);
-            this.topChevronImage.Location = new System.Drawing.Point(168, 97);
+            this.topChevronImage.Location = new System.Drawing.Point(181, 74);
             this.topChevronImage.Name = "topChevronImage";
             this.topChevronImage.Size = new System.Drawing.Size(25, 25);
             this.topChevronImage.TabIndex = 38;
@@ -244,7 +247,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeName(this.leftChevronImage, null);
             this.structuresExtender.SetAttributeTypeName(this.leftChevronImage, null);
             this.structuresExtender.SetBindPropertyName(this.leftChevronImage, null);
-            this.leftChevronImage.Location = new System.Drawing.Point(86, 166);
+            this.leftChevronImage.Location = new System.Drawing.Point(99, 143);
             this.leftChevronImage.Name = "leftChevronImage";
             this.leftChevronImage.Size = new System.Drawing.Size(25, 25);
             this.leftChevronImage.TabIndex = 39;
@@ -258,7 +261,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeName(this.topArrowImage, null);
             this.structuresExtender.SetAttributeTypeName(this.topArrowImage, null);
             this.structuresExtender.SetBindPropertyName(this.topArrowImage, null);
-            this.topArrowImage.Location = new System.Drawing.Point(168, 66);
+            this.topArrowImage.Location = new System.Drawing.Point(181, 43);
             this.topArrowImage.Name = "topArrowImage";
             this.topArrowImage.Size = new System.Drawing.Size(25, 25);
             this.topArrowImage.TabIndex = 40;
@@ -272,7 +275,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeName(this.rightArrowImage, null);
             this.structuresExtender.SetAttributeTypeName(this.rightArrowImage, null);
             this.structuresExtender.SetBindPropertyName(this.rightArrowImage, null);
-            this.rightArrowImage.Location = new System.Drawing.Point(279, 166);
+            this.rightArrowImage.Location = new System.Drawing.Point(292, 143);
             this.rightArrowImage.Name = "rightArrowImage";
             this.rightArrowImage.Size = new System.Drawing.Size(25, 25);
             this.rightArrowImage.TabIndex = 41;
@@ -286,7 +289,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeName(this.bottomArrowImage, null);
             this.structuresExtender.SetAttributeTypeName(this.bottomArrowImage, null);
             this.structuresExtender.SetBindPropertyName(this.bottomArrowImage, null);
-            this.bottomArrowImage.Location = new System.Drawing.Point(168, 258);
+            this.bottomArrowImage.Location = new System.Drawing.Point(181, 235);
             this.bottomArrowImage.Name = "bottomArrowImage";
             this.bottomArrowImage.Size = new System.Drawing.Size(25, 25);
             this.bottomArrowImage.TabIndex = 42;
@@ -300,7 +303,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeName(this.leftArrowImage, null);
             this.structuresExtender.SetAttributeTypeName(this.leftArrowImage, null);
             this.structuresExtender.SetBindPropertyName(this.leftArrowImage, null);
-            this.leftArrowImage.Location = new System.Drawing.Point(55, 166);
+            this.leftArrowImage.Location = new System.Drawing.Point(68, 143);
             this.leftArrowImage.Name = "leftArrowImage";
             this.leftArrowImage.Size = new System.Drawing.Size(25, 25);
             this.leftArrowImage.TabIndex = 43;
@@ -315,7 +318,7 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeTypeName(this.centerImage, null);
             this.centerImage.BackColor = System.Drawing.Color.Transparent;
             this.structuresExtender.SetBindPropertyName(this.centerImage, null);
-            this.centerImage.Location = new System.Drawing.Point(168, 166);
+            this.centerImage.Location = new System.Drawing.Point(181, 143);
             this.centerImage.Name = "centerImage";
             this.centerImage.Size = new System.Drawing.Size(25, 25);
             this.centerImage.TabIndex = 44;
@@ -349,10 +352,10 @@ namespace Drawing.CenterView
             this.structuresExtender.SetBindPropertyName(this.checkBox1, null);
             this.checkBox1.FlatAppearance.BorderSize = 3;
             this.checkBox1.ForeColor = System.Drawing.Color.Black;
-            this.checkBox1.Location = new System.Drawing.Point(213, 227);
+            this.checkBox1.Location = new System.Drawing.Point(323, 227);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.checkBox1.Size = new System.Drawing.Size(174, 50);
+            this.checkBox1.Size = new System.Drawing.Size(64, 50);
             this.checkBox1.TabIndex = 46;
             this.checkBox1.Text = "Exclude Current Drawing From Mass Centering Macro? (NOT IMPLEMENTED!)";
             this.checkBox1.UseVisualStyleBackColor = false;
@@ -365,9 +368,9 @@ namespace Drawing.CenterView
             this.structuresExtender.SetAttributeTypeName(this.selectedObjectsButton, null);
             this.structuresExtender.SetBindPropertyName(this.selectedObjectsButton, null);
             this.selectedObjectsButton.ForeColor = System.Drawing.Color.Black;
-            this.selectedObjectsButton.Location = new System.Drawing.Point(267, 119);
+            this.selectedObjectsButton.Location = new System.Drawing.Point(323, 119);
             this.selectedObjectsButton.Name = "selectedObjectsButton";
-            this.selectedObjectsButton.Size = new System.Drawing.Size(118, 23);
+            this.selectedObjectsButton.Size = new System.Drawing.Size(62, 23);
             this.selectedObjectsButton.TabIndex = 29;
             this.selectedObjectsButton.Text = "Get Selected Objects";
             this.selectedObjectsButton.UseVisualStyleBackColor = true;
@@ -411,6 +414,7 @@ namespace Drawing.CenterView
             this.Name = "PluginForm";
             this.ShowInTaskbar = true;
             this.Text = "Drawing Centerizer-er";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PluginForm_FormClosing);
             this.infoPanel.ResumeLayout(false);
             this.infoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paperImage)).EndInit();

@@ -2,13 +2,18 @@
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using Tekla.Structures.Model.UI;
+using Tekla.Structures.Model;
+using Tekla.Structures.ModelInternal;
 using Color = System.Drawing.Color;
+using ModelObjectSelector = Tekla.Structures.Model.UI.ModelObjectSelector;
 
 namespace Drawing.CenterView;
 
 public partial class PluginForm
 {
+    private readonly Tekla.Structures.Drawing.UI.Events _events = new Tekla.Structures.Drawing.UI.Events();
+    private readonly object _exitEventHandlerLock = new object();
+
     /// <summary>
     ///     Method <c>onTopCheckBox_CheckedChanged</c> toggles "always stay on top"
     /// </summary>
@@ -154,5 +159,33 @@ public partial class PluginForm
     private void bottomArrowImage_Click(object sender, EventArgs e)
     {
         ShiftViewDown(20);
+    }
+
+    private void watermark_MouseHover(object sender, EventArgs e)
+    {
+        var label = sender as Label;
+        if (label != null) label.ForeColor = System.Drawing.Color.PowderBlue;
+        if (label != null) label.BackColor = System.Drawing.Color.DimGray;
+    }
+
+    private void watermark_MouseLeave(object sender, EventArgs e)
+    {
+        var label = sender as Label;
+        var newColor = System.Drawing.Color.FromArgb(40, 57, 56);
+        if (label != null) label.ForeColor = newColor;
+        if (label != null) label.BackColor = System.Drawing.Color.Transparent;
+    }
+
+    private void PluginForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        _events.UnRegister();
+    }
+
+    private void ExitApplication()
+    {
+        lock (_exitEventHandlerLock)
+        {
+            Application.Exit();
+        }
     }
 }

@@ -20,6 +20,7 @@ using Tekla.Structures.DrawingInternal;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.Operations;
 using Tekla.Structures.ModelInternal;
+using Color = RenderData.Color;
 using ModelObjectSelector = Tekla.Structures.Model.UI.ModelObjectSelector;
 using Polygon = Tekla.Structures.Model.Polygon;
 using Size = System.Drawing.Size;
@@ -284,8 +285,8 @@ namespace Drawing.CenterView
                 InfoBox.ToDefault(infoBox);
                 // Set some default values
                 infoBox.AutoSize = true;
-                infoBox.MinimumSize = new Size(198, 0);
-                infoBox.MaximumSize = new Size(198, 0);
+                infoBox.MinimumSize = new Size(249, 0);
+                infoBox.MaximumSize = new Size(249, 0);
 
                 InfoBox.OnInfo(infoBox,
                     _myModel.GetConnectionStatus() ? "Connection succeeded" : "Connection failed");
@@ -303,6 +304,9 @@ namespace Drawing.CenterView
                                                        "\n Currently, there is no way to reestablish connection. " +
                                                        "You must restart this application to do so."));
             }
+
+            _events.DrawingEditorClosed += ExitApplication;
+            _events.Register();
         }
     }
 }

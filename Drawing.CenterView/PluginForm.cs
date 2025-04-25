@@ -68,101 +68,53 @@ namespace Drawing.CenterView
             _drawingHandler = new DrawingHandler();
         }
 
-        private void ShiftViewRight(int amount)
-        {
-            var view = GetValidViewInActiveDrawing();
-            if (view == null) return;
-            view.Origin.X += amount;
-            view.Modify();
-            view.GetStringUserProperties(out Dictionary<string, string> viewType);
-            GetViewTypeEnum(viewType);
-            InfoBox.OnInfo(infoBox, $"Shifting Right => {(ViewType)GetViewTypeEnum(viewType)}");
-            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Right");
-        }
-
-        private void ShiftViewUp(int amount)
-        {
-            var view = GetValidViewInActiveDrawing();
-            if (view == null) return;
-            view.Origin.Y += amount;
-            view.Modify();
-            view.GetStringUserProperties(out Dictionary<string, string> viewType);
-            GetViewTypeEnum(viewType);
-            InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)}\nShifting Up =^");
-            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Up");
-        }
-
-        private void ShiftViewDown(int amount)
-        {
-            var view = GetValidViewInActiveDrawing();
-            if (view == null) return;
-            view.Origin.Y -= amount;
-            view.Modify();
-            view.GetStringUserProperties(out Dictionary<string, string> viewType);
-            GetViewTypeEnum(viewType);
-            InfoBox.OnInfo(infoBox, $"Shifting Down=v\n{(ViewType)GetViewTypeEnum(viewType)}");
-            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Down");
-        }
-
-        private void ShiftViewLeft(int amount)
-        {
-            var view = GetValidViewInActiveDrawing();
-            if (view == null) return;
-            view.Origin.X -= amount;
-            view.Modify();
-            view.GetStringUserProperties(out Dictionary<string, string> viewType);
-            GetViewTypeEnum(viewType);
-            InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)} <= Shifting Left");
-            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Left");
-        }
-
         private ViewBase? GetValidViewInActiveDrawing()
         {
             var allViews = _drawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
             var memberCount = 0;
+            var memberList = new ArrayList();
             while (allViews.MoveNext())
             {
                 allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
-                if (type is not PluginForm.ViewType.None) memberCount++;
-                //Console.WriteLine(PluginForm.GetViewTypeEnum(viewTypes).ToString());
+                if (type is PluginForm.ViewType.None) continue;
+                memberCount++;
+                memberList.Add(allViews.Current);
             }
 
-            if (memberCount != 1) return null;
+            if (memberCount > 1) return null;
+
+            var memberListArray = memberList.ToArray();
             allViews.Reset();
-            while (allViews.MoveNext())
+
+            if (memberListArray[0] == null) return null;
+            ((ViewBase)memberListArray[0]).GetStringUserProperties(out Dictionary<string, string> viewType);
+            var currentView = memberListArray[0];
+            try
             {
-                allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewType);
-                var currentView = (ViewBase)allViews.Current;
-                try
-                {
-                    return currentView;
-                }
-                catch (Exception e) when (e is KeyNotFoundException)
-                {
-                    Console.WriteLine(@"Invalid View: " + currentView.ToString());
-                }
+                return (ViewBase?)currentView;
+            }
+            catch (Exception e) when (e is KeyNotFoundException)
+            {
+                Console.WriteLine(@"Invalid View: " + currentView.ToString());
             }
 
             return null;
         }
 
-        private void CenterViewsInDrawing()
+        private void CenterViewDriver()
         {
-            var allViews = _drawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
-
-            while (allViews.MoveNext())
+            var currView = GetValidViewInActiveDrawing();
+            if (currView != null)
             {
-                allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewType);
-                var currentView = (ViewBase)allViews.Current;
-                try
-                {
-                    CenterView(currentView, (int)GetViewTypeEnum(viewType));
-                }
-                catch (Exception e) when (e is KeyNotFoundException)
-                {
-                    InfoBox.OnInfo(infoBox, @"Invalid View: " + currentView.ToString());
-                }
+                currView.GetStringUserProperties(out Dictionary<string, string> viewTypes);
+                CenterView(currView, (int)GetViewTypeEnum(viewTypes));
+            }
+            else
+            {
+                InfoBox.OnError(infoBox,
+                    new Exception("Something went wrong.\nDo you have more than one main view?",
+                        new NullReferenceException()));
             }
         }
 
@@ -181,25 +133,16 @@ namespace Drawing.CenterView
                 default: break;
             }
 
-            Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
             sheet.Origin.Y = sheetHeightOffset;
             var originalOriginX = view.Origin.X;
             var originalOriginY = view.Origin.Y;
             view.Origin = sheet.Origin;
-            Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
             var viewCenterPoint = view.GetAxisAlignedBoundingBox().GetCenterPoint();
 
             var sheetHeight = sheet.Height / 2;
             var sheetWidth = (sheet.Width - 33.274) / 2;
             var xOffset = sheetWidth - viewCenterPoint.X;
             var yOffset = sheetHeight - viewCenterPoint.Y;
-
-            Console.WriteLine($"View Center:  {viewCenterPoint.ToString()}");
-            Console.WriteLine(
-                $"Sheet Height: {sheetHeight.ToString(CultureInfo.InvariantCulture)}\nSheet Width: {sheetWidth.ToString(CultureInfo.InvariantCulture)}");
-            Console.WriteLine($"View Origin: {view.Origin.ToString()}");
-            Console.WriteLine($"x offset: {xOffset}, y offset: {yOffset}");
-
 
             if (Math.Abs(originalOriginX - xOffset) < 0.0001 &&
                 Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001)
@@ -215,7 +158,6 @@ namespace Drawing.CenterView
 
                 view.Modify();
                 _drawingHandler.GetActiveDrawing().CommitChanges("Center View");
-                Console.WriteLine(view.Origin.ToString());
             }
         }
 
@@ -305,8 +247,9 @@ namespace Drawing.CenterView
                 InfoBox.ToDefault(infoBox);
                 // Set some default values
                 infoBox.AutoSize = true;
-                infoBox.MinimumSize = new Size(249, 0);
-                infoBox.MaximumSize = new Size(249, 0);
+                infoBox.MinimumSize = new Size(245, 0);
+                infoBox.MaximumSize = new Size(245, 0);
+                infoBox.BringToFront();
 
                 InfoBox.OnInfo(infoBox,
                     _myModel.GetConnectionStatus() ? "Connection succeeded" : "Connection failed");

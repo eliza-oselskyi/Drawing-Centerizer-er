@@ -149,6 +149,54 @@ public partial class PluginForm
             InfoBox.OnError(infoBox, ex);
         }
     }
+    
+        private void ShiftViewRight(int amount)
+        {
+            var view = GetValidViewInActiveDrawing();
+            if (view == null) return;
+            view.Origin.X += amount;
+            view.Modify();
+            view.GetStringUserProperties(out Dictionary<string, string> viewType);
+            GetViewTypeEnum(viewType);
+            InfoBox.OnInfo(infoBox, $"Shifting Right => {(ViewType)GetViewTypeEnum(viewType)}");
+            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Right");
+        }
+
+        private void ShiftViewUp(int amount)
+        {
+            var view = GetValidViewInActiveDrawing();
+            if (view == null) return;
+            view.Origin.Y += amount;
+            view.Modify();
+            view.GetStringUserProperties(out Dictionary<string, string> viewType);
+            GetViewTypeEnum(viewType);
+            InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)}\nShifting Up =^");
+            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Up");
+        }
+
+        private void ShiftViewDown(int amount)
+        {
+            var view = GetValidViewInActiveDrawing();
+            if (view == null) return;
+            view.Origin.Y -= amount;
+            view.Modify();
+            view.GetStringUserProperties(out Dictionary<string, string> viewType);
+            GetViewTypeEnum(viewType);
+            InfoBox.OnInfo(infoBox, $"Shifting Down=v\n{(ViewType)GetViewTypeEnum(viewType)}");
+            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Down");
+        }
+
+        private void ShiftViewLeft(int amount)
+        {
+            var view = GetValidViewInActiveDrawing();
+            if (view == null) return;
+            view.Origin.X -= amount;
+            view.Modify();
+            view.GetStringUserProperties(out Dictionary<string, string> viewType);
+            GetViewTypeEnum(viewType);
+            InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)} <= Shifting Left");
+            _drawingHandler.GetActiveDrawing().CommitChanges("Shift View Left");
+        }
 }
 
 public static class InfoBox

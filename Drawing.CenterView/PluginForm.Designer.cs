@@ -157,12 +157,11 @@ namespace Drawing.CenterView
             this.infoPanel.BackColor = System.Drawing.Color.Transparent;
             this.structuresExtender.SetBindPropertyName(this.infoPanel, null);
             this.infoPanel.Controls.Add(this.infoBox);
-            this.infoPanel.Enabled = false;
-            this.infoPanel.Location = new System.Drawing.Point(68, 266);
-            this.infoPanel.MaximumSize = new System.Drawing.Size(249, 45);
-            this.infoPanel.MinimumSize = new System.Drawing.Size(249, 45);
+            this.infoPanel.Location = new System.Drawing.Point(72, 266);
+            this.infoPanel.MaximumSize = new System.Drawing.Size(245, 52);
+            this.infoPanel.MinimumSize = new System.Drawing.Size(245, 52);
             this.infoPanel.Name = "infoPanel";
-            this.infoPanel.Size = new System.Drawing.Size(249, 45);
+            this.infoPanel.Size = new System.Drawing.Size(245, 52);
             this.infoPanel.TabIndex = 30;
             // 
             // scrambleViewsButton

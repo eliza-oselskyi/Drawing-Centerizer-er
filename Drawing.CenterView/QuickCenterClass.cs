@@ -67,7 +67,7 @@ abstract partial class QuickCenterClass
             switch (boxResult)
             {
                 case DialogResult.OK:
-                    GotoCenterAll();
+                    _CenterAllDriver();
                     break;
                 case DialogResult.Cancel:
                     Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Aborting.");
@@ -99,10 +99,10 @@ abstract partial class QuickCenterClass
             switch (boxResult)
             {
                 case DialogResult.Yes:
-                    CenterSelectedDrawings(drawingSelector.GetSelected());
+                    CenterSelectedDriver(drawingSelector.GetSelected());
                     break;
                 case DialogResult.No:
-                    GotoCenterAll();
+                    _CenterAllDriver();
                     break;
                 case DialogResult.Cancel:
                     Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Aborting.");
@@ -121,7 +121,7 @@ abstract partial class QuickCenterClass
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Done.");
     }
 
-    private static void GotoCenterAll()
+    private static void _CenterAllDriver()
     {
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Centering Drawings...");
         var allDrawings = DrawingHandler.GetDrawings();
@@ -129,10 +129,10 @@ abstract partial class QuickCenterClass
         while (allDrawings.MoveNext())
             if (allDrawings.Current is GADrawing)
                 allGADrawings.Add(allDrawings.Current);
-        CenterAllDrawings(allGADrawings);
+        CenterAllDriver(allGADrawings);
     }
 
-    private static void CenterSelectedDrawings(DrawingEnumerator selectedGADrawings)
+    private static void CenterSelectedDriver(DrawingEnumerator selectedGADrawings)
     {
         var reportStringBuilder = new StringBuilder();
         while (selectedGADrawings.MoveNext())
@@ -192,7 +192,7 @@ abstract partial class QuickCenterClass
         }
     }
 
-    private static void CenterAllDrawings(ArrayList drawings)
+    private static void CenterAllDriver(ArrayList drawings)
     {
         var reportStringBuilder = new StringBuilder();
         foreach (var gaDwg in drawings)

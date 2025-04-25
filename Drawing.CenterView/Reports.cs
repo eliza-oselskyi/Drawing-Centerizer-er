@@ -1,22 +1,23 @@
 ﻿/*
  *
- Drawing Centerizer-er: Mainly centers Tekla drawings, specifically NBG's flavor.
-      Copyright (C) 2025  Eliza Oselskyi
-
-      This program is free software: you can redistribute it and/or modify
-      it under the terms of the GNU Lesser General Public License as published by
-      the Free Software Foundation, either version 3 of the License, or
-      (at your option) any later version.
-
-      This program is distributed in the hope that it will be useful,
-      but WITHOUT ANY WARRANTY; without even the implied warranty of
-      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-      GNU Lesser General Public License for more details.
-
-      You should have received a copy of the GNU Lesser General Public License
-      along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *  Drawing Centerizer-er: Mainly centers Tekla drawings, specifically NBG's flavor.
+ *       Copyright (C) 2025  Eliza Oselskyi
+ *
+ *       This program is free software: you can redistribute it and/or modify
+ *       it under the terms of the GNU Lesser General Public License as published by
+ *       the Free Software Foundation, either version 3 of the License, or
+ *       (at your option) any later version.
+ *
+ *       This program is distributed in the hope that it will be useful,
+ *       but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *       GNU Lesser General Public License for more details.
+ *
+ *       You should have received a copy of the GNU Lesser General Public License
+ *       along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+
 
 using System;
 using System.IO;
@@ -42,24 +43,6 @@ public abstract partial class QuickCenterClass
         if (!File.Exists(reportsTemplateFolder + reportTemplate + ".rpt"))
             File.Copy($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}.rpt",
                 $@"{reportsTemplateFolder}\{reportTemplate}.rpt");
-        /*
-        var tempTemplate = File.Open($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}_temp.rpt",
-            FileMode.Create);CommitChanges();
-        var template =
-            File.Open($@"{firmFolder}\Macros\modeling\Center_Drawings\Release\report_template\{reportTemplate}_test.rpt",
-                FileMode.Open);
-
-        //tempTemplate.Close();
-        template.CopyTo(tempTemplate);
-        tempTemplate.Close();
-        using (var writer = File.AppendText(tempTemplate.Name))
-        {
-            writer.WriteLine(formattedReportString);
-        }
-
-        File.Replace(tempTemplate.Name, reportsTemplateFolder + reportTemplate + ".rpt",
-            Directory.GetCurrentDirectory().ToString() + "Report_backup.xsr");
-            */
 
         Directory.CreateDirectory(reportsFolder);
         if (File.Exists(reportsFolder + reportTemplate + ".xsr")) File.Delete(reportsFolder + reportTemplate + ".xsr");

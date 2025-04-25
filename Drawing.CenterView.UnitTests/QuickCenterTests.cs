@@ -57,28 +57,24 @@ namespace Drawing.CenterView.UnitTests
                 views.MoveNext();
                 var view = views.Current as View;
                 origViewOrigin = view.Origin;
-                views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes); // Get viewTypes
+                views.Current.GetStringUserProperties(out var viewTypes); // Get viewTypes
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
 
                 if (type is PluginForm.ViewType.None)
-                {
                     Assert.Ignore("No view valid type found");
-                }
                 else
-                {
                     return new Tuple<ViewBase, Point>((ViewBase)view, origViewOrigin);
-                }
             }
             else if (views.GetSize() > 1)
             {
-                int member = 0;
+                var member = 0;
                 var viewList = new ArrayList();
 
                 while (views.MoveNext())
                 {
                     var curr = views.Current as View;
                     if (curr == null) Assert.Inconclusive("Null current view found");
-                    curr.GetStringUserProperties(out Dictionary<string, string> viewTypes);
+                    curr.GetStringUserProperties(out var viewTypes);
                     var type = PluginForm.GetViewTypeEnum(viewTypes);
 
                     if (type != PluginForm.ViewType.None)
@@ -119,7 +115,7 @@ namespace Drawing.CenterView.UnitTests
                 views.MoveNext();
                 var view = views.Current as View;
                 var origViewOrigin = view.Origin;
-                views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes); // Get viewTypes
+                views.Current.GetStringUserProperties(out var viewTypes); // Get viewTypes
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
 
                 if (type is PluginForm.ViewType.None)
@@ -131,7 +127,7 @@ namespace Drawing.CenterView.UnitTests
                     if (view == null) Assert.Inconclusive("Null view found");
                     Console.WriteLine("\n\nTest View Origin: " + view.Origin.ToString());
                     var result = QuickCenterClass.CenterView((ViewBase)view, (int)type,
-                        out Tuple<Tekla.Structures.Drawing.Drawing, string> drawingTuple);
+                        out var drawingTuple);
                     Assert.True(result.Contains("Nothing To Do.") && drawingTuple.Item2.Equals("NC"),
                         "Fail, Had something to do.");
                 }
@@ -142,25 +138,19 @@ namespace Drawing.CenterView.UnitTests
             }
             else if (views.GetSize() > 1)
             {
-                int member = 0;
+                var member = 0;
 
                 while (views.MoveNext())
                 {
                     var curr = views.Current as View;
                     if (curr == null) Assert.Inconclusive("Null current view found");
-                    curr.GetStringUserProperties(out Dictionary<string, string> viewTypes);
+                    curr.GetStringUserProperties(out var viewTypes);
                     var type = PluginForm.GetViewTypeEnum(viewTypes);
 
-                    if (type != PluginForm.ViewType.None)
-                    {
-                        member++;
-                    }
+                    if (type != PluginForm.ViewType.None) member++;
                 }
 
-                if (member > 1)
-                {
-                    Assert.Inconclusive("More than one \"valid\" view found");
-                }
+                if (member > 1) Assert.Inconclusive("More than one \"valid\" view found");
             }
             else
             {
@@ -178,7 +168,7 @@ namespace Drawing.CenterView.UnitTests
             {
                 views.MoveNext();
                 var view = views.Current as View;
-                views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes); // Get viewTypes
+                views.Current.GetStringUserProperties(out var viewTypes); // Get viewTypes
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
 
                 if (type is PluginForm.ViewType.None)
@@ -190,32 +180,26 @@ namespace Drawing.CenterView.UnitTests
                     if (view == null) Assert.Inconclusive("Null view found");
                     Console.WriteLine("\n\nTest View Origin: " + view.Origin.ToString());
                     var result = QuickCenterClass.CenterView((ViewBase)view, (int)type,
-                        out Tuple<Tekla.Structures.Drawing.Drawing, string> drawingTuple);
+                        out var drawingTuple);
                     Assert.True(result.Contains("Centering") && drawingTuple.Item2.Equals("C"),
                         "Fail, Had nothing to do.");
                 }
             }
             else if (views.GetSize() > 1)
             {
-                int member = 0;
+                var member = 0;
 
                 while (views.MoveNext())
                 {
                     var curr = views.Current as View;
                     if (curr == null) Assert.Inconclusive("Null current view found");
-                    curr.GetStringUserProperties(out Dictionary<string, string> viewTypes);
+                    curr.GetStringUserProperties(out var viewTypes);
                     var type = PluginForm.GetViewTypeEnum(viewTypes);
 
-                    if (type != PluginForm.ViewType.None)
-                    {
-                        member++;
-                    }
+                    if (type != PluginForm.ViewType.None) member++;
                 }
 
-                if (member > 1)
-                {
-                    Assert.Inconclusive("More than one \"valid\" view found");
-                }
+                if (member > 1) Assert.Inconclusive("More than one \"valid\" view found");
             }
             else
             {

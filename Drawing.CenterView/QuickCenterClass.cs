@@ -1,20 +1,20 @@
 ﻿/*
  *
- Drawing Centerizer-er: Mainly centers Tekla drawings, specifically NBG's flavor.
-      Copyright (C) 2025  Eliza Oselskyi
-
-      This program is free software: you can redistribute it and/or modify
-      it under the terms of the GNU Lesser General Public License as published by
-      the Free Software Foundation, either version 3 of the License, or
-      (at your option) any later version.
-
-      This program is distributed in the hope that it will be useful,
-      but WITHOUT ANY WARRANTY; without even the implied warranty of
-      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-      GNU Lesser General Public License for more details.
-
-      You should have received a copy of the GNU Lesser General Public License
-      along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *  Drawing Centerizer-er: Mainly centers Tekla drawings, specifically NBG's flavor.
+ *       Copyright (C) 2025  Eliza Oselskyi
+ *
+ *       This program is free software: you can redistribute it and/or modify
+ *       it under the terms of the GNU Lesser General Public License as published by
+ *       the Free Software Foundation, either version 3 of the License, or
+ *       (at your option) any later version.
+ *
+ *       This program is distributed in the hope that it will be useful,
+ *       but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *       GNU Lesser General Public License for more details.
+ *
+ *       You should have received a copy of the GNU Lesser General Public License
+ *       along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -72,6 +72,15 @@ abstract partial class QuickCenterClass
                 case DialogResult.Cancel:
                     Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Aborting.");
                     return;
+                case DialogResult.None:
+                case DialogResult.Abort:
+                case DialogResult.Retry:
+                case DialogResult.Ignore:
+                case DialogResult.Yes:
+                case DialogResult.No:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
         else
@@ -107,14 +116,6 @@ abstract partial class QuickCenterClass
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            //var testArray = selectedList.ToArray(typeof(GADrawing));
-
-            // foreach (GADrawing dwg in testArray)
-            // {
-            //     Console.WriteLine(dwg.Name.ToString());
-            // }
-
-            //CenterSelectedDrawings(selectedList);
         }
 
         Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Done.");
@@ -134,7 +135,6 @@ abstract partial class QuickCenterClass
     private static void CenterSelectedDrawings(DrawingEnumerator selectedGADrawings)
     {
         var reportStringBuilder = new StringBuilder();
-        Tuple<Tekla.Structures.Drawing.Drawing, string> s = null;
         while (selectedGADrawings.MoveNext())
         {
             var memberCount = 0;
@@ -146,7 +146,6 @@ abstract partial class QuickCenterClass
                 views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
                 if (type is not PluginForm.ViewType.None) memberCount++;
-                //Console.WriteLine(PluginForm.GetViewTypeEnum(viewTypes).ToString());
             }
 
             if (memberCount != 1) continue;
@@ -157,6 +156,8 @@ abstract partial class QuickCenterClass
             {
                 DrawingHandler.SetActiveDrawing(drawing);
                 var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
+                Tuple<Tekla.Structures.Drawing.Drawing, string> s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(
+                    new GADrawing(), string.Empty);
                 while (allViews.MoveNext())
                 {
                     allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewType);
@@ -170,21 +171,16 @@ abstract partial class QuickCenterClass
                     }
                     catch (Exception e) when (e is KeyNotFoundException)
                     {
-                        Console.WriteLine(@"Invalid View: " + currentView.ToString());
+                        Tekla.Structures.Model.Operations.Operation.DisplayPrompt(@"Invalid View: " +
+                            currentView.ToString());
                     }
                 }
 
 
                 DrawingHandler.CloseActiveDrawing();
-                if (s != null)
-                {
-                    s.Item1.Title3 = s.Item2.ToString();
-                    s.Item1.Modify();
-                }
+                s.Item1.Title3 = s.Item2.ToString();
+                s.Item1.Modify();
             }
-            //Console.WriteLine("Candidate for centering drawing");
-
-            //Console.WriteLine(views.Current);
         }
 
         GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
@@ -199,7 +195,6 @@ abstract partial class QuickCenterClass
     private static void CenterAllDrawings(ArrayList drawings)
     {
         var reportStringBuilder = new StringBuilder();
-        Tuple<Tekla.Structures.Drawing.Drawing, string> s;
         foreach (var gaDwg in drawings)
         {
             var dwg = (Tekla.Structures.Drawing.Drawing)gaDwg;
@@ -212,7 +207,6 @@ abstract partial class QuickCenterClass
                 views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
                 if (type is not PluginForm.ViewType.None) memberCount++;
-                //Console.WriteLine(PluginForm.GetViewTypeEnum(viewTypes).ToString());
             }
 
             if (memberCount != 1) continue;
@@ -229,27 +223,19 @@ abstract partial class QuickCenterClass
                     var currentView = (ViewBase)allViews.Current;
                     try
                     {
-                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType), out s);
+                        var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType),
+                            out var s);
                         reportStringBuilder.AppendLine(reportString);
                         s.Item1.Title3 = s.Item2.ToString();
                         s.Item1.Modify();
                     }
                     catch (Exception e) when (e is KeyNotFoundException)
                     {
-                        Console.WriteLine(@"Invalid View: " + currentView.ToString());
+                        Tekla.Structures.Model.Operations.Operation.DisplayPrompt(@"Invalid View: " +
+                            currentView.ToString());
                     }
                 }
             }
-
-            // views.Reset();
-            // while (views.MoveNext())
-            // {
-            //     views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
-            //     var type = PluginForm.GetViewTypeEnum(viewTypes);
-            //     ViewBase? viewsCurrent = (ViewBase)views.Current;
-            //     CenterView(ref viewsCurrent, (int)type);
-            // }
-            //Console.WriteLine("Candidate for centering drawing");
         }
 
         DrawingHandler.CloseActiveDrawing();
@@ -276,14 +262,10 @@ abstract partial class QuickCenterClass
             default: break;
         }
 
-        Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
         sheet.Origin.Y = sheetHeightOffset;
-        //sheet.Modify();
         var originalOriginX = view.Origin.X;
         var originalOriginY = view.Origin.Y;
         view.Origin = sheet.Origin;
-        //view.Modify();
-        Console.WriteLine($"Sheet origin: {sheet.Origin.ToString()}");
 
         var viewCenterPoint = view.GetAxisAlignedBoundingBox().GetCenterPoint();
 
@@ -291,12 +273,6 @@ abstract partial class QuickCenterClass
         var sheetWidth = (sheet.Width - 33.274) / 2;
         var xOffset = sheetWidth - viewCenterPoint.X;
         var yOffset = sheetHeight - viewCenterPoint.Y;
-
-        Console.WriteLine($"View Center:  {viewCenterPoint.ToString()}");
-        Console.WriteLine(
-            $"Sheet Height: {sheetHeight.ToString(CultureInfo.InvariantCulture)}\nSheet Width: {sheetWidth.ToString(CultureInfo.InvariantCulture)}");
-        Console.WriteLine($"View Origin: {view.Origin.ToString()}");
-        Console.WriteLine($"x offset: {xOffset}, y offset: {yOffset}");
 
         if (Math.Abs(originalOriginX - xOffset) < 0.0001 &&
             Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001)
@@ -313,7 +289,6 @@ abstract partial class QuickCenterClass
             s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "C");
             DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
             DrawingHandler.SaveActiveDrawing();
-            Console.WriteLine(view.Origin.ToString());
             return $"Centering {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
         }
 

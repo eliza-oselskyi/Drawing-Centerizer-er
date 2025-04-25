@@ -154,7 +154,7 @@ abstract partial class QuickCenterClass
 
             foreach (GADrawing drawing in filteredDrawingsArray)
             {
-                DrawingHandler.SetActiveDrawing(drawing);
+                DrawingHandler.SetActiveDrawing(drawing, false);
                 var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
                 Tuple<Tekla.Structures.Drawing.Drawing, string> s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(
                     new GADrawing(), string.Empty);
@@ -215,7 +215,7 @@ abstract partial class QuickCenterClass
 
             foreach (GADrawing drawing in filteredDrawingsArray)
             {
-                DrawingHandler.SetActiveDrawing(drawing);
+                DrawingHandler.SetActiveDrawing(drawing, false);
                 var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
                 while (allViews.MoveNext())
                 {

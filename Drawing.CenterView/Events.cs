@@ -238,6 +238,7 @@ public partial class PluginForm
     private void PluginForm_FormClosing(object sender, FormClosingEventArgs e)
     {
         _UiEvents.UnRegister();
+        _events.UnRegister();
     }
 
     private void ExitApplication()

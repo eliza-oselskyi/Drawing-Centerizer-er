@@ -61,7 +61,7 @@ namespace Drawing.CenterView
             this.infoBox = new System.Windows.Forms.Label();
             this.infoPanel = new System.Windows.Forms.Panel();
             this.scrambleViewsButton = new System.Windows.Forms.Button();
-            this.subheading = new System.Windows.Forms.Label();
+            this.version = new System.Windows.Forms.Label();
             this.paperImage = new System.Windows.Forms.PictureBox();
             this.refreshButton = new System.Windows.Forms.Button();
             this.rightChevronImage = new System.Windows.Forms.PictureBox();
@@ -178,18 +178,17 @@ namespace Drawing.CenterView
             this.scrambleViewsButton.UseVisualStyleBackColor = true;
             this.scrambleViewsButton.Visible = false;
             // 
-            // subheading
+            // version
             // 
-            this.structuresExtender.SetAttributeName(this.subheading, null);
-            this.structuresExtender.SetAttributeTypeName(this.subheading, null);
-            this.subheading.BackColor = System.Drawing.Color.Transparent;
-            this.structuresExtender.SetBindPropertyName(this.subheading, null);
-            this.subheading.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.subheading.Location = new System.Drawing.Point(0, 321);
-            this.subheading.Name = "subheading";
-            this.subheading.Size = new System.Drawing.Size(60, 23);
-            this.subheading.TabIndex = 33;
-            this.subheading.Text = "v1.0.0.1";
+            this.structuresExtender.SetAttributeName(this.version, null);
+            this.structuresExtender.SetAttributeTypeName(this.version, null);
+            this.version.BackColor = System.Drawing.Color.Transparent;
+            this.structuresExtender.SetBindPropertyName(this.version, null);
+            this.version.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.version.Location = new System.Drawing.Point(0, 321);
+            this.version.Name = "version";
+            this.version.Size = new System.Drawing.Size(60, 23);
+            this.version.TabIndex = 33;
             // 
             // paperImage
             // 
@@ -419,7 +418,7 @@ namespace Drawing.CenterView
             this.Controls.Add(this.rightChevronImage);
             this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.paperImage);
-            this.Controls.Add(this.subheading);
+            this.Controls.Add(this.version);
             this.Controls.Add(this.scrambleViewsButton);
             this.Controls.Add(this.infoPanel);
             this.Controls.Add(this.selectedObjectsButton);
@@ -431,7 +430,6 @@ namespace Drawing.CenterView
             this.MaximumSize = new System.Drawing.Size(408, 379);
             this.MinimumSize = new System.Drawing.Size(408, 379);
             this.Name = "PluginForm";
-            this.ShowInTaskbar = true;
             this.Text = "Drawing Centerizer-er";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PluginForm_FormClosing);
             this.infoPanel.ResumeLayout(false);
@@ -468,7 +466,7 @@ namespace Drawing.CenterView
 
         private System.Windows.Forms.PictureBox paperImage;
 
-        private System.Windows.Forms.Label subheading;
+        private System.Windows.Forms.Label version;
 
         private System.Windows.Forms.Button scrambleViewsButton;
 

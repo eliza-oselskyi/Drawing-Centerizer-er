@@ -265,7 +265,12 @@ namespace Drawing.CenterView
                                                        "You must restart this application to do so."));
             }
 
-            _events.DrawingEditorClosed += ExitApplication;
+            // Events 
+            _UiEvents.OnDrawingLoaded("CheckDrawingState");
+            _UiEvents.DrawingEditorClosed += ExitApplication;
+            _UiEvents.DrawingLoaded += CheckDrawingState;
+            _events.DrawingChanged += CheckDrawingState;
+            _UiEvents.Register();
             _events.Register();
         }
     }

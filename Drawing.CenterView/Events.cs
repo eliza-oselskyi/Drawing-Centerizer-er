@@ -21,6 +21,7 @@
 using System;
 using System.Text;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Tekla.Structures.Model;
 using Tekla.Structures.ModelInternal;
@@ -31,8 +32,28 @@ namespace Drawing.CenterView;
 
 public partial class PluginForm
 {
-    private readonly Tekla.Structures.Drawing.UI.Events _events = new Tekla.Structures.Drawing.UI.Events();
+    private readonly Tekla.Structures.Drawing.UI.Events _UiEvents = new Tekla.Structures.Drawing.UI.Events();
+    private readonly Tekla.Structures.Drawing.Events _events = new Tekla.Structures.Drawing.Events();
     private readonly object _exitEventHandlerLock = new object();
+
+    private void CheckDrawingState()
+    {
+        var drawing = _drawingHandler.GetActiveDrawing();
+        if (drawing.Title3 == "X")
+        {
+            if (excludeCheckBox.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(delegate { excludeCheckBox.CheckState = CheckState.Checked; }));
+            }
+        }
+        else
+        {
+            if (excludeCheckBox.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(delegate { excludeCheckBox.CheckState = CheckState.Unchecked; }));
+            }
+        }
+    }
 
     /// <summary>
     ///     Method <c>onTopCheckBox_CheckedChanged</c> toggles "always stay on top"
@@ -213,9 +234,10 @@ public partial class PluginForm
         currDrawing.Modify();
     }
 
+
     private void PluginForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-        _events.UnRegister();
+        _UiEvents.UnRegister();
     }
 
     private void ExitApplication()

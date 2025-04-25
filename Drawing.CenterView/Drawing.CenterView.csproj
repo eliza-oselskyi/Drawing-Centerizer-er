@@ -213,6 +213,7 @@
         <None Include="App.config"/>
     </ItemGroup>
     <ItemGroup>
+        <Content Include="bin\Release\report_template\Centered_Report.rpt" />
         <Content Include="Resources\element_catalog_cross_section.bmp"/>
         <Content Include="Resources\element_catalog_cross_section_sketch.bmp"/>
         <Content Include="Resources\element_catalog_cross_section_user.bmp"/>
@@ -229,6 +230,7 @@
         <Content Include="Resources\prtyp_tree_7.bmp"/>
         <Content Include="Resources\prtyp_tree_8.bmp"/>
         <Content Include="Resources\prtyp_tree_9.bmp"/>
+        <Content Include="Resources\report_template\Centered_Report.rpt" />
         <Content Include="Resources\svgs\arrow-backward.svg"/>
         <Content Include="Resources\svgs\arrow-chevron-down.svg"/>
         <Content Include="Resources\svgs\arrow-chevron-left.svg"/>

@@ -273,5 +273,18 @@ namespace Drawing.CenterView
             _UiEvents.Register();
             _events.Register();
         }
+
+        private void checkBox1_MouseHover(object sender, EventArgs e)
+        {
+            if (sender is not CheckBox checkBox) return;
+            Wait(100);
+            checkBox.Text = "Must Save Drawing Before Exiting Drawing!";
+        }
+
+        private void checkBox1_MouseLeave(object sender, EventArgs e)
+        {
+            if (sender is not CheckBox checkBox) return;
+            checkBox.Text = "Exclude Drawing From Centering Macro?";
+        }
     }
 }

@@ -242,6 +242,9 @@ namespace Drawing.CenterView
         {
             try
             {
+                // Deployment: false, Testing: true
+                if (PluginForm.ActiveForm != null) PluginForm.ActiveForm.ShowInTaskbar = false;
+
                 base.OnLoad(e);
                 UI();
                 InfoBox.ToDefault(infoBox);

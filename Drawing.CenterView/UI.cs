@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Drawing.CenterView;
@@ -66,7 +67,7 @@ public partial class PluginForm
                 {
                     ActiveForm.BackColor = backColor;
                     header.ForeColor = targetColor;
-                    subheading.ForeColor = targetColor;
+                    version.ForeColor = targetColor;
                     foreach (Control control in Controls)
                         //control.BackColor = backColor;
                         control.ForeColor = InvertColor(control.ForeColor);
@@ -77,6 +78,8 @@ public partial class PluginForm
             {
                 targetColor = Color.White;
             }
+            
+            version.Text = @"v" + Assembly.GetEntryAssembly()?.GetName().Version.ToString();
 
             _rightArrow = new SvgIcon(SvgIcon.Icon.RightArrow);
             _rightArrow.ChangeIconColors(Color.Black, targetColor);

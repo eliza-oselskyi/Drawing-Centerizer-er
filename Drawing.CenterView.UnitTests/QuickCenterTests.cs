@@ -24,7 +24,7 @@ namespace Drawing.CenterView.UnitTests
         private DrawingHandler _drawingHandler;
 
         // TODO: Figure out how to do a setup and teardown for this test.
-        
+
         [SetUp]
         public Tuple<ViewBase, Point> CenterViewSetup()
         {
@@ -36,7 +36,7 @@ namespace Drawing.CenterView.UnitTests
             {
                 views.MoveNext();
                 var view = views.Current as View;
-                origViewOrigin =  view.Origin;
+                origViewOrigin = view.Origin;
                 views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes); // Get viewTypes
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
 
@@ -46,7 +46,7 @@ namespace Drawing.CenterView.UnitTests
                 }
                 else
                 {
-                    return new Tuple<ViewBase, Point>((ViewBase)view,  origViewOrigin);
+                    return new Tuple<ViewBase, Point>((ViewBase)view, origViewOrigin);
                 }
             }
             else if (views.GetSize() > 1)
@@ -98,7 +98,7 @@ namespace Drawing.CenterView.UnitTests
             {
                 views.MoveNext();
                 var view = views.Current as View;
-                var origViewOrigin =  view.Origin;
+                var origViewOrigin = view.Origin;
                 views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes); // Get viewTypes
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
 
@@ -112,8 +112,10 @@ namespace Drawing.CenterView.UnitTests
                     Console.WriteLine("\n\nTest View Origin: " + view.Origin.ToString());
                     var result = QuickCenterClass.CenterView((ViewBase)view, (int)type,
                         out Tuple<Tekla.Structures.Drawing.Drawing, string> drawingTuple);
-                    Assert.True(result.Contains("Nothing To Do.") && drawingTuple.Item2.Equals("NC"), "Fail, Had something to do.");
+                    Assert.True(result.Contains("Nothing To Do.") && drawingTuple.Item2.Equals("NC"),
+                        "Fail, Had something to do.");
                 }
+
                 //Reset everything
                 view.Origin = origViewOrigin;
                 view.Modify();
@@ -145,7 +147,7 @@ namespace Drawing.CenterView.UnitTests
                 Assert.Inconclusive("No views found");
             }
         }
-        
+
         [Test]
         public void CenterView_SomethingToDo_ReturnC()
         {
@@ -169,7 +171,8 @@ namespace Drawing.CenterView.UnitTests
                     Console.WriteLine("\n\nTest View Origin: " + view.Origin.ToString());
                     var result = QuickCenterClass.CenterView((ViewBase)view, (int)type,
                         out Tuple<Tekla.Structures.Drawing.Drawing, string> drawingTuple);
-                    Assert.True(result.Contains("Centering") && drawingTuple.Item2.Equals("C"), "Fail, Had nothing to do.");
+                    Assert.True(result.Contains("Centering") && drawingTuple.Item2.Equals("C"),
+                        "Fail, Had nothing to do.");
                 }
             }
             else if (views.GetSize() > 1)

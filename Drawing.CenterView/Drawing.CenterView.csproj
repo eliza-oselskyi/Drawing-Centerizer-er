@@ -36,7 +36,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-            <InternalsVisibleTo Include="Drawing.CenterView.UnitTests"/>
+        <InternalsVisibleTo Include="Drawing.CenterView.UnitTests"/>
         <Reference Include="Akit5, Version=5.8.0.0, Culture=neutral, PublicKeyToken=a70cba4ef557ee03, processorArchitecture=MSIL">
             <HintPath>..\packages\Tekla.Technology.Akit5.5.8.17235.1\lib\net\Akit5.dll</HintPath>
         </Reference>
@@ -44,10 +44,10 @@
             <HintPath>..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
         </Reference>
         <Reference Include="ExCSS, Version=4.2.3.0, Culture=neutral, PublicKeyToken=bdbe16be9b936b9a, processorArchitecture=MSIL">
-          <HintPath>..\packages\ExCSS.4.2.3\lib\net48\ExCSS.dll</HintPath>
+            <HintPath>..\packages\ExCSS.4.2.3\lib\net48\ExCSS.dll</HintPath>
         </Reference>
         <Reference Include="Fizzler, Version=1.1.21209.0, Culture=neutral, PublicKeyToken=4ebff4844e382110, processorArchitecture=MSIL">
-          <HintPath>..\packages\Fizzler.1.1.0\lib\net35\Fizzler.dll</HintPath>
+            <HintPath>..\packages\Fizzler.1.1.0\lib\net35\Fizzler.dll</HintPath>
         </Reference>
         <Reference Include="LibTessDotNet, Version=2.0.0.0, Culture=neutral, PublicKeyToken=93c0f7e4f1ca9619, processorArchitecture=MSIL">
             <HintPath>..\packages\Tekla.Common.Geometry.4.6.4\lib\net\LibTessDotNet.dll</HintPath>
@@ -69,7 +69,7 @@
             <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="Svg, Version=3.0.49.2, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
-          <HintPath>..\packages\Svg.Core.3.0.49.2\lib\net472\Svg.dll</HintPath>
+            <HintPath>..\packages\Svg.Core.3.0.49.2\lib\net472\Svg.dll</HintPath>
         </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -88,7 +88,7 @@
         </Reference>
         <Reference Include="System.Runtime.Remoting"/>
         <Reference Include="System.ServiceModel"/>
-        <Reference Include="System.Web" />
+        <Reference Include="System.Web"/>
         <Reference Include="System.Xml.Linq"/>
         <Reference Include="System.Data.DataSetExtensions"/>
         <Reference Include="Microsoft.CSharp"/>
@@ -169,8 +169,8 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Events.cs" />
-        <Compile Include="IconHandler.cs" />
+        <Compile Include="Events.cs"/>
+        <Compile Include="IconHandler.cs"/>
         <Compile Include="PluginForm.cs">
             <SubType>Form</SubType>
         </Compile>
@@ -179,10 +179,10 @@
         </Compile>
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="QuickCenterClass.cs" />
-        <Compile Include="Reports.cs" />
-        <Compile Include="TestClass.cs" />
-        <Compile Include="UI.cs" />
+        <Compile Include="QuickCenterClass.cs"/>
+        <Compile Include="Reports.cs"/>
+        <Compile Include="TestClass.cs"/>
+        <Compile Include="UI.cs"/>
         <EmbeddedResource Include="PluginForm.resx">
             <DependentUpon>PluginForm.cs</DependentUpon>
         </EmbeddedResource>
@@ -229,17 +229,17 @@
         <Content Include="Resources\prtyp_tree_7.bmp"/>
         <Content Include="Resources\prtyp_tree_8.bmp"/>
         <Content Include="Resources\prtyp_tree_9.bmp"/>
-        <Content Include="Resources\svgs\arrow-backward.svg" />
-        <Content Include="Resources\svgs\arrow-chevron-down.svg" />
-        <Content Include="Resources\svgs\arrow-chevron-left.svg" />
-        <Content Include="Resources\svgs\arrow-chevron-right.svg" />
-        <Content Include="Resources\svgs\arrow-chevron-up.svg" />
-        <Content Include="Resources\svgs\arrow-downward.svg" />
-        <Content Include="Resources\svgs\arrow-forward.svg" />
-        <Content Include="Resources\svgs\arrow-upward.svg" />
-        <Content Include="Resources\svgs\center.svg" />
-        <Content Include="Resources\svgs\paper.svg" />
-        <Content Include="Resources\svgs\paper_alt.svg" />
+        <Content Include="Resources\svgs\arrow-backward.svg"/>
+        <Content Include="Resources\svgs\arrow-chevron-down.svg"/>
+        <Content Include="Resources\svgs\arrow-chevron-left.svg"/>
+        <Content Include="Resources\svgs\arrow-chevron-right.svg"/>
+        <Content Include="Resources\svgs\arrow-chevron-up.svg"/>
+        <Content Include="Resources\svgs\arrow-downward.svg"/>
+        <Content Include="Resources\svgs\arrow-forward.svg"/>
+        <Content Include="Resources\svgs\arrow-upward.svg"/>
+        <Content Include="Resources\svgs\center.svg"/>
+        <Content Include="Resources\svgs\paper.svg"/>
+        <Content Include="Resources\svgs\paper_alt.svg"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>

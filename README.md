@@ -1,5 +1,4 @@
-# nbg-tekla-drawing-centerizerer Centerizes and makes gooderized NBG Tekla
-drawings
+# nbg-tekla-drawing-centerizerer Centerizes and makes gooderized NBG Tekla drawings
 
 Currently this program works only for GA Drawings, but there are future plans
 to include fabrication drawings as well!

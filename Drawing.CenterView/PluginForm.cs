@@ -199,7 +199,8 @@ namespace Drawing.CenterView
         public static ViewType GetViewTypeEnum(Dictionary<string, string> viewType)
         {
             try {
-                return viewType["ViewType"] switch
+                viewType.TryGetValue("ViewType", out string vt);
+                return vt switch
                 {
                     "Cover Sheet" => ViewType.CoverSheet,
                     "Building Sheet 1" => ViewType.BuildingSheet1,

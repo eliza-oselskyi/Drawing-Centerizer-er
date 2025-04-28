@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using Tekla.Structures.Drawing;
 
 namespace Drawing.CenterView.UnitTests;
@@ -16,12 +17,23 @@ public class TestClass
             if (allDwgs.Current is GADrawing)
             {
                 drawingHandler.SetActiveDrawing(allDwgs.Current, false);
-                Console.WriteLine();
-               var x = allDwgs.Current.GetSheet().GetAllViews();
+                var x = allDwgs.Current.GetSheet().GetAllViews();
                 Console.WriteLine(((GADrawing)allDwgs.Current).Name + " : " + x.GetSize());
-               drawingHandler.CloseActiveDrawing();
+                while (x.MoveNext())
+                {
+                    x.Current.GetStringUserProperties(out Dictionary<string, string> viewType);
+                    Console.WriteLine(viewType.TryGetValue("ViewType", out string vt));
+                }
+                drawingHandler.CloseActiveDrawing();
 
             }
         }
+    }
+
+    [Test]
+    public void CloseCurrentDrawing()
+    {
+        var drawingHandler = new Tekla.Structures.Drawing.DrawingHandler();
+        drawingHandler.CloseActiveDrawing();
     }
 }

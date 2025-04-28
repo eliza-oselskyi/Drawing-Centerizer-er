@@ -177,13 +177,17 @@ abstract partial class QuickCenterClass
                     {
                         if (!currentView.GetDrawing().Title3.Equals("X"))
                         {
-                            var reportString = CenterView(currentView as ViewBase, (int)PluginForm.GetViewTypeEnum(viewType),
-                                out s);
-                            reportStringBuilder.AppendLine(reportString);
-                            TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
-                            counter++;
-                            s.Item1.Title3 = s.Item2.ToString();
-                            s.Item1.Modify();
+                            viewType.TryGetValue("ViewType", out string vt);
+                            if (vt != null)
+                            {
+                                var reportString = CenterView(currentView as ViewBase, (int)PluginForm.GetViewTypeEnum(viewType),
+                                    out s);
+                                reportStringBuilder.AppendLine(reportString);
+                                TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
+                                counter++;
+                                s.Item1.Title3 = s.Item2.ToString();
+                                s.Item1.Modify();
+                            }
                         }
                         else
                         {
@@ -252,13 +256,16 @@ abstract partial class QuickCenterClass
                     {
                         if (!currentView.GetDrawing().Title3.Equals("X"))
                         {
-                            var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType),
-                                out var s);
-                            reportStringBuilder.AppendLine(reportString);
-                            TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
-                            counter++;
-                            s.Item1.Title3 = s.Item2.ToString();
-                            s.Item1.Modify();
+                            viewType.TryGetValue("ViewType", out string vt);
+                            if (vt != null){
+                                var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType),
+                                    out var s);
+                                reportStringBuilder.AppendLine(reportString);
+                                TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
+                                counter++;
+                                s.Item1.Title3 = s.Item2.ToString();
+                                s.Item1.Modify();
+                            }
                         }
                         else
                         {

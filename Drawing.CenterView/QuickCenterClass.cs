@@ -166,7 +166,7 @@ abstract partial class QuickCenterClass
             foreach (GADrawing drawing in filteredDrawingsArray)
             {
                 DrawingHandler.SetActiveDrawing(drawing, false);
-                var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
+                var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews() ?? throw new ArgumentNullException("DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews()");
                 Tuple<Tekla.Structures.Drawing.Drawing, string> s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(
                     new GADrawing(), string.Empty);
                 while (allViews.MoveNext())
@@ -177,7 +177,7 @@ abstract partial class QuickCenterClass
                     {
                         if (!currentView.GetDrawing().Title3.Equals("X"))
                         {
-                            var reportString = CenterView(currentView, (int)PluginForm.GetViewTypeEnum(viewType),
+                            var reportString = CenterView(currentView as ViewBase, (int)PluginForm.GetViewTypeEnum(viewType),
                                 out s);
                             reportStringBuilder.AppendLine(reportString);
                             TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
@@ -297,7 +297,7 @@ abstract partial class QuickCenterClass
             case >= 2 and <= 24:
                 sheetHeightOffset = 22.225; // 7/8"
                 break;
-            default: break;
+            default: Tekla.Structures.Model.Operations.Operation.DisplayPrompt(viewType.ToString()); break;
         }
 
         sheet.Origin.Y = sheetHeightOffset;
@@ -327,6 +327,7 @@ abstract partial class QuickCenterClass
             s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "C");
             DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
             DrawingHandler.SaveActiveDrawing();
+
             return $"Centering {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
         }
 

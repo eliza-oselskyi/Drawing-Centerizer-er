@@ -15,6 +15,9 @@
         <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
         <ApplicationIcon>Resources\Steel_Beam.ico</ApplicationIcon>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>sgKey.sn</AssemblyOriginatorKeyFile>
+        <PublicSign>true</PublicSign>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -208,6 +211,7 @@
         <None Include="Resources\Steel_Beam.bmp"/>
         <None Include="Resources\Steel_Beam.ico"/>
         <None Include="Resources\Steel_Beam.png"/>
+        <None Include="sgKey.sn" />
     </ItemGroup>
     <ItemGroup>
         <None Include="App.config"/>

@@ -36,6 +36,9 @@ public partial class PluginForm
     private readonly Tekla.Structures.Drawing.Events _events = new Tekla.Structures.Drawing.Events();
     private readonly object _exitEventHandlerLock = new object();
 
+    /// <summary>
+    ///     Method <c>CheckDrawingState</c> Checks the state of current active drawing and sets UI elements accordingly
+    /// </summary>
     private void CheckDrawingState()
     {
         var drawing = DrawingHandler.GetActiveDrawing();
@@ -98,13 +101,6 @@ public partial class PluginForm
         }
     }
 
-/*
-    private void centerViewButton_Click(object sender, EventArgs e)
-    {
-        CenterViewDriver();
-    }
-*/
-
     private void refreshButton_Click(object sender, EventArgs e)
     {
         UI();
@@ -112,18 +108,14 @@ public partial class PluginForm
 
     private void iconImage_MouseHover(object sender, EventArgs e)
     {
-        if (((PictureBox)sender).Equals(centerImage))
-            ChangePictureBoxIconColor(sender, Color.White, Color.Aquamarine);
-        else
-            ChangePictureBoxIconColor(sender, Color.White, Color.Tomato);
+        ChangePictureBoxIconColor(sender, Color.White,
+            ((PictureBox)sender).Equals(centerImage) ? Color.Aquamarine : Color.Tomato);
     }
 
     private void iconImage_MouseLeave(object sender, EventArgs e)
     {
-        if (((PictureBox)sender).Equals(centerImage))
-            ChangePictureBoxIconColor(sender, Color.Aquamarine, Color.White);
-        else
-            ChangePictureBoxIconColor(sender, Color.Tomato, Color.White);
+        ChangePictureBoxIconColor(sender, ((PictureBox)sender).Equals(centerImage) ? Color.Aquamarine : Color.Tomato,
+            Color.White);
     }
 
     private void ChangePictureBoxIconColor(object sender, Color sourceColor, Color targetColor)
@@ -141,22 +133,6 @@ public partial class PluginForm
         CenterViewDriver();
     }
 
-    // Create a timer, instead of using sleep, to not lock up the UI. (Sleep pauses the entire thread for a given amount of milliseconds)
-    private static void Wait(int milliseconds)
-    {
-        if (milliseconds == 0 | milliseconds < 0) return;
-
-        var timer = new Timer();
-        timer.Interval = milliseconds;
-        timer.Enabled = true;
-        timer.Start();
-        timer.Tick += (_, _) => // this is the event. All it does is stop the timer after 1 second.
-        {
-            timer.Enabled = false; // Stops the while loop
-            timer.Stop();
-        };
-        while (timer.Enabled) Application.DoEvents(); // Goes to the event
-    }
 
     private void leftChevronImage_Click(object sender, EventArgs e)
     {
@@ -230,6 +206,39 @@ public partial class PluginForm
         currDrawing.Modify();
     }
 
+    private void excludeCheckBox_MouseHover(object sender, EventArgs e)
+    {
+        if (sender is not CheckBox checkBox) return;
+        Wait(100);
+        checkBox.Text = @"Must Save Drawing Before Exiting Drawing!";
+    }
+
+    private void excludeCheckBox_MouseLeave(object sender, EventArgs e)
+    {
+        if (sender is not CheckBox checkBox) return;
+        checkBox.Text = @"Exclude Drawing From Centering Macro?";
+    }
+
+    /// <summary>
+    ///     Method <c>Wait</c> waits asynchronously for x amount of milliseconds
+    /// </summary>
+    /// <param name="milliseconds"></param>
+    // Create a timer, instead of using sleep, to not lock up the UI. (Sleep pauses the entire thread for a given amount of milliseconds)
+    private static void Wait(int milliseconds)
+    {
+        if (milliseconds == 0 | milliseconds < 0) return;
+
+        var timer = new Timer();
+        timer.Interval = milliseconds;
+        timer.Enabled = true;
+        timer.Start();
+        timer.Tick += (_, _) => // this is the event. All it does is stop the timer after 1 second.
+        {
+            timer.Enabled = false; // Stops the while loop
+            timer.Stop();
+        };
+        while (timer.Enabled) Application.DoEvents(); // Goes to the event
+    }
 
     private void PluginForm_FormClosing(object sender, FormClosingEventArgs e)
     {

@@ -245,15 +245,10 @@ namespace Drawing.CenterView
 
         // NOTE: Overloads default Windows Forms OnLoad() method.
         // I'm setting up the environment for the application, here.
-        // NOTE: for sake debugging purposes, the property PluginForm.ShowInTaskbar is set to TRUE.
-        // Tekla style guidelines states to have this set to FALSE in deployment.
         protected override void OnLoad(EventArgs e)
         {
             try
             {
-                // Deployment: false, Testing: true
-                if (PluginForm.ActiveForm != null) PluginForm.ActiveForm.ShowInTaskbar = false;
-
                 base.OnLoad(e);
                 UI();
 
@@ -273,27 +268,6 @@ namespace Drawing.CenterView
                                                        "\n Currently, there is no way to reestablish connection. " +
                                                        "You must restart this application to do so."));
             }
-
-            // Events 
-            _UiEvents.OnDrawingLoaded("CheckDrawingState");
-            _UiEvents.DrawingEditorClosed += ExitApplication;
-            _UiEvents.DrawingLoaded += CheckDrawingState;
-            _events.DrawingChanged += CheckDrawingState;
-            _UiEvents.Register();
-            _events.Register();
-        }
-
-        private void checkBox1_MouseHover(object sender, EventArgs e)
-        {
-            if (sender is not CheckBox checkBox) return;
-            Wait(100);
-            checkBox.Text = "Must Save Drawing Before Exiting Drawing!";
-        }
-
-        private void checkBox1_MouseLeave(object sender, EventArgs e)
-        {
-            if (sender is not CheckBox checkBox) return;
-            checkBox.Text = "Exclude Drawing From Centering Macro?";
         }
     }
 }

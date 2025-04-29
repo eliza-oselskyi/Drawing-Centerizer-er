@@ -395,8 +395,8 @@ namespace Drawing.CenterView
             this.excludeCheckBox.Text = "Exclude Drawing From Centering Macro?";
             this.excludeCheckBox.UseVisualStyleBackColor = false;
             this.excludeCheckBox.CheckStateChanged += new System.EventHandler(this.excludeCheckBox_CheckStateChanged);
-            this.excludeCheckBox.MouseLeave += new System.EventHandler(this.checkBox1_MouseLeave);
-            this.excludeCheckBox.MouseHover += new System.EventHandler(this.checkBox1_MouseHover);
+            this.excludeCheckBox.MouseLeave += new System.EventHandler(this.excludeCheckBox_MouseLeave);
+            this.excludeCheckBox.MouseHover += new System.EventHandler(this.excludeCheckBox_MouseHover);
             // 
             // PluginForm
             // 

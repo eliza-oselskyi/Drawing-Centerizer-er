@@ -56,6 +56,19 @@ public partial class PluginForm
     // ReSharper disable once InconsistentNaming
     private void UI()
     {
+        // NOTE: for sake debugging purposes, the property PluginForm.ShowInTaskbar is set to TRUE.
+        // Tekla style guidelines states to have this set to FALSE in deployment.
+        // Deployment: false, Testing: true
+        if (PluginForm.ActiveForm != null) PluginForm.ActiveForm.ShowInTaskbar = false;
+
+        // Events 
+        _UiEvents.OnDrawingLoaded("CheckDrawingState");
+        _UiEvents.DrawingEditorClosed += ExitApplication;
+        _UiEvents.DrawingLoaded += CheckDrawingState;
+        _events.DrawingChanged += CheckDrawingState;
+        _UiEvents.Register();
+        _events.Register();
+
         InfoBox.ToDefault(infoBox);
         // Set some default values
         infoBox.AutoSize = true;

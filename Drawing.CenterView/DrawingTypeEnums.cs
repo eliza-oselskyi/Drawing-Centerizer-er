@@ -5,40 +5,6 @@ namespace Drawing.CenterView;
     
     public partial class PluginForm
     {
-        public enum ViewType
-        {
-            None,
-            CoverSheet,
-            BuildingSheet1,
-            BuildingSheet2,
-            PlaneIdentificationPlan,
-            AnchorRodPlan,
-            BasePlateDetails,
-            Reactions,
-            ShakeoutPlan,
-            RoofFramedOpeningPlan,
-            CraneBeamPlan,
-            CrossSection,
-            PortalCrossSection,
-            RoofFramingPlan,
-            RoofFramingPlanSecondary,
-            RoofFramingPlanOpenings,
-            RoofFramingPlanPurlinBracing,
-            EndwallFraming,
-            EndwallPartitionFraming,
-            SidewallFraming,
-            SidewallPartitionFraming,
-            WallSheeting,
-            PartitionWallSheeting,
-            RoofSheeting,
-            WallLiner,
-            PartitionWallLiner,
-            RoofLiner,
-            RoofPanelClipLayout,
-            MezzaninePlanFramingOnly,
-            MezzaninePlanJoistsOnly,
-            MezzaninePlanDecking
-        }
 
         public static ViewType GetViewTypeEnum(Dictionary<string, string> viewType)
         {

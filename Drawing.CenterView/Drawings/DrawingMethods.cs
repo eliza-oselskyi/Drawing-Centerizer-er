@@ -36,7 +36,7 @@ public static class DrawingMethods
             Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001)
         {
             s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "NC");
-            return $@"Nothing To Do. {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
+            return $@"Nothing To Do. {view.GetDrawing().Name} => {(ViewType)viewType}";
         }
         else if (Math.Abs(view.ExtremaCenter.X - sheetWidth) > 0.0001 ||
                  Math.Abs(view.ExtremaCenter.Y - sheetHeight) > 0.0001)
@@ -46,10 +46,10 @@ public static class DrawingMethods
             view.Modify();
             s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "C");
 
-            return $"Centering {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
+            return $"Centering {view.GetDrawing().Name} => {(ViewType)viewType}";
         }
 
         s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "X");
-        return $"Something Went Wrong At {view.GetDrawing().Name} => " + (PluginForm.ViewType)viewType;
+        return $"Something Went Wrong At {view.GetDrawing().Name} => " + (ViewType)viewType;
     }
 }

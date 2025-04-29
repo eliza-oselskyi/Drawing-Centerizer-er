@@ -23,7 +23,7 @@ public static class DrawingUtils
         {
             views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
             var type = PluginForm.GetViewTypeEnum(viewTypes);
-            if (type is not PluginForm.ViewType.None) memberCount++;
+            if (type is not ViewType.None) memberCount++;
         }
 
         return memberCount == 1; // valid if memberCount is 1

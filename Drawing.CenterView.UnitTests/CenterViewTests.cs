@@ -58,7 +58,7 @@ namespace Drawing.CenterView.UnitTests
                 views.Current.GetStringUserProperties(out var viewTypes); // Get viewTypes
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
 
-                if (type is PluginForm.ViewType.None)
+                if (type is ViewType.None)
                 {
                     Assert.Ignore("No view valid type found");
                 }
@@ -87,7 +87,7 @@ namespace Drawing.CenterView.UnitTests
                     curr.GetStringUserProperties(out var viewTypes);
                     var type = PluginForm.GetViewTypeEnum(viewTypes);
 
-                    if (type != PluginForm.ViewType.None) member++;
+                    if (type != ViewType.None) member++;
                 }
 
                 if (member > 1) Assert.Inconclusive("More than one \"valid\" view found");
@@ -111,7 +111,7 @@ namespace Drawing.CenterView.UnitTests
                 views.Current.GetStringUserProperties(out var viewTypes); // Get viewTypes
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
 
-                if (type is PluginForm.ViewType.None)
+                if (type is ViewType.None)
                 {
                     Assert.Ignore("No view valid type found");
                 }
@@ -136,7 +136,7 @@ namespace Drawing.CenterView.UnitTests
                     curr.GetStringUserProperties(out var viewTypes);
                     var type = PluginForm.GetViewTypeEnum(viewTypes);
 
-                    if (type != PluginForm.ViewType.None) member++;
+                    if (type != ViewType.None) member++;
                 }
 
                 if (member > 1) Assert.Inconclusive("More than one \"valid\" view found");

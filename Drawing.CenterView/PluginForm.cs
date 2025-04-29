@@ -77,7 +77,7 @@ namespace Drawing.CenterView
             {
                 allViews.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
                 var type = PluginForm.GetViewTypeEnum(viewTypes);
-                if (type is PluginForm.ViewType.None) continue;
+                if (type is ViewType.None) continue;
                 memberCount++;
                 memberList.Add(allViews.Current);
             }

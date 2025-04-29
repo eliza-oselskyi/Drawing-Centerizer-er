@@ -244,7 +244,7 @@ abstract partial class QuickCenterClass
                                 $@"({counter}/{total}) Skipping {currentView.GetDrawing().Name}.");
                             break;
                         default:
-                            if (viewTypeEnum != PluginForm.ViewType.None)
+                            if (viewTypeEnum != ViewType.None)
                             {
                                 var reportString = DrawingMethods.CenterView(currentView, (int)viewTypeEnum,
                                     out drawingTuple);

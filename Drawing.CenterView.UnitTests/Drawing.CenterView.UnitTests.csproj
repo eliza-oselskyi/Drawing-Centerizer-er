@@ -106,8 +106,9 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="QuickCenterTests.cs"/>
+        <Compile Include="CenterViewTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="QuickCenterClassTests.cs" />
         <Compile Include="TestClass.cs" />
     </ItemGroup>
     <ItemGroup>

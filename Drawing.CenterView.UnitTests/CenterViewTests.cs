@@ -38,70 +38,10 @@ using View = Tekla.Structures.Drawing.View;
 namespace Drawing.CenterView.UnitTests
 {
     [TestFixture]
-    public class QuickCenterTests
+    public class CenterViewTests
     {
         private Model _model;
         private DrawingHandler _drawingHandler;
-
-        // TODO: Figure out how to do a setup and teardown for this test.
-
-        [SetUp]
-        public Tuple<ViewBase, Point> CenterViewSetup()
-        {
-            _drawingHandler = new DrawingHandler();
-            var drawing = _drawingHandler.GetActiveDrawing();
-            var views = drawing.GetSheet().GetViews();
-            Point origViewOrigin;
-            if (views.GetSize() == 1)
-            {
-                views.MoveNext();
-                var view = views.Current as View;
-                origViewOrigin = view.Origin;
-                views.Current.GetStringUserProperties(out var viewTypes); // Get viewTypes
-                var type = PluginForm.GetViewTypeEnum(viewTypes);
-
-                if (type is PluginForm.ViewType.None)
-                    Assert.Ignore("No view valid type found");
-                else
-                    return new Tuple<ViewBase, Point>((ViewBase)view, origViewOrigin);
-            }
-            else if (views.GetSize() > 1)
-            {
-                var member = 0;
-                var viewList = new ArrayList();
-
-                while (views.MoveNext())
-                {
-                    var curr = views.Current as View;
-                    if (curr == null) Assert.Inconclusive("Null current view found");
-                    curr.GetStringUserProperties(out var viewTypes);
-                    var type = PluginForm.GetViewTypeEnum(viewTypes);
-
-                    if (type != PluginForm.ViewType.None)
-                    {
-                        member++;
-                        viewList.Add(curr);
-                    }
-                }
-
-                if (member == 1)
-                {
-                    var viewArray = (ViewBase[])viewList.ToArray();
-                    origViewOrigin = viewArray[0].Origin;
-                    return new Tuple<ViewBase, Point>(viewArray[0], origViewOrigin);
-                }
-                else if (member > 1)
-                {
-                    Assert.Inconclusive("More than one \"valid\" view found");
-                }
-            }
-            else
-            {
-                Assert.Inconclusive("No views found");
-            }
-
-            return null;
-        }
 
         // TODO: Refactor these tests to use the Setup and Teardown methods
         [Test]

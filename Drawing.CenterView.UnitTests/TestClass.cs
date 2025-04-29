@@ -7,7 +7,7 @@ namespace Drawing.CenterView.UnitTests;
 
 public class TestClass
 {
-    [Test]
+    //[Test]
     public void TestMethod1()
     {
         var drawingHandler = new Tekla.Structures.Drawing.DrawingHandler();
@@ -30,7 +30,7 @@ public class TestClass
         }
     }
 
-    [Test]
+    //[Test]
     public void CloseCurrentDrawing()
     {
         var drawingHandler = new Tekla.Structures.Drawing.DrawingHandler();

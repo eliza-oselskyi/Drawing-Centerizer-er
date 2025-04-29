@@ -13,7 +13,6 @@ public class TestClass
         var drawingHandler = new Tekla.Structures.Drawing.DrawingHandler();
         var allDwgs = drawingHandler.GetDrawingSelector().GetSelected();
         while (allDwgs.MoveNext())
-        {
             if (allDwgs.Current is GADrawing)
             {
                 drawingHandler.SetActiveDrawing(allDwgs.Current, false);
@@ -21,13 +20,12 @@ public class TestClass
                 Console.WriteLine(((GADrawing)allDwgs.Current).Name + " : " + x.GetSize());
                 while (x.MoveNext())
                 {
-                    x.Current.GetStringUserProperties(out Dictionary<string, string> viewType);
-                    Console.WriteLine(viewType.TryGetValue("ViewType", out string vt));
+                    x.Current.GetStringUserProperties(out var viewType);
+                    Console.WriteLine(viewType.TryGetValue("ViewType", out var vt));
                 }
-                drawingHandler.CloseActiveDrawing();
 
+                drawingHandler.CloseActiveDrawing();
             }
-        }
     }
 
     //[Test]

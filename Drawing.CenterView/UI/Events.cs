@@ -38,20 +38,16 @@ public partial class PluginForm
 
     private void CheckDrawingState()
     {
-        var drawing = _drawingHandler.GetActiveDrawing();
+        var drawing = DrawingHandler.GetActiveDrawing();
         if (drawing.Title3 == "X")
         {
             if (excludeCheckBox.InvokeRequired)
-            {
                 this.Invoke(new MethodInvoker(delegate { excludeCheckBox.CheckState = CheckState.Checked; }));
-            }
         }
         else
         {
             if (excludeCheckBox.InvokeRequired)
-            {
                 this.Invoke(new MethodInvoker(delegate { excludeCheckBox.CheckState = CheckState.Unchecked; }));
-            }
         }
     }
 
@@ -221,7 +217,7 @@ public partial class PluginForm
     {
         if (sender is not CheckBox checkBox) return;
 
-        var currDrawing = _drawingHandler.GetActiveDrawing();
+        var currDrawing = DrawingHandler.GetActiveDrawing();
         currDrawing.Title3 = checkBox.CheckState switch
         {
             CheckState.Unchecked => "",

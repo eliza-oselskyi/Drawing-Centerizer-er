@@ -13,8 +13,8 @@ namespace Drawing.CenterView.UnitTests;
 public class QuickCenterClassTests
 {
     private readonly GADrawing _drawing;
-    private View _view1;
-    private View _view2;
+    private readonly View _view1;
+    private readonly View _view2;
 
     public QuickCenterClassTests(string viewType1, string viewType2)
     {
@@ -29,7 +29,6 @@ public class QuickCenterClassTests
 
     private View CreateView(string viewType)
     {
-        
         var coordSys = new CoordinateSystem();
         var aabb = new AABB();
         var drawingView = new View(_drawing.GetSheet(), coordSys, coordSys, aabb);
@@ -39,30 +38,25 @@ public class QuickCenterClassTests
         return drawingView;
     }
 
-    private static Dictionary<string,string> GetViewTypeDict(View view)
+    private static Dictionary<string, string> GetViewTypeDict(View view)
     {
-        view.GetStringUserProperties(new List<string>() {"ViewType"}, out var viewType);
+        view.GetStringUserProperties(new List<string>() { "ViewType" }, out var viewType);
         return viewType;
     }
-    
+
     [Test]
     public void IsValidDrawingForCenter_OneValidView_ReturnsTrue()
     {
         var viewType1 = GetViewTypeDict(_view1);
-        var viewType2 =  GetViewTypeDict(_view2);
-        
+        var viewType2 = GetViewTypeDict(_view2);
+
         var viewType1Enum = PluginForm.GetViewTypeEnum(viewType1);
         var viewType2Enum = PluginForm.GetViewTypeEnum(viewType2);
 
         if ((viewType1Enum != PluginForm.ViewType.None && viewType2Enum == PluginForm.ViewType.None) ||
             (viewType1Enum == PluginForm.ViewType.None && viewType2Enum != PluginForm.ViewType.None))
-        {
-            Assert.That(QuickCenterClass.IsValidDrawingForCenter(_drawing), Is.True, "Should be a valid drawing");
-        }
+            Assert.That(DrawingUtils.IsValidDrawingForCenter(_drawing), Is.True, "Should be a valid drawing");
         else
-        {
-            Assert.That(QuickCenterClass.IsValidDrawingForCenter(_drawing), Is.False, "Should not be a valid drawing");
-        }
-
+            Assert.That(DrawingUtils.IsValidDrawingForCenter(_drawing), Is.False, "Should not be a valid drawing");
     }
 }

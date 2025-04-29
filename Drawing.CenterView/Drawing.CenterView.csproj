@@ -172,20 +172,22 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Events.cs"/>
-        <Compile Include="IconHandler.cs"/>
+        <Compile Include="Drawings\DrawingMethods.cs" />
+        <Compile Include="Drawings\DrawingUtils.cs" />
         <Compile Include="PluginForm.cs">
             <SubType>Form</SubType>
         </Compile>
         <Compile Include="PluginForm.Designer.cs">
             <DependentUpon>PluginForm.cs</DependentUpon>
         </Compile>
-        <Compile Include="Program.cs"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="QuickCenterClass.cs"/>
-        <Compile Include="Reports.cs"/>
-        <Compile Include="TestClass.cs"/>
-        <Compile Include="UI.cs"/>
+        <Compile Include="Program.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="QuickCenterClass.cs" />
+        <Compile Include="TestClass.cs" />
+        <Compile Include="UI\Events.cs" />
+        <Compile Include="UI\IconHandler.cs" />
+        <Compile Include="UI\Reports.cs" />
+        <Compile Include="UI\UI.cs" />
         <EmbeddedResource Include="PluginForm.resx">
             <DependentUpon>PluginForm.cs</DependentUpon>
         </EmbeddedResource>
@@ -198,7 +200,7 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
-        <None Include="packages.config"/>
+        <None Include="packages.config" />
         <None Include="Properties\Settings.settings">
             <Generator>SettingsSingleFileGenerator</Generator>
             <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -208,44 +210,44 @@
             <DependentUpon>Settings.settings</DependentUpon>
             <DesignTimeSharedInput>True</DesignTimeSharedInput>
         </Compile>
-        <None Include="Resources\Steel_Beam.bmp"/>
-        <None Include="Resources\Steel_Beam.ico"/>
-        <None Include="Resources\Steel_Beam.png"/>
+        <None Include="Resources\Steel_Beam.bmp" />
+        <None Include="Resources\Steel_Beam.ico" />
+        <None Include="Resources\Steel_Beam.png" />
         <None Include="sgKey.sn" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config"/>
+        <None Include="App.config" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="bin\Release\report_template\Centered_Report.rpt" />
-        <Content Include="Resources\element_catalog_cross_section.bmp"/>
-        <Content Include="Resources\element_catalog_cross_section_sketch.bmp"/>
-        <Content Include="Resources\element_catalog_cross_section_user.bmp"/>
-        <Content Include="Resources\prtyp_tree_1.bmp"/>
-        <Content Include="Resources\prtyp_tree_10.bmp"/>
-        <Content Include="Resources\prtyp_tree_11.bmp"/>
-        <Content Include="Resources\prtyp_tree_13.bmp"/>
-        <Content Include="Resources\prtyp_tree_15.bmp"/>
-        <Content Include="Resources\prtyp_tree_2.bmp"/>
-        <Content Include="Resources\prtyp_tree_3.bmp"/>
-        <Content Include="Resources\prtyp_tree_4.bmp"/>
-        <Content Include="Resources\prtyp_tree_5.bmp"/>
-        <Content Include="Resources\prtyp_tree_6.bmp"/>
-        <Content Include="Resources\prtyp_tree_7.bmp"/>
-        <Content Include="Resources\prtyp_tree_8.bmp"/>
-        <Content Include="Resources\prtyp_tree_9.bmp"/>
+        <Content Include="Resources\element_catalog_cross_section.bmp" />
+        <Content Include="Resources\element_catalog_cross_section_sketch.bmp" />
+        <Content Include="Resources\element_catalog_cross_section_user.bmp" />
+        <Content Include="Resources\prtyp_tree_1.bmp" />
+        <Content Include="Resources\prtyp_tree_10.bmp" />
+        <Content Include="Resources\prtyp_tree_11.bmp" />
+        <Content Include="Resources\prtyp_tree_13.bmp" />
+        <Content Include="Resources\prtyp_tree_15.bmp" />
+        <Content Include="Resources\prtyp_tree_2.bmp" />
+        <Content Include="Resources\prtyp_tree_3.bmp" />
+        <Content Include="Resources\prtyp_tree_4.bmp" />
+        <Content Include="Resources\prtyp_tree_5.bmp" />
+        <Content Include="Resources\prtyp_tree_6.bmp" />
+        <Content Include="Resources\prtyp_tree_7.bmp" />
+        <Content Include="Resources\prtyp_tree_8.bmp" />
+        <Content Include="Resources\prtyp_tree_9.bmp" />
         <Content Include="Resources\report_template\Centered_Report.rpt" />
-        <Content Include="Resources\svgs\arrow-backward.svg"/>
-        <Content Include="Resources\svgs\arrow-chevron-down.svg"/>
-        <Content Include="Resources\svgs\arrow-chevron-left.svg"/>
-        <Content Include="Resources\svgs\arrow-chevron-right.svg"/>
-        <Content Include="Resources\svgs\arrow-chevron-up.svg"/>
-        <Content Include="Resources\svgs\arrow-downward.svg"/>
-        <Content Include="Resources\svgs\arrow-forward.svg"/>
-        <Content Include="Resources\svgs\arrow-upward.svg"/>
-        <Content Include="Resources\svgs\center.svg"/>
-        <Content Include="Resources\svgs\paper.svg"/>
-        <Content Include="Resources\svgs\paper_alt.svg"/>
+        <Content Include="Resources\svgs\arrow-backward.svg" />
+        <Content Include="Resources\svgs\arrow-chevron-down.svg" />
+        <Content Include="Resources\svgs\arrow-chevron-left.svg" />
+        <Content Include="Resources\svgs\arrow-chevron-right.svg" />
+        <Content Include="Resources\svgs\arrow-chevron-up.svg" />
+        <Content Include="Resources\svgs\arrow-downward.svg" />
+        <Content Include="Resources\svgs\arrow-forward.svg" />
+        <Content Include="Resources\svgs\arrow-upward.svg" />
+        <Content Include="Resources\svgs\center.svg" />
+        <Content Include="Resources\svgs\paper.svg" />
+        <Content Include="Resources\svgs\paper_alt.svg" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>

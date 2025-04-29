@@ -54,7 +54,7 @@ namespace Drawing.CenterView
     public partial class PluginForm : ApplicationFormBase
     {
         private readonly Model _myModel;
-        private static DrawingHandler _drawingHandler;
+        private static DrawingHandler? DrawingHandler { get; set; }
 
 #pragma warning disable CS8618, CS9264
         public PluginForm() // Main entry point for the form.
@@ -65,12 +65,12 @@ namespace Drawing.CenterView
 
             // Set up the private, read-only fields. Can do only in here (the constructor method).
             _myModel = new Model();
-            _drawingHandler = new DrawingHandler();
+            DrawingHandler = new DrawingHandler();
         }
 
         private ViewBase? GetValidViewInActiveDrawing()
         {
-            var allViews = _drawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
+            var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
             var memberCount = 0;
             var memberList = new ArrayList();
             while (allViews.MoveNext())
@@ -88,7 +88,6 @@ namespace Drawing.CenterView
             allViews.Reset();
 
             if (memberListArray[0] == null) return null;
-            ((ViewBase)memberListArray[0]).GetStringUserProperties(out Dictionary<string, string> viewType);
             var currentView = memberListArray[0];
             try
             {
@@ -157,7 +156,7 @@ namespace Drawing.CenterView
                 view.Origin.Y += yOffset;
 
                 view.Modify();
-                _drawingHandler.GetActiveDrawing().CommitChanges("Center View");
+                DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
             }
         }
 
@@ -198,8 +197,9 @@ namespace Drawing.CenterView
 
         public static ViewType GetViewTypeEnum(Dictionary<string, string> viewType)
         {
-            try {
-                viewType.TryGetValue("ViewType", out string vt);
+            try
+            {
+                viewType.TryGetValue("ViewType", out var vt);
                 return vt switch
                 {
                     "Cover Sheet" => ViewType.CoverSheet,
@@ -235,10 +235,10 @@ namespace Drawing.CenterView
                     _ => ViewType.None
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                    Console.WriteLine(ex.Message);
-                
+                Console.WriteLine(ex.Message);
+
                 return ViewType.None;
             }
         }

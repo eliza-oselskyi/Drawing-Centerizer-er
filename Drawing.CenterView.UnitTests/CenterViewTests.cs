@@ -66,7 +66,7 @@ namespace Drawing.CenterView.UnitTests
                 {
                     if (view == null) Assert.Inconclusive("Null view found");
                     Console.WriteLine("\n\nTest View Origin: " + view.Origin.ToString());
-                    var result = QuickCenterClass.CenterView((ViewBase)view, (int)type,
+                    var result = DrawingMethods.CenterView((ViewBase)view, (int)type,
                         out var drawingTuple);
                     Assert.True(result.Contains("Nothing To Do.") && drawingTuple.Item2.Equals("NC"),
                         "Fail, Had something to do.");
@@ -119,7 +119,7 @@ namespace Drawing.CenterView.UnitTests
                 {
                     if (view == null) Assert.Inconclusive("Null view found");
                     Console.WriteLine("\n\nTest View Origin: " + view.Origin.ToString());
-                    var result = QuickCenterClass.CenterView((ViewBase)view, (int)type,
+                    var result = DrawingMethods.CenterView((ViewBase)view, (int)type,
                         out var drawingTuple);
                     Assert.True(result.Contains("Centering") && drawingTuple.Item2.Equals("C"),
                         "Fail, Had nothing to do.");

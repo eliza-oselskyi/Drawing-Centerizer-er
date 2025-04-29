@@ -37,7 +37,7 @@ internal static class Program
         var model = new Model();
         var drawingHandler = new DrawingHandler();
         if (!model.GetConnectionStatus()) return;
-        
+
         if (drawingHandler.GetActiveDrawing() != null)
         {
             Application.EnableVisualStyles();

@@ -46,12 +46,15 @@ namespace Drawing.CenterView;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 abstract partial class QuickCenterClass
 {
-    //private static readonly Model Model = new Model();
-    private static readonly DrawingHandler DrawingHandler = new DrawingHandler();
+    public static DrawingHandler DrawingHandler1 { get; } = new DrawingHandler();
+
+    public static int Read { set; get; }
+
+    public static Model Model1 { get; } = new Model();
 
     public static void EntryPoint()
     {
-        var drawingSelector = DrawingHandler.GetDrawingSelector();
+        var drawingSelector = DrawingHandler1.GetDrawingSelector();
         var selectedSize = drawingSelector.GetSelected().GetSize();
         var stopWatch = new Stopwatch();
 
@@ -126,14 +129,14 @@ abstract partial class QuickCenterClass
 
         //Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Done.");
         stopWatch.Stop();
-        Tekla.Structures.Model.Operations.Operation.DisplayPrompt(
-            $@"Drawings centered. Time elapsed = {stopWatch.Elapsed.ToString(@"mm\:ss\:mss")}");
+        TSMO.Operation.DisplayPrompt(
+            $@"Drawings centered. Time elapsed = {stopWatch.Elapsed:mm\:ss\:mss}");
     }
 
     private static bool _CenterAllDriver()
     {
-        Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Centering Drawings...");
-        var allDrawings = DrawingHandler.GetDrawings();
+        TSMO.Operation.DisplayPrompt(@"Centering Drawings...");
+        var allDrawings = DrawingHandler1.GetDrawings();
         var allGADrawings = new ArrayList();
         while (allDrawings.MoveNext())
             if (allDrawings.Current is GADrawing)
@@ -142,49 +145,6 @@ abstract partial class QuickCenterClass
         return allGADrawings.Count != 1 ? true : false;
     }
 
-
-    private static void RenameDrawingTitle3FromTuple(Tuple<Tekla.Structures.Drawing.Drawing, string> drawingTuple)
-    {
-        drawingTuple.Item1.Title3 = drawingTuple.Item2.ToString();
-        drawingTuple.Item1.Modify();
-    }
-
-    private static void CleanUp(Tekla.Structures.Drawing.Drawing drawing)
-    {
-        if (drawing.Title3.Equals("X")) return;
-        drawing.Title3 = "";
-        drawing.Modify();
-    }
-
-    private static void FinalizeDrawing(Tuple<Tekla.Structures.Drawing.Drawing, string> s)
-    {
-        DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
-        DrawingHandler.SaveActiveDrawing();
-        DrawingHandler.CloseActiveDrawing(true);
-        if (s.Item1.Title3.Equals("X")) return;
-        s.Item1.Title3 = s.Item2.ToString();
-        s.Item1.Modify();
-    }
-
-    /// <summary>
-    /// Method <c>IsValidDrawingForCenter</c> checks if there is exactly one view that has a valid property from ViewType enum.
-    /// </summary>
-    /// <param name="drawing"></param>
-    /// <returns></returns>
-    public static bool IsValidDrawingForCenter(Tekla.Structures.Drawing.Drawing drawing)
-    {
-        var memberCount = 0;
-        var views = drawing.GetSheet().GetViews();
-
-        while (views.MoveNext())
-        {
-            views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
-            var type = PluginForm.GetViewTypeEnum(viewTypes);
-            if (type is not PluginForm.ViewType.None) memberCount++;
-        }
-
-        return (memberCount == 1); // valid if memberCount is 1
-    }
 
     private static bool CenterSelectedGADrawingsDriver(DrawingEnumerator selectedGADrawings)
     {
@@ -195,13 +155,13 @@ abstract partial class QuickCenterClass
 
         while (selectedGADrawings.MoveNext())
         {
-            if (!IsValidDrawingForCenter(selectedGADrawings.Current))
+            if (!DrawingUtils.IsValidDrawingForCenter(selectedGADrawings.Current))
                 continue; // check if dwg is a candidate for centering
 
             var filteredDrawing = selectedGADrawings.Current as GADrawing ?? new GADrawing();
 
-            DrawingHandler.SetActiveDrawing(filteredDrawing, false);
-            var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews() ??
+            DrawingHandler1.SetActiveDrawing(filteredDrawing, false);
+            var allViews = DrawingHandler1.GetActiveDrawing().GetSheet().GetAllViews() ??
                            throw new ArgumentNullException(
                                nameof(selectedGADrawings));
             var drawingTuple =
@@ -216,15 +176,15 @@ abstract partial class QuickCenterClass
                 {
                     if (!currentView.GetDrawing().Title3.Equals("X"))
                     {
-                        viewType.TryGetValue("ViewType", out string vt);
+                        viewType.TryGetValue("ViewType", out var vt);
                         if (vt != null)
                         {
-                            var reportString = CenterView(currentView as ViewBase,
+                            var reportString = DrawingMethods.CenterView(currentView as ViewBase,
                                 (int)PluginForm.GetViewTypeEnum(viewType),
                                 out drawingTuple);
                             reportStringBuilder.AppendLine(reportString);
                             TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
-                            RenameDrawingTitle3FromTuple(drawingTuple);
+                            DrawingUtils.RenameDrawingTitle3FromTuple(drawingTuple);
                             counter++;
                         }
                     }
@@ -242,15 +202,12 @@ abstract partial class QuickCenterClass
                 }
             }
 
-            FinalizeDrawing(drawingTuple);
+            DrawingUtils.FinalizeDrawing(drawingTuple);
         }
 
-        GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
+        Reports.GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
         selectedGADrawings.Reset();
-        while (selectedGADrawings.MoveNext())
-        {
-            CleanUp(selectedGADrawings.Current);
-        }
+        while (selectedGADrawings.MoveNext()) DrawingUtils.CleanUp(selectedGADrawings.Current);
 
         return true;
     }
@@ -266,13 +223,13 @@ abstract partial class QuickCenterClass
             var drawingTuple =
                 new Tuple<Tekla.Structures.Drawing.Drawing, string>(
                     new GADrawing(), string.Empty);
-            var dwg = (Tekla.Structures.Drawing.Drawing)gaDwg;
 
-            if (!IsValidDrawingForCenter(gaDwg as Tekla.Structures.Drawing.Drawing ?? new GADrawing())) continue;
+            if (!DrawingUtils.IsValidDrawingForCenter(gaDwg as Tekla.Structures.Drawing.Drawing ?? new GADrawing()))
+                continue;
             var filteredDrawing = gaDwg as GADrawing;
 
-            DrawingHandler.SetActiveDrawing(filteredDrawing, false);
-            var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
+            DrawingHandler1.SetActiveDrawing(filteredDrawing, false);
+            var allViews = DrawingHandler1.GetActiveDrawing().GetSheet().GetAllViews();
             while (allViews.MoveNext())
             {
                 var currentView = (ViewBase)allViews.Current;
@@ -289,12 +246,12 @@ abstract partial class QuickCenterClass
                         default:
                             if (viewTypeEnum != PluginForm.ViewType.None)
                             {
-                                var reportString = CenterView(currentView, (int)viewTypeEnum,
+                                var reportString = DrawingMethods.CenterView(currentView, (int)viewTypeEnum,
                                     out drawingTuple);
                                 reportStringBuilder.AppendLine(reportString);
                                 TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
                                 counter++;
-                                RenameDrawingTitle3FromTuple(drawingTuple);
+                                DrawingUtils.RenameDrawingTitle3FromTuple(drawingTuple);
                             }
 
                             break;
@@ -306,68 +263,17 @@ abstract partial class QuickCenterClass
                                                  currentView.ToString());
                 }
 
-                FinalizeDrawing(drawingTuple);
+                DrawingUtils.FinalizeDrawing(drawingTuple);
             }
         }
 
-        GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
-        foreach (GADrawing drawing in drawings)
-        {
-            CleanUp(drawing);
-        }
+        Reports.GenerateAndDisplayReport("Centered_Report", reportStringBuilder.ToString());
+        foreach (GADrawing drawing in drawings) DrawingUtils.CleanUp(drawing);
     }
 
     private static Dictionary<string, string> GetViewTypeDict(ViewBase view)
     {
         view.GetStringUserProperties(new List<string>() { "ViewType" }, out var viewType);
         return viewType;
-    }
-
-    public static string CenterView(ViewBase view, int viewType, out Tuple<Tekla.Structures.Drawing.Drawing, string> s)
-    {
-        var sheet = view.GetDrawing().GetSheet();
-        double sheetHeightOffset = 0;
-        switch (viewType)
-        {
-            case 1:
-                sheetHeightOffset = 25.4; // 1"
-                break;
-            case >= 2 and <= 24:
-                sheetHeightOffset = 22.225; // 7/8"
-                break;
-            default: Tekla.Structures.Model.Operations.Operation.DisplayPrompt(viewType.ToString()); break;
-        }
-
-        sheet.Origin.Y = sheetHeightOffset;
-        var originalOriginX = view.Origin.X;
-        var originalOriginY = view.Origin.Y;
-        view.Origin = sheet.Origin;
-
-        var viewCenterPoint = view.GetAxisAlignedBoundingBox().GetCenterPoint();
-
-        var sheetHeight = sheet.Height / 2;
-        var sheetWidth = (sheet.Width - 33.274) / 2;
-        var xOffset = sheetWidth - viewCenterPoint.X;
-        var yOffset = sheetHeight - viewCenterPoint.Y;
-
-        if (Math.Abs(originalOriginX - xOffset) < 0.0001 &&
-            Math.Abs(originalOriginY - yOffset - sheetHeightOffset) < 0.0001)
-        {
-            s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "NC");
-            return $@"Nothing To Do. {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
-        }
-        else if (Math.Abs(view.ExtremaCenter.X - sheetWidth) > 0.0001 ||
-                 Math.Abs(view.ExtremaCenter.Y - sheetHeight) > 0.0001)
-        {
-            view.Origin.X += xOffset;
-            view.Origin.Y += yOffset;
-            view.Modify();
-            s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "C");
-
-            return $"Centering {view.GetDrawing().Name} => {(PluginForm.ViewType)viewType}";
-        }
-
-        s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "X");
-        return $"Something Went Wrong At {view.GetDrawing().Name} => " + (PluginForm.ViewType)viewType;
     }
 }

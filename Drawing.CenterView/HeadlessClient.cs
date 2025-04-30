@@ -29,6 +29,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Drawing.CenterView.Views;
 using Tekla.Structures;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Drawing.UI;

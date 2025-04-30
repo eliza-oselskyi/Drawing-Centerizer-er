@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Reflection;
 using System.Resources;
+using Drawing.CenterView.Views;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using Tekla.Structures.Drawing;

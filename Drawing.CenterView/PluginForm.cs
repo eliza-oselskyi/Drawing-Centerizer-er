@@ -30,6 +30,7 @@ using System.Text;
 using Svg;
 using System.Windows.Forms;
 using Drawing.CenterView.Properties;
+using Drawing.CenterView.Views;
 using Tekla.Structures;
 using Tekla.Structures.Catalogs;
 using Tekla.Structures.Dialog;

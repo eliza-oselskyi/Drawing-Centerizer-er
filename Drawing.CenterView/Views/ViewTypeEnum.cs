@@ -1,4 +1,4 @@
-﻿namespace Drawing.CenterView;
+﻿namespace Drawing.CenterView.Views;
         public enum GaViewType
         {
             None,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using Drawing.CenterView.Views;
 using Tekla.Structures;
 
 namespace Drawing.CenterView;

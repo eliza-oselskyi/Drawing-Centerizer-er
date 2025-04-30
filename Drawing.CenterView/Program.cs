@@ -21,6 +21,7 @@
 
 using System;
 using System.Windows.Forms;
+using Drawing.CenterView.Views;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Model;
 
@@ -47,7 +48,7 @@ internal static class Program
         else
         {
             //HeadlessClient.EntryPoint();
-            Drawing.CenterView.TestProgram.TestEntryPoint();
+            TestProgram.TestEntryPoint();
         }
     }
 }

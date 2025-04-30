@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using Drawing.CenterView.Views;
 
 namespace Drawing.CenterView;
 

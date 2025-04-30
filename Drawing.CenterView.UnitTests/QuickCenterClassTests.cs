@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Drawing.CenterView.Views;
 using NUnit.Framework;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;

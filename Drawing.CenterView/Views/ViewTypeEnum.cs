@@ -2,6 +2,7 @@
         public enum GaViewType
         {
             None,
+            Assembly,
             CoverSheet,
             BuildingSheet1,
             BuildingSheet2,

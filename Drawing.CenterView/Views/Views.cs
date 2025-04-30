@@ -12,16 +12,20 @@ public class FabView : IView
 
     public View View { get; set; }
 
-    public void Center(IViewVisitor visitor)
+    // TODO refactor out this stupid tuple!
+    public Tuple<Tekla.Structures.Drawing.Drawing, string> Center(IViewVisitor visitor)
     {
         visitor.CenterVisit(this);
+        return new Tuple<Tekla.Structures.Drawing.Drawing, string>(new GADrawing(), "");
     }
 
+    // TODO remove method maybe
     public bool IsValidViewForCenter(IViewVisitor visitor)
     {
         throw new NotImplementedException();
     }
 
+    // TODO remove method
     public Dictionary<string, string> GetViewTypeDict(IViewVisitor visitor)
     {
         throw new NotImplementedException();
@@ -42,16 +46,21 @@ public class GaView : IView
 
     public View View { get; set; }
 
-    public void Center(IViewVisitor visitor)
+    // TODO refactor out this stupid tuple!
+    public Tuple<Tekla.Structures.Drawing.Drawing, string> Center(IViewVisitor visitor)
     {
-        visitor.CenterVisit(this);
+        var drawingTuple = new Tuple<Tekla.Structures.Drawing.Drawing, string>(new GADrawing(), "");
+        visitor.CenterVisit(this, ref drawingTuple);
+        return  drawingTuple;
     }
 
+    // TODO maybe don't need this method
     public bool IsValidViewForCenter(IViewVisitor visitor)
     {
         throw new NotImplementedException();
     }
 
+    // TODO remove method
     public Dictionary<string, string> GetViewTypeDict(IViewVisitor visitor)
     {
         throw new NotImplementedException();

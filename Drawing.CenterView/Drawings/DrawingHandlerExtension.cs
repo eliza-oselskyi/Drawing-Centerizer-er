@@ -11,6 +11,7 @@ public class DrawingHandlerExtension
 {
     private ViewHandler _viewHandler = new ViewHandler();
     public DrawingEnumerator Drawings;
+    private DrawingHandler _drawingHandler = new DrawingHandler();
 
     public DrawingHandlerExtension(DrawingEnumerator drawings)
     {
@@ -35,9 +36,12 @@ public class DrawingHandlerExtension
                 break;
         }
     }
-    public void CenterDriver(bool? flag)
+
+    // TODO Fix this method. Needs tests!
+    private void CenterDriver(bool? flag)
     {
         var centerHandler = new ViewHandler();
+        var drawingHandler = new DrawingHandler();
         while (Drawings.MoveNext())
         {
             var drawingsCurrent = Drawings.Current;
@@ -45,12 +49,13 @@ public class DrawingHandlerExtension
 
             switch (drawingsCurrent)
             {
-                case GADrawing when DrawingUtils.IsValidDrawingForCenter(drawingsCurrent):
+                case GADrawing gaDrawing when DrawingUtils.IsValidDrawingForCenter(gaDrawing):
                 {
                     if (flag == true) continue; // True == fab only, false erection only
                     if (flag is not (null or false)) continue;
-                    
-                    var allDrawingViews = drawingsCurrent.GetSheet().GetViews();
+
+                        drawingHandler.SetActiveDrawing(gaDrawing);
+                    var allDrawingViews = gaDrawing.GetSheet().GetViews();
                     while (allDrawingViews.MoveNext())
                     {
                         var viewTypeDict = DrawingMethods.GetViewTypeDict((View)allDrawingViews.Current);
@@ -62,15 +67,16 @@ public class DrawingHandlerExtension
 
                     break;
                 }
-                case AssemblyDrawing:
+                case AssemblyDrawing assemblyDrawing when DrawingUtils.IsValidDrawingForCenter(assemblyDrawing):
                 {
-                    var view = drawingsCurrent.GetSheet().GetViews();
+                        drawingHandler.SetActiveDrawing(assemblyDrawing);
+                    var view = assemblyDrawing.GetSheet().GetViews();
                     while (view.MoveNext())
                     {
                         if (flag == false) continue;
                         if (flag is not (null or true)) continue;
-                        
                         if (view.Current.GetView().IsSheet) continue;
+
                         var fabView = new FabView((View)view.Current);
                         var viewTypeEnum = (GaViewType)fabView.GetViewTypeEnum(_viewHandler);
                         if (viewTypeEnum == GaViewType.None) continue;
@@ -81,50 +87,58 @@ public class DrawingHandlerExtension
                 }
             }
 
-            currentView?.Center(centerHandler);
+            //DrawingUtils.FinalizeDrawing(currentView?.Center(centerHandler)!);
         }
     }
+    // TODO fix this method. Needs tests!
     public void CenterDriver()
     {
         var centerHandler = new ViewHandler();
         while (Drawings.MoveNext())
         {
             var drawingsCurrent = Drawings.Current;
-            IView currentView = null;
 
             switch (drawingsCurrent)
             {
-                case GADrawing when DrawingUtils.IsValidDrawingForCenter(drawingsCurrent):
+                case GADrawing gaDrawing when DrawingUtils.IsValidDrawingForCenter(gaDrawing):
                 {
-                    var allDrawingViews = drawingsCurrent.GetSheet().GetViews();
+                    _drawingHandler.SetActiveDrawing(gaDrawing, false);
+                    var allDrawingViews = _drawingHandler.GetActiveDrawing().GetSheet().GetViews();
+                    Tuple<Tekla.Structures.Drawing.Drawing, string> drawingTuple = null;
                     while (allDrawingViews.MoveNext())
                     {
                         var viewTypeDict = DrawingMethods.GetViewTypeDict((View)allDrawingViews.Current);
                         var viewTypeEnum = DrawingMethods.GetViewTypeEnum(viewTypeDict);
 
                         if (viewTypeEnum == GaViewType.None) continue;
-                        currentView = new GaView((View)allDrawingViews.Current);
+                        IView currentView = new GaView((View)allDrawingViews.Current);
+                        drawingTuple = currentView.Center(centerHandler);
+                        //DrawingUtils.FinalizeDrawing(currentView.Center(centerHandler));
                     }
+                    // TODO fix this
+                    DrawingUtils.FinalizeDrawing(drawingTuple);
+
 
                     break;
                 }
-                case AssemblyDrawing:
+                case AssemblyDrawing assemblyDrawing when DrawingUtils.IsValidDrawingForCenter(assemblyDrawing):
                 {
-                    var view = drawingsCurrent.GetSheet().GetViews();
+                    _drawingHandler.SetActiveDrawing(assemblyDrawing, false);
+                    var view = assemblyDrawing.GetSheet().GetViews();
                     while (view.MoveNext())
                     {
                         if (view.Current.GetView().IsSheet) continue;
                         var fabView = new FabView((View)view.Current);
                         var viewTypeEnum = (GaViewType)fabView.GetViewTypeEnum(_viewHandler);
                         if (viewTypeEnum == GaViewType.None) continue;
-                        currentView = fabView;
+                        IView currentView = fabView;
+                        currentView.Center(centerHandler);
                     }
 
                     break;
                 }
             }
 
-            currentView?.Center(centerHandler);
         }
     }
 }

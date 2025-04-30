@@ -36,6 +36,8 @@ internal static class Program
     static void Main()
     {
         var model = new Model();
+        if (!model.GetConnectionStatus()) MessageBox.Show("Connection to Tekla failed");
+        
         var drawingHandler = new DrawingHandler();
         if (!model.GetConnectionStatus()) return;
 

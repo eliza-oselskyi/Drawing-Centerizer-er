@@ -156,7 +156,7 @@ abstract partial class HeadlessClient
 
         while (selectedGADrawings.MoveNext())
         {
-            if (!DrawingUtils.IsValidDrawingForCenter(selectedGADrawings.Current))
+            if (!DrawingUtils.IsValidDrawingForCenter((GADrawing)selectedGADrawings.Current))
                 continue; // check if dwg is a candidate for centering
 
             var filteredDrawing = selectedGADrawings.Current as GADrawing ?? new GADrawing();
@@ -225,7 +225,7 @@ abstract partial class HeadlessClient
                 new Tuple<Tekla.Structures.Drawing.Drawing, string>(
                     new GADrawing(), string.Empty);
 
-            if (!DrawingUtils.IsValidDrawingForCenter(gaDwg as Tekla.Structures.Drawing.Drawing ?? new GADrawing()))
+            if (!DrawingUtils.IsValidDrawingForCenter(gaDwg as Tekla.Structures.Drawing.GADrawing ?? new GADrawing()))
                 continue;
             var filteredDrawing = gaDwg as GADrawing;
 

@@ -32,79 +32,84 @@ partial class CustomMessageBox
     private void InitializeComponent()
     {
         this.messageLabel = new System.Windows.Forms.Label();
-        this.button1 = new System.Windows.Forms.Button();
-        this.button2 = new System.Windows.Forms.Button();
-        this.button3 = new System.Windows.Forms.Button();
-        this.button4 = new System.Windows.Forms.Button();
+        this.allButton = new System.Windows.Forms.Button();
+        this.fabButton = new System.Windows.Forms.Button();
+        this.erectionButton = new System.Windows.Forms.Button();
+        this.cancelButton = new System.Windows.Forms.Button();
         this.SuspendLayout();
         // 
         // messageLabel
         // 
-        this.messageLabel.Location = new System.Drawing.Point(9, 5);
+        this.messageLabel.Location = new System.Drawing.Point(8, 5);
         this.messageLabel.MaximumSize = new System.Drawing.Size(366, 82);
         this.messageLabel.MinimumSize = new System.Drawing.Size(366, 82);
         this.messageLabel.Name = "messageLabel";
         this.messageLabel.Size = new System.Drawing.Size(366, 82);
         this.messageLabel.TabIndex = 0;
-        this.messageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+        this.messageLabel.Text = "Click \"All\" to center both fabrication and erection drawings.";
+        this.messageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
-        // button1
+        // allButton
         // 
-        this.button1.Location = new System.Drawing.Point(12, 105);
-        this.button1.Name = "button1";
-        this.button1.Size = new System.Drawing.Size(75, 23);
-        this.button1.TabIndex = 1;
-        this.button1.Text = "button1";
-        this.button1.UseVisualStyleBackColor = true;
+        this.allButton.Location = new System.Drawing.Point(9, 105);
+        this.allButton.Name = "allButton";
+        this.allButton.Size = new System.Drawing.Size(75, 23);
+        this.allButton.TabIndex = 1;
+        this.allButton.Text = "All";
+        this.allButton.UseVisualStyleBackColor = true;
+        this.allButton.Click += new System.EventHandler(this.allButton_Click);
         // 
-        // button2
+        // fabButton
         // 
-        this.button2.Location = new System.Drawing.Point(93, 105);
-        this.button2.Name = "button2";
-        this.button2.Size = new System.Drawing.Size(75, 23);
-        this.button2.TabIndex = 2;
-        this.button2.Text = "button2";
-        this.button2.UseVisualStyleBackColor = true;
+        this.fabButton.Location = new System.Drawing.Point(104, 105);
+        this.fabButton.Name = "fabButton";
+        this.fabButton.Size = new System.Drawing.Size(75, 23);
+        this.fabButton.TabIndex = 2;
+        this.fabButton.Text = "Fabrication";
+        this.fabButton.UseVisualStyleBackColor = true;
+        this.fabButton.Click += new System.EventHandler(this.fabButton_Click);
         // 
-        // button3
+        // erectionButton
         // 
-        this.button3.Location = new System.Drawing.Point(174, 105);
-        this.button3.Name = "button3";
-        this.button3.Size = new System.Drawing.Size(75, 23);
-        this.button3.TabIndex = 3;
-        this.button3.Text = "button3";
-        this.button3.UseVisualStyleBackColor = true;
+        this.erectionButton.Location = new System.Drawing.Point(202, 105);
+        this.erectionButton.Name = "erectionButton";
+        this.erectionButton.Size = new System.Drawing.Size(75, 23);
+        this.erectionButton.TabIndex = 3;
+        this.erectionButton.Text = "Erection";
+        this.erectionButton.UseVisualStyleBackColor = true;
+        this.erectionButton.Click += new System.EventHandler(this.erectionButton_Click);
         // 
-        // button4
+        // cancelButton
         // 
-        this.button4.Location = new System.Drawing.Point(255, 105);
-        this.button4.Name = "button4";
-        this.button4.Size = new System.Drawing.Size(75, 23);
-        this.button4.TabIndex = 4;
-        this.button4.Text = "button4";
-        this.button4.UseVisualStyleBackColor = true;
+        this.cancelButton.Location = new System.Drawing.Point(300, 105);
+        this.cancelButton.Name = "cancelButton";
+        this.cancelButton.Size = new System.Drawing.Size(75, 23);
+        this.cancelButton.TabIndex = 4;
+        this.cancelButton.Text = "Cancel";
+        this.cancelButton.UseVisualStyleBackColor = true;
+        this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
         // 
         // CustomMessageBox
         // 
         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(387, 140);
-        this.Controls.Add(this.button4);
-        this.Controls.Add(this.button3);
-        this.Controls.Add(this.button2);
-        this.Controls.Add(this.button1);
+        this.Controls.Add(this.cancelButton);
+        this.Controls.Add(this.erectionButton);
+        this.Controls.Add(this.fabButton);
+        this.Controls.Add(this.allButton);
         this.Controls.Add(this.messageLabel);
         this.MaximumSize = new System.Drawing.Size(403, 179);
         this.MinimumSize = new System.Drawing.Size(403, 179);
         this.Name = "CustomMessageBox";
-        this.Text = "CustomMessageBox";
+        this.Text = "Center All Drawings?";
         this.ResumeLayout(false);
     }
 
-    private System.Windows.Forms.Button button1;
-    private System.Windows.Forms.Button button2;
-    private System.Windows.Forms.Button button3;
-    private System.Windows.Forms.Button button4;
+    private System.Windows.Forms.Button allButton;
+    private System.Windows.Forms.Button fabButton;
+    private System.Windows.Forms.Button erectionButton;
+    private System.Windows.Forms.Button cancelButton;
 
     private System.Windows.Forms.Label messageLabel;
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Tekla.Structures.Drawing;
+using Tekla.Structures.Drawing.UI;
 using TSMO = Tekla.Structures.Model.Operations;
 using View = Tekla.Structures.Drawing.View;
 
@@ -11,46 +12,100 @@ namespace Drawing.CenterView;
 
 public class TestProgram
 {
-    private static readonly DrawingHandler _drawingHandler =  new DrawingHandler();
+    private static readonly DrawingHandler _drawingHandler = new DrawingHandler();
+    private static readonly DrawingSelector _drawingSelector = _drawingHandler.GetDrawingSelector();
+
     public static void TestEntryPoint()
     {
-        var  drawingSelector = _drawingHandler.GetDrawingSelector();
-        var selectedDrawings = drawingSelector.GetSelected();
-        var centerHandler = new ViewHandler();
+        var selectedDrawings = _drawingSelector.GetSelected();
 
         if (selectedDrawings.GetSize() <= 0)
         {
-            Console.WriteLine("Nothing selected");
+            PromptNoneSelected();
         }
         else
         {
-            while (selectedDrawings.MoveNext())
-            {
-                var current = selectedDrawings.Current;
-                IView currentDrawing = null;
-                if (current is GADrawing)
-                {
-                    var view = current.GetSheet().GetViews();
-                    currentDrawing = new GaView((View)view.Current);
-                }
-                else if (current is AssemblyDrawing)
-                {
-                    var view = current.GetSheet().GetViews();
-                    currentDrawing = new FabView((View)view.Current);
-                }
-
-                currentDrawing?.Center(centerHandler);
-            }
+            PromptSelected();
         }
+    }
 
+    private static void PromptSelected()
+    {
+        Console.WriteLine("Drawings selected prompt");
+        var drawingHandler = new DrawingHandlerExtension(_drawingSelector.GetSelected());
+        drawingHandler.CenterDriver();
+    }
+
+    private static void PromptNoneSelected()
+    {
+        Console.WriteLine("Drawings none selected prompt");
+        var drawingHandler = new DrawingHandlerExtension(_drawingHandler.GetDrawings());
+        drawingHandler.CenterDriver();
+    }
+}
+
+public class DrawingHandlerExtension
+{
+    private ViewHandler _viewHandler = new ViewHandler();
+    public DrawingEnumerator Drawings;
+
+    public DrawingHandlerExtension(DrawingEnumerator drawings)
+    {
+        Drawings = drawings;
+    }
+
+    public void CenterDriver()
+    {
+        var centerHandler = new ViewHandler();
+        while (Drawings.MoveNext())
+        {
+            var drawingsCurrent = Drawings.Current;
+            IView currentView = null;
+
+            switch (drawingsCurrent)
+            {
+                case GADrawing when DrawingUtils.IsValidDrawingForCenter(drawingsCurrent):
+                {
+                    var allDrawingViews = drawingsCurrent.GetSheet().GetViews();
+                    while (allDrawingViews.MoveNext())
+                    {
+                        var viewTypeDict = DrawingMethods.GetViewTypeDict((View)allDrawingViews.Current);
+                        var viewTypeEnum = DrawingMethods.GetViewTypeEnum(viewTypeDict);
+
+                        if (viewTypeEnum == GaViewType.None) continue;
+                        currentView = new GaView((View)allDrawingViews.Current);
+                    }
+
+                    break;
+                }
+                case AssemblyDrawing:
+                {
+                    var view = drawingsCurrent.GetSheet().GetViews();
+                    while (view.MoveNext())
+                    {
+                        if (view.Current.GetView().IsSheet) continue;
+                        var fabView = new FabView((View)view.Current);
+                        var viewTypeEnum = (GaViewType)fabView.GetViewTypeEnum(_viewHandler);
+                        if (viewTypeEnum == GaViewType.None) continue;
+                        currentView = fabView;
+                    }
+
+                    break;
+                }
+            }
+
+            currentView?.Center(centerHandler);
+        }
     }
 }
 
 public interface IViewVisitor
 {
-    public void Visit(FabView view);
-    public void Visit(GaView view);
-    
+    public void CenterVisit(FabView view);
+    public void CenterVisit(GaView view);
+    public bool IsValidViewForCenterVisit(GaView view);
+    public bool IsValidViewForCenterVisit(FabView view);
+    public Enum GetViewTypeEnumVisit(FabView view);
 }
 
 interface IView
@@ -63,14 +118,33 @@ interface IView
 
 public class ViewHandler : IViewVisitor
 {
-    public void Visit(FabView view)
+    public void CenterVisit(FabView view)
     {
         Console.WriteLine(@"Centering FabView");
     }
 
-    public void Visit(GaView view)
+    public void CenterVisit(GaView view)
     {
+        var view2 = view.View.GetView();
+        var dict = DrawingMethods.GetViewTypeDict(view2);
+        var viewEnum = DrawingMethods.GetViewTypeEnum(dict);
+        DrawingMethods.CenterView(view2, (int)viewEnum, out Tuple<Tekla.Structures.Drawing.Drawing, string> s);
         Console.WriteLine(@"Centering GaView");
+    }
+
+    public bool IsValidViewForCenterVisit(GaView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    bool IViewVisitor.IsValidViewForCenterVisit(FabView view)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Enum GetViewTypeEnumVisit(FabView view)
+    {
+        return GaViewType.None;
     }
 }
 
@@ -81,10 +155,11 @@ public class FabView : IView
         View = view;
     }
 
-    public View  View { get; set; }
+    public View View { get; set; }
+
     public void Center(IViewVisitor visitor)
     {
-        visitor.Visit(this);
+        visitor.CenterVisit(this);
     }
 
     public bool IsValidViewForCenter(IViewVisitor visitor)
@@ -99,7 +174,7 @@ public class FabView : IView
 
     public Enum GetViewTypeEnum(IViewVisitor visitor)
     {
-        throw new NotImplementedException();
+        return visitor.GetViewTypeEnumVisit(this);
     }
 }
 
@@ -110,10 +185,11 @@ public class GaView : IView
         View = view;
     }
 
-    public View  View { get; set; }
+    public View View { get; set; }
+
     public void Center(IViewVisitor visitor)
     {
-        visitor.Visit(this);
+        visitor.CenterVisit(this);
     }
 
     public bool IsValidViewForCenter(IViewVisitor visitor)

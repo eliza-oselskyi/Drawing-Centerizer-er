@@ -176,7 +176,7 @@ abstract partial class HeadlessClient
                 {
                     if (!currentView.GetDrawing().Title3.Equals("X"))
                     {
-                        viewType.TryGetValue("GaViewType", out var vt);
+                        viewType.TryGetValue("ViewType", out var vt);
                         if (vt != null)
                         {
                             var reportString = DrawingMethods.CenterView(currentView as ViewBase,

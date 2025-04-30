@@ -44,7 +44,7 @@ using View = Tekla.Structures.Drawing.View;
 namespace Drawing.CenterView;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-abstract partial class HeadlessCenteringContext
+abstract partial class HeadlessClient
 {
     public static DrawingHandler DrawingHandler { get; } = new DrawingHandler();
 
@@ -176,11 +176,11 @@ abstract partial class HeadlessCenteringContext
                 {
                     if (!currentView.GetDrawing().Title3.Equals("X"))
                     {
-                        viewType.TryGetValue("ViewType", out var vt);
+                        viewType.TryGetValue("GaViewType", out var vt);
                         if (vt != null)
                         {
                             var reportString = DrawingMethods.CenterView(currentView as ViewBase,
-                                (int)PluginForm.GetViewTypeEnum(viewType),
+                                (int)DrawingMethods.GetViewTypeEnum(viewType),
                                 out drawingTuple);
                             reportStringBuilder.AppendLine(reportString);
                             TSMO.Operation.DisplayPrompt($@"({counter}/{total}) " + reportString);
@@ -234,7 +234,7 @@ abstract partial class HeadlessCenteringContext
             {
                 var currentView = (ViewBase)allViews.Current;
                 var viewTypeDict = DrawingMethods.GetViewTypeDict(currentView);
-                var viewTypeEnum = PluginForm.GetViewTypeEnum(viewTypeDict);
+                var viewTypeEnum = DrawingMethods.GetViewTypeEnum(viewTypeDict);
                 try
                 {
                     switch (currentView.GetDrawing().Title3)
@@ -244,7 +244,7 @@ abstract partial class HeadlessCenteringContext
                                 $@"({counter}/{total}) Skipping {currentView.GetDrawing().Name}.");
                             break;
                         default:
-                            if (viewTypeEnum != ViewType.None)
+                            if (viewTypeEnum != GaViewType.None)
                             {
                                 var reportString = DrawingMethods.CenterView(currentView, (int)viewTypeEnum,
                                     out drawingTuple);

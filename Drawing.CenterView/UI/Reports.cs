@@ -27,7 +27,7 @@ using Tekla.Structures.Model;
 
 namespace Drawing.CenterView
 {
-    public abstract partial class HeadlessCenteringContext
+    public abstract partial class HeadlessClient
     {
     }
 }
@@ -40,7 +40,7 @@ namespace Drawing.CenterView
         {
             Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Generating Report...");
 
-            var reportsFolder = HeadlessCenteringContext.Model1.GetInfo().ModelPath + @"\Reports\";
+            var reportsFolder = HeadlessClient.Model1.GetInfo().ModelPath + @"\Reports\";
             var firmFolder = "";
             TeklaStructuresSettings.GetAdvancedOption("XS_FIRM", ref firmFolder);
             var reportsTemplateFolder = Path.Combine(firmFolder, @"Reports\");
@@ -79,7 +79,7 @@ namespace Drawing.CenterView
                         FileAccess.ReadWrite, FileShare.ReadWrite);
                     var readText = new byte[fileStream.Length];
                     fileStream.Seek(0, SeekOrigin.Begin);
-                    HeadlessCenteringContext.Read = fileStream.Read(readText, 0, (int)fileStream.Length);
+                    HeadlessClient.Read = fileStream.Read(readText, 0, (int)fileStream.Length);
 
                     return true;
                 }

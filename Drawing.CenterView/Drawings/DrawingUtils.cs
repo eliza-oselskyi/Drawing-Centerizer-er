@@ -9,7 +9,7 @@ namespace Drawing.CenterView;
 public static class DrawingUtils
 {
     /// <summary>
-    ///     Method <c>IsValidDrawingForCenter</c> checks if there is exactly one view that has a valid property from ViewType
+    ///     Method <c>IsValidDrawingForCenter</c> checks if there is exactly one view that has a valid property from GaViewType
     ///     enum.
     /// </summary>
     /// <param name="drawing"></param>
@@ -22,8 +22,8 @@ public static class DrawingUtils
         while (views.MoveNext())
         {
             views.Current.GetStringUserProperties(out Dictionary<string, string> viewTypes);
-            var type = PluginForm.GetViewTypeEnum(viewTypes);
-            if (type is not ViewType.None) memberCount++;
+            var type = DrawingMethods.GetViewTypeEnum(viewTypes);
+            if (type is not GaViewType.None) memberCount++;
         }
 
         return memberCount == 1; // valid if memberCount is 1
@@ -44,9 +44,9 @@ public static class DrawingUtils
 
     public static void FinalizeDrawing(Tuple<Tekla.Structures.Drawing.Drawing, string> s)
     {
-        HeadlessCenteringContext.DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
-        HeadlessCenteringContext.DrawingHandler.SaveActiveDrawing();
-        HeadlessCenteringContext.DrawingHandler.CloseActiveDrawing(true);
+        HeadlessClient.DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
+        HeadlessClient.DrawingHandler.SaveActiveDrawing();
+        HeadlessClient.DrawingHandler.CloseActiveDrawing(true);
         if (s.Item1.Title3.Equals("X")) return;
         s.Item1.Title3 = s.Item2.ToString();
         s.Item1.Modify();

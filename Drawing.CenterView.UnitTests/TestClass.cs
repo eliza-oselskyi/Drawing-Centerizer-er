@@ -21,7 +21,7 @@ public class TestClass
                 while (x.MoveNext())
                 {
                     x.Current.GetStringUserProperties(out var viewType);
-                    Console.WriteLine(viewType.TryGetValue("ViewType", out var vt));
+                    Console.WriteLine(viewType.TryGetValue("GaViewType", out var vt));
                 }
 
                 drawingHandler.CloseActiveDrawing();

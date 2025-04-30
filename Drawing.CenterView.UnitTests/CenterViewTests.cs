@@ -56,9 +56,9 @@ namespace Drawing.CenterView.UnitTests
                 var view = views.Current as View;
                 var origViewOrigin = view.Origin;
                 views.Current.GetStringUserProperties(out var viewTypes); // Get viewTypes
-                var type = PluginForm.GetViewTypeEnum(viewTypes);
+                var type = DrawingMethods.GetViewTypeEnum(viewTypes);
 
-                if (type is ViewType.None)
+                if (type is GaViewType.None)
                 {
                     Assert.Ignore("No view valid type found");
                 }
@@ -85,9 +85,9 @@ namespace Drawing.CenterView.UnitTests
                     var curr = views.Current as View;
                     if (curr == null) Assert.Inconclusive("Null current view found");
                     curr.GetStringUserProperties(out var viewTypes);
-                    var type = PluginForm.GetViewTypeEnum(viewTypes);
+                    var type = DrawingMethods.GetViewTypeEnum(viewTypes);
 
-                    if (type != ViewType.None) member++;
+                    if (type != GaViewType.None) member++;
                 }
 
                 if (member > 1) Assert.Inconclusive("More than one \"valid\" view found");
@@ -109,9 +109,9 @@ namespace Drawing.CenterView.UnitTests
                 views.MoveNext();
                 var view = views.Current as View;
                 views.Current.GetStringUserProperties(out var viewTypes); // Get viewTypes
-                var type = PluginForm.GetViewTypeEnum(viewTypes);
+                var type = DrawingMethods.GetViewTypeEnum(viewTypes);
 
-                if (type is ViewType.None)
+                if (type is GaViewType.None)
                 {
                     Assert.Ignore("No view valid type found");
                 }
@@ -134,9 +134,9 @@ namespace Drawing.CenterView.UnitTests
                     var curr = views.Current as View;
                     if (curr == null) Assert.Inconclusive("Null current view found");
                     curr.GetStringUserProperties(out var viewTypes);
-                    var type = PluginForm.GetViewTypeEnum(viewTypes);
+                    var type = DrawingMethods.GetViewTypeEnum(viewTypes);
 
-                    if (type != ViewType.None) member++;
+                    if (type != GaViewType.None) member++;
                 }
 
                 if (member > 1) Assert.Inconclusive("More than one \"valid\" view found");

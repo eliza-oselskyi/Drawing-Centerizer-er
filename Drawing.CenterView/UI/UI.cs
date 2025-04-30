@@ -181,8 +181,8 @@ public partial class PluginForm
         view.Origin.X += amount;
         view.Modify();
         view.GetStringUserProperties(out Dictionary<string, string> viewType);
-        GetViewTypeEnum(viewType);
-        InfoBox.OnInfo(infoBox, $"Shifting Right => {(ViewType)GetViewTypeEnum(viewType)}");
+        DrawingMethods.GetViewTypeEnum(viewType);
+        InfoBox.OnInfo(infoBox, $"Shifting Right => {(GaViewType)DrawingMethods.GetViewTypeEnum(viewType)}");
         DrawingHandler.GetActiveDrawing().CommitChanges("Shift View Right");
     }
 
@@ -193,8 +193,8 @@ public partial class PluginForm
         view.Origin.Y += amount;
         view.Modify();
         view.GetStringUserProperties(out Dictionary<string, string> viewType);
-        GetViewTypeEnum(viewType);
-        InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)}\nShifting Up =^");
+        DrawingMethods.GetViewTypeEnum(viewType);
+        InfoBox.OnInfo(infoBox, $"{(GaViewType)DrawingMethods.GetViewTypeEnum(viewType)}\nShifting Up =^");
         DrawingHandler.GetActiveDrawing().CommitChanges("Shift View Up");
     }
 
@@ -205,8 +205,8 @@ public partial class PluginForm
         view.Origin.Y -= amount;
         view.Modify();
         view.GetStringUserProperties(out Dictionary<string, string> viewType);
-        GetViewTypeEnum(viewType);
-        InfoBox.OnInfo(infoBox, $"Shifting Down=v\n{(ViewType)GetViewTypeEnum(viewType)}");
+        DrawingMethods.GetViewTypeEnum(viewType);
+        InfoBox.OnInfo(infoBox, $"Shifting Down=v\n{(GaViewType)DrawingMethods.GetViewTypeEnum(viewType)}");
         DrawingHandler.GetActiveDrawing().CommitChanges("Shift View Down");
     }
 
@@ -217,8 +217,8 @@ public partial class PluginForm
         view.Origin.X -= amount;
         view.Modify();
         view.GetStringUserProperties(out Dictionary<string, string> viewType);
-        GetViewTypeEnum(viewType);
-        InfoBox.OnInfo(infoBox, $"{(ViewType)GetViewTypeEnum(viewType)} <= Shifting Left");
+        DrawingMethods.GetViewTypeEnum(viewType);
+        InfoBox.OnInfo(infoBox, $"{(GaViewType)DrawingMethods.GetViewTypeEnum(viewType)} <= Shifting Left");
         DrawingHandler.GetActiveDrawing().CommitChanges("Shift View Left");
     }
 }

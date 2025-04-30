@@ -46,7 +46,8 @@ internal static class Program
         }
         else
         {
-            HeadlessCenteringContext.EntryPoint();
+            //HeadlessClient.EntryPoint();
+            Drawing.CenterView.TestProgram.TestEntryPoint();
         }
     }
 }

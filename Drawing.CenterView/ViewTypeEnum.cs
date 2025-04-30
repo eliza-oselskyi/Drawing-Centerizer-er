@@ -1,5 +1,5 @@
 ﻿namespace Drawing.CenterView;
-        public enum ViewType
+        public enum GaViewType
         {
             None,
             CoverSheet,

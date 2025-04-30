@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Tekla.Structures.Drawing;
 
 namespace Drawing.CenterView;
@@ -51,5 +52,11 @@ public static class DrawingMethods
 
         s = new Tuple<Tekla.Structures.Drawing.Drawing, string>(view.GetDrawing(), "X");
         return $"Something Went Wrong At {view.GetDrawing().Name} => " + (ViewType)viewType;
+    }
+
+    internal static Dictionary<string, string> GetViewTypeDict(ViewBase view)
+    {
+        view.GetStringUserProperties(new List<string>() { "ViewType" }, out var viewType);
+        return viewType;
     }
 }

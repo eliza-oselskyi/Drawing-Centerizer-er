@@ -44,9 +44,9 @@ public static class DrawingUtils
 
     public static void FinalizeDrawing(Tuple<Tekla.Structures.Drawing.Drawing, string> s)
     {
-        QuickCenterClass.DrawingHandler1.GetActiveDrawing().CommitChanges("Center View");
-        QuickCenterClass.DrawingHandler1.SaveActiveDrawing();
-        QuickCenterClass.DrawingHandler1.CloseActiveDrawing(true);
+        HeadlessCenteringContext.DrawingHandler.GetActiveDrawing().CommitChanges("Center View");
+        HeadlessCenteringContext.DrawingHandler.SaveActiveDrawing();
+        HeadlessCenteringContext.DrawingHandler.CloseActiveDrawing(true);
         if (s.Item1.Title3.Equals("X")) return;
         s.Item1.Title3 = s.Item2.ToString();
         s.Item1.Modify();

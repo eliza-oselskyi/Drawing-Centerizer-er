@@ -62,11 +62,11 @@ public partial class PluginForm
         if (PluginForm.ActiveForm != null) PluginForm.ActiveForm.ShowInTaskbar = false;
 
         // Events 
-        _UiEvents.OnDrawingLoaded("CheckDrawingState");
-        _UiEvents.DrawingEditorClosed += ExitApplication;
-        _UiEvents.DrawingLoaded += CheckDrawingState;
+        _uiEvents.OnDrawingLoaded("CheckDrawingState");
+        _uiEvents.DrawingEditorClosed += ExitApplication;
+        _uiEvents.DrawingLoaded += CheckDrawingState;
         _events.DrawingChanged += CheckDrawingState;
-        _UiEvents.Register();
+        _uiEvents.Register();
         _events.Register();
 
         InfoBox.ToDefault(infoBox);

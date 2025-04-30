@@ -172,8 +172,10 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="CenterHandler.cs" />
         <Compile Include="Drawings\DrawingMethods.cs" />
         <Compile Include="Drawings\DrawingUtils.cs" />
+        <Compile Include="DrawingType.cs" />
         <Compile Include="DrawingTypeEnums.cs" />
         <Compile Include="PluginForm.cs">
             <SubType>Form</SubType>
@@ -183,7 +185,7 @@
         </Compile>
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="QuickCenterClass.cs" />
+        <Compile Include="HeadlessCenteringContext.cs" />
         <Compile Include="TestClass.cs" />
         <Compile Include="ViewTypeEnum.cs" />
         <Compile Include="UI\Events.cs" />

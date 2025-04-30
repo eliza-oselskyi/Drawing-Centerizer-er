@@ -46,7 +46,7 @@ internal static class Program
         }
         else
         {
-            QuickCenterClass.EntryPoint();
+            HeadlessCenteringContext.EntryPoint();
         }
     }
 }

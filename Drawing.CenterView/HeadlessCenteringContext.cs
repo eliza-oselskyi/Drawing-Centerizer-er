@@ -44,9 +44,9 @@ using View = Tekla.Structures.Drawing.View;
 namespace Drawing.CenterView;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-abstract partial class QuickCenterClass
+abstract partial class HeadlessCenteringContext
 {
-    public static DrawingHandler DrawingHandler1 { get; } = new DrawingHandler();
+    public static DrawingHandler DrawingHandler { get; } = new DrawingHandler();
 
     public static int Read { set; get; }
 
@@ -54,7 +54,7 @@ abstract partial class QuickCenterClass
 
     public static void EntryPoint()
     {
-        var drawingSelector = DrawingHandler1.GetDrawingSelector();
+        var drawingSelector = DrawingHandler.GetDrawingSelector();
         var selectedSize = drawingSelector.GetSelected().GetSize();
         var stopWatch = new Stopwatch();
 
@@ -136,7 +136,7 @@ abstract partial class QuickCenterClass
     private static bool _CenterAllDriver()
     {
         TSMO.Operation.DisplayPrompt(@"Centering Drawings...");
-        var allDrawings = DrawingHandler1.GetDrawings();
+        var allDrawings = DrawingHandler.GetDrawings();
         var allGADrawings = new ArrayList();
         while (allDrawings.MoveNext())
             if (allDrawings.Current is GADrawing)
@@ -160,8 +160,8 @@ abstract partial class QuickCenterClass
 
             var filteredDrawing = selectedGADrawings.Current as GADrawing ?? new GADrawing();
 
-            DrawingHandler1.SetActiveDrawing(filteredDrawing, false);
-            var allViews = DrawingHandler1.GetActiveDrawing().GetSheet().GetAllViews() ??
+            DrawingHandler.SetActiveDrawing(filteredDrawing, false);
+            var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews() ??
                            throw new ArgumentNullException(
                                nameof(selectedGADrawings));
             var drawingTuple =
@@ -228,12 +228,12 @@ abstract partial class QuickCenterClass
                 continue;
             var filteredDrawing = gaDwg as GADrawing;
 
-            DrawingHandler1.SetActiveDrawing(filteredDrawing, false);
-            var allViews = DrawingHandler1.GetActiveDrawing().GetSheet().GetAllViews();
+            DrawingHandler.SetActiveDrawing(filteredDrawing, false);
+            var allViews = DrawingHandler.GetActiveDrawing().GetSheet().GetAllViews();
             while (allViews.MoveNext())
             {
                 var currentView = (ViewBase)allViews.Current;
-                var viewTypeDict = GetViewTypeDict(currentView);
+                var viewTypeDict = DrawingMethods.GetViewTypeDict(currentView);
                 var viewTypeEnum = PluginForm.GetViewTypeEnum(viewTypeDict);
                 try
                 {
@@ -271,9 +271,4 @@ abstract partial class QuickCenterClass
         foreach (GADrawing drawing in drawings) DrawingUtils.CleanUp(drawing);
     }
 
-    private static Dictionary<string, string> GetViewTypeDict(ViewBase view)
-    {
-        view.GetStringUserProperties(new List<string>() { "ViewType" }, out var viewType);
-        return viewType;
-    }
 }

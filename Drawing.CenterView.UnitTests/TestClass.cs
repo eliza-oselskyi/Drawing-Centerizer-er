@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Tekla.Structures.Drawing;
+using Tekla.Structures.DrawingInternal;
 
 namespace Drawing.CenterView.UnitTests;
 
@@ -33,5 +34,28 @@ public class TestClass
     {
         var drawingHandler = new Tekla.Structures.Drawing.DrawingHandler();
         drawingHandler.CloseActiveDrawing();
+    }
+
+    [Test]
+    public void TestMethod2()
+    {
+        var drawingHandler = new Tekla.Structures.Drawing.DrawingHandler();
+        var picker = drawingHandler.GetPicker();
+         picker.PickObject("Pick object", out DrawingObject drawingObject,out ViewBase view);
+
+         
+         view.GetIntegerUserProperties(out Dictionary<string, int> properties);
+
+         TestContext.WriteLine(((View)view).ViewType.ToString());
+         TestContext.WriteLine(((View)view).Name);
+         TestContext.WriteLine(view.GetType().ToString());
+
+         foreach (KeyValuePair<string,int> keyValuePair in properties)
+         {
+            TestContext.WriteLine(keyValuePair.Key + " : " + keyValuePair.Value);
+            TestContext.WriteLine("test");
+         }
+         
+         
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Tekla.Structures.Drawing;
@@ -15,7 +16,7 @@ public class TestProgram
     {
         var  drawingSelector = _drawingHandler.GetDrawingSelector();
         var selectedDrawings = drawingSelector.GetSelected();
-        var centerHandler = new CenterHandler();
+        var centerHandler = new ViewHandler();
 
         if (selectedDrawings.GetSize() <= 0)
         {
@@ -55,9 +56,12 @@ public interface IViewVisitor
 interface IView
 {
     void Center(IViewVisitor visitor);
+    bool IsValidViewForCenter(IViewVisitor visitor);
+    Dictionary<string, string> GetViewTypeDict(IViewVisitor visitor);
+    Enum GetViewTypeEnum(IViewVisitor visitor);
 }
 
-public class CenterHandler : IViewVisitor
+public class ViewHandler : IViewVisitor
 {
     public void Visit(FabView view)
     {
@@ -82,6 +86,21 @@ public class FabView : IView
     {
         visitor.Visit(this);
     }
+
+    public bool IsValidViewForCenter(IViewVisitor visitor)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dictionary<string, string> GetViewTypeDict(IViewVisitor visitor)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Enum GetViewTypeEnum(IViewVisitor visitor)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class GaView : IView
@@ -95,5 +114,20 @@ public class GaView : IView
     public void Center(IViewVisitor visitor)
     {
         visitor.Visit(this);
+    }
+
+    public bool IsValidViewForCenter(IViewVisitor visitor)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dictionary<string, string> GetViewTypeDict(IViewVisitor visitor)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Enum GetViewTypeEnum(IViewVisitor visitor)
+    {
+        throw new NotImplementedException();
     }
 }

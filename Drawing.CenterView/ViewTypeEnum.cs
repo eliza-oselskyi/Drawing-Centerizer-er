@@ -33,3 +33,8 @@
             MezzaninePlanJoistsOnly,
             MezzaninePlanDecking
         }
+
+        public enum FabViewType
+        {
+            None,
+        }

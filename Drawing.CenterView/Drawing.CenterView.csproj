@@ -172,10 +172,15 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="CenterHandler.cs" />
+        <Compile Include="ViewHandler.cs" />
         <Compile Include="Drawings\DrawingMethods.cs" />
         <Compile Include="Drawings\DrawingUtils.cs" />
-        <Compile Include="DrawingType.cs" />
+        <Compile Include="CustomMessageBox.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="CustomMessageBox.Designer.cs">
+          <DependentUpon>CustomMessageBox.cs</DependentUpon>
+        </Compile>
         <Compile Include="PluginForm.cs">
             <SubType>Form</SubType>
         </Compile>
@@ -191,6 +196,9 @@
         <Compile Include="UI\IconHandler.cs" />
         <Compile Include="UI\Reports.cs" />
         <Compile Include="UI\UI.cs" />
+        <EmbeddedResource Include="CustomMessageBox.resx">
+          <DependentUpon>CustomMessageBox.cs</DependentUpon>
+        </EmbeddedResource>
         <EmbeddedResource Include="PluginForm.resx">
             <DependentUpon>PluginForm.cs</DependentUpon>
         </EmbeddedResource>

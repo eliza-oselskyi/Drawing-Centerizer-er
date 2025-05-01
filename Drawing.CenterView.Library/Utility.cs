@@ -3,8 +3,16 @@ using System.Reflection;
 
 namespace Drawing.CenterView.Library;
 
-public class Utility
+public static class Utility
 {
+  /// <summary>
+  /// Gets a value from the description of an object. This is useful for enumerations.
+  /// </summary>
+  /// <param name="description"></param>
+  /// <typeparam name="T"></typeparam>
+  /// <returns></returns>
+  /// <exception cref="InvalidOperationException"></exception>
+  /// <exception cref="ArgumentException"></exception>
     public static T GetValueFromDescription<T>(string description)
     {
       var type = typeof (T);

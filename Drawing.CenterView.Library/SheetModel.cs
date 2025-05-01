@@ -7,11 +7,16 @@ public class SheetModel
 {
     private Tekla.Structures.Drawing.Drawing Drawing;
     private static ContainerView SheetView { get; set; }
+    /// <summary>
+    /// Represents the adjusted size of the sheet.
+    /// </summary>
     public Tuple<double, double> Size { get; set; } = new  Tuple<double, double>(SheetView.Width, SheetView.Height);
     private double TitleBlockWidth { get; set; }
     private double TemplateBlockHeight { get; set; }
+    /// <summary>
+    /// Used internally to test equality against the center point of a view.
+    /// </summary>
     private Point AdjustedCenter { get; set; }
-    public Tuple<double, double> Offset { get; set; }
 
     public SheetModel(ContainerView sheet)
     {

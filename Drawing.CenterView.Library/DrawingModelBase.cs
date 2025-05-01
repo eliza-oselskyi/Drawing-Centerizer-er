@@ -1,4 +1,5 @@
 using System.Collections;
+using Tekla.Structures.Drawing;
 
 namespace Drawing.CenterView.Library;
 
@@ -35,12 +36,17 @@ public abstract class DrawingModelBase : IValidation, IDrawingOperations
     /// Currently, this value is derived from the Title_3 property;
     /// if it is "X", the drawing is excluded.
     /// </summary>
-    public bool Excluded { get; }
+    public virtual bool Excluded { get; }
     /// <summary>
     /// The value that represents whether the drawing is open in the drawing editor.
     /// If true, the GUI will appear.
     /// </summary>
     private bool _guiMode;
+
+    /// <summary>
+    /// The DrawingSet current drawing belongs to.
+    /// </summary>
+    private DrawingSetModel _parentDrawingSet;
     
 
     public DrawingModelBase(Tekla.Structures.Drawing.Drawing drawing)
@@ -49,6 +55,16 @@ public abstract class DrawingModelBase : IValidation, IDrawingOperations
         DrawingType = Drawing.GetType();
         Views = Drawing.GetSheet()
                        .GetViews();
+    }
+
+    private void GetValidViews()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void SetExcluded()
+    {
+        throw new NotImplementedException();
     }
 
     public void IsValidForCenter()
@@ -64,26 +80,31 @@ public abstract class DrawingModelBase : IValidation, IDrawingOperations
     public abstract void FilterValid();
 }
 
-public class FabDrawingmodel : DrawingModelBase
+public class FabDrawingModel(Tekla.Structures.Drawing.Drawing drawing) : DrawingModelBase(drawing)
 {
-    public FabDrawingmodel(Tekla.Structures.Drawing.Drawing drawing) : base(drawing)
-    {
-    }
-
     public override void FilterValid()
     {
         throw new NotImplementedException();
     }
 }
 
-public class GaDrawingModel : DrawingModelBase
+public class GaDrawingModel(Tekla.Structures.Drawing.Drawing drawing) : DrawingModelBase(drawing)
 {
-    public GaDrawingModel(Tekla.Structures.Drawing.Drawing drawing) : base(drawing)
-    {
-    }
-
     public override void FilterValid()
     {
         throw new NotImplementedException();
     }
+}
+
+public class NullDrawingModel(Tekla.Structures.Drawing.Drawing drawing) : DrawingModelBase(drawing)
+{
+    private static readonly Lazy<NullDrawingModel> Lazy =
+        new Lazy<NullDrawingModel>(() => new NullDrawingModel());
+    public static NullDrawingModel Instance => Lazy.Value;
+    private NullDrawingModel() : this(new GADrawing())
+    { }
+    public override void FilterValid()
+    {
+    }
+    public override bool Excluded => true;
 }

@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace Drawing.CenterView.Library;
 
-public class DrawingModel
+public abstract class DrawingModelBase : IValidation, IDrawingOperations
 {
 
     /// <summary>
@@ -43,7 +43,7 @@ public class DrawingModel
     private bool _guiMode;
     
 
-    public DrawingModel(Tekla.Structures.Drawing.Drawing drawing)
+    public DrawingModelBase(Tekla.Structures.Drawing.Drawing drawing)
     {
         Drawing = drawing;
         DrawingType = Drawing.GetType();
@@ -51,4 +51,39 @@ public class DrawingModel
                        .GetViews();
     }
 
+    public void IsValidForCenter()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Center()
+    {
+        throw new NotImplementedException();
+    }
+
+    public abstract void FilterValid();
+}
+
+public class FabDrawingmodel : DrawingModelBase
+{
+    public FabDrawingmodel(Tekla.Structures.Drawing.Drawing drawing) : base(drawing)
+    {
+    }
+
+    public override void FilterValid()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class GaDrawingModel : DrawingModelBase
+{
+    public GaDrawingModel(Tekla.Structures.Drawing.Drawing drawing) : base(drawing)
+    {
+    }
+
+    public override void FilterValid()
+    {
+        throw new NotImplementedException();
+    }
 }

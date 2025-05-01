@@ -1,9 +1,10 @@
 using System.Reflection;
+using Tekla.Structures.Drawing;
 using Tekla.Structures.Geometry3d;
 
 namespace Drawing.CenterView.Library;
 
-public class ViewModel(Tekla.Structures.Drawing.View view)
+public abstract class ViewModelBase(Tekla.Structures.Drawing.View view) : IValidation
 {
     private Tekla.Structures.Drawing.View _view = view;
     /// <summary>
@@ -26,7 +27,7 @@ public class ViewModel(Tekla.Structures.Drawing.View view)
     /// <summary>
     /// The associated DrawingModel instance of this view.
     /// </summary>
-    private DrawingModel Drawing { get; set; }
+    private DrawingModelBase Drawing { get; set; }
     /// <summary>
     /// Origin point of the view.
     /// </summary>
@@ -42,6 +43,23 @@ public class ViewModel(Tekla.Structures.Drawing.View view)
     /// <summary>
     /// The list of views contained in current view.
     /// </summary>
-    public List<ViewModel> ChildViews { get; set; } 
+    public List<ViewModelBase> ChildViews { get; set; }
 
+    public abstract void IsValidForCenter();
+}
+
+public class FabViewModel(View view) : ViewModelBase(view)
+{
+    public override void IsValidForCenter()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class GaViewModel(View view) : ViewModelBase(view)
+{
+    public override void IsValidForCenter()
+    {
+        throw new NotImplementedException();
+    }
 }

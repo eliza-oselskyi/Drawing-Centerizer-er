@@ -2,13 +2,13 @@
 
 namespace Drawing.CenterView.Library;
 
-public class DrawingSetModel
+public class DrawingSetModel : IDrawingOperations
 {
     private DrawingEnumerator RawDrawingList { get; set; }
     /// <summary>
     /// The list that contains all the valid drawings for centering in the set.
     /// </summary>
-    public List<DrawingModel> FilteredDrawingsList { get; }
+    public List<DrawingModelBase> FilteredDrawingsList { get; }
     /// <summary>
     /// Represents the number of drawings to be processed. This is taken from the FilteredDrawingsList.
     /// </summary>
@@ -20,5 +20,15 @@ public class DrawingSetModel
     /// <summary>
     /// The current drawing in the set.
     /// </summary>
-    public DrawingModel CurrentDrawing { get;  }
+    public DrawingModelBase CurrentDrawing { get;  }
+
+    public void Center()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void FilterValid()
+    {
+        throw new NotImplementedException();
+    }
 }

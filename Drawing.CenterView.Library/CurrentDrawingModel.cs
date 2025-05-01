@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace Drawing.CenterView.Library;
 
-public class CurrentDrawing
+public class CurrentDrawingModel
 {
 
     public Tekla.Structures.Drawing.Drawing Drawing { get; set; }
@@ -15,7 +15,7 @@ public class CurrentDrawing
     private bool _guiMode;
     
 
-    public CurrentDrawing(Tekla.Structures.Drawing.Drawing drawing)
+    public CurrentDrawingModel(Tekla.Structures.Drawing.Drawing drawing)
     {
         Drawing = drawing;
         DrawingType = Drawing.GetType();

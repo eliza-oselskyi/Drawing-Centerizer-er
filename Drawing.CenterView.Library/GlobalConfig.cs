@@ -10,18 +10,18 @@ public sealed class GlobalConfig
     /// </summary>
     public static readonly Tekla.Structures.Drawing.DrawingHandler
         DrawingHandler = new Tekla.Structures.Drawing.DrawingHandler();
-    private int DrawingSetInstances { get; set; } = 0;
+
+    private readonly DrawingSetModel _drawingSetInstance = new DrawingSetModel();
     private static readonly Lazy<GlobalConfig> Lazy = new Lazy<GlobalConfig>(() => new GlobalConfig());
     public static GlobalConfig Instance => Lazy.Value;
     private GlobalConfig() { }
 
     /// <summary>
-    /// Initializes a new DrawingSetModel.
-    /// Ensures that there is only one instance.
+    /// Returns a single instance of a drawing set
     /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
-    public void InitializeDrawingSet()
+    /// <returns>DrawingSetModel</returns>
+    public DrawingSetModel GetDrawingSet()
     {
-        throw new NotImplementedException();
+        return _drawingSetInstance;
     }
 }

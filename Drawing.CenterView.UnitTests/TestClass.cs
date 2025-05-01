@@ -58,4 +58,26 @@ public class TestClass
          
          
     }
+
+    [Test]
+    public void GetSelected()
+    {
+        var drawingHandler = new Tekla.Structures.Drawing.DrawingHandler();
+        var drawingEnumerator = drawingHandler.GetDrawingSelector().GetSelected();
+
+        while (drawingEnumerator.MoveNext())
+        {
+            var t = "";
+            var views = drawingEnumerator.Current.GetSheet().GetViews();
+            Console.WriteLine(drawingEnumerator.Current.DrawingTypeStr);
+            Console.WriteLine(drawingEnumerator.Current.GetType());
+
+            while (views.MoveNext())
+            {
+                views.Current.GetUserProperty("ViewType", ref t);
+                TestContext.WriteLine(t);
+            }
+            
+        }
+    }
 }

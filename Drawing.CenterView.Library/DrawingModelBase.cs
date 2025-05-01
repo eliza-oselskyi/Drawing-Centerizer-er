@@ -47,9 +47,9 @@ public abstract class DrawingModelBase : IValidation, IDrawingOperations
     /// The DrawingSet current drawing belongs to.
     /// </summary>
     private DrawingSetModel _parentDrawingSet;
-    
 
-    public DrawingModelBase(Tekla.Structures.Drawing.Drawing drawing)
+
+    protected DrawingModelBase(Tekla.Structures.Drawing.Drawing drawing)
     {
         Drawing = drawing;
         DrawingType = Drawing.GetType();
@@ -57,12 +57,12 @@ public abstract class DrawingModelBase : IValidation, IDrawingOperations
                        .GetViews();
     }
 
-    private void GetValidViews()
+    protected void GetValidViews()
     {
         throw new NotImplementedException();
     }
 
-    private void SetExcluded()
+    protected void SetExcluded()
     {
         throw new NotImplementedException();
     }

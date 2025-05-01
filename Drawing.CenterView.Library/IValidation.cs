@@ -2,5 +2,5 @@
 
 public interface IValidation
 {
-    void IsValidForCenter();
+    bool IsValidForCenter();
 }

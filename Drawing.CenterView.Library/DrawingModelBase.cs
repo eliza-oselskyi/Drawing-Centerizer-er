@@ -67,7 +67,7 @@ public abstract class DrawingModelBase : IValidation, IDrawingOperations
         throw new NotImplementedException();
     }
 
-    public void IsValidForCenter()
+    public bool IsValidForCenter()
     {
         throw new NotImplementedException();
     }
@@ -77,12 +77,12 @@ public abstract class DrawingModelBase : IValidation, IDrawingOperations
         throw new NotImplementedException();
     }
 
-    public abstract void FilterValid();
+    public abstract void FilterValid(List<DrawingModelBase> drawings);
 }
 
 public class FabDrawingModel(Tekla.Structures.Drawing.Drawing drawing) : DrawingModelBase(drawing)
 {
-    public override void FilterValid()
+    public override void FilterValid(List<DrawingModelBase> drawings)
     {
         throw new NotImplementedException();
     }
@@ -90,7 +90,7 @@ public class FabDrawingModel(Tekla.Structures.Drawing.Drawing drawing) : Drawing
 
 public class GaDrawingModel(Tekla.Structures.Drawing.Drawing drawing) : DrawingModelBase(drawing)
 {
-    public override void FilterValid()
+    public override void FilterValid(List<DrawingModelBase> drawings)
     {
         throw new NotImplementedException();
     }
@@ -103,7 +103,7 @@ public class NullDrawingModel(Tekla.Structures.Drawing.Drawing drawing) : Drawin
     public static NullDrawingModel Instance => Lazy.Value;
     private NullDrawingModel() : this(new GADrawing())
     { }
-    public override void FilterValid()
+    public override void FilterValid(List<DrawingModelBase> drawings)
     {
     }
     public override bool Excluded => true;

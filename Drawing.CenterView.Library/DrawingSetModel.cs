@@ -35,25 +35,58 @@ public class DrawingSetModel : IDrawingOperations
     public DrawingSetModel(DrawingSetOptions options)
     {
         _options = options;
-        switch (_options)
+        List<DrawingModelBase> partialFilter = _options switch
         {
-            case DrawingSetOptions.Fab:
-            case DrawingSetOptions.Ga:
-            case DrawingSetOptions.All:
-            case DrawingSetOptions.Selected:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+            DrawingSetOptions.Fab => CreatePartialFilteredDrawingList(typeof(AssemblyDrawing)),
+            DrawingSetOptions.Ga => CreatePartialFilteredDrawingList(typeof(GADrawing)),
+            DrawingSetOptions.All => CreatePartialFilteredDrawingList(typeof(Tekla.Structures.Drawing.Drawing)),
+            DrawingSetOptions.Selected => CreateDrawingListFromSelected(),
+            _ => throw new ArgumentOutOfRangeException()
+        };
         // Call FilterValid
     }
 
-    private void CreateDrawingList(Type type)
+    // TODO Create Test
+    /// <summary>
+    /// Creates a partially filtered list from the raw list, of the selected drawings.
+    /// The return value gets used by FilterValid to populate the field FilteredDrawingList
+    /// </summary>
+    /// <returns><list type="DrawingModelBase"></list></returns>
+    private List<DrawingModelBase> CreateDrawingListFromSelected()
     {
+        var  result = new List<DrawingModelBase>();
+        while (RawDrawingList.MoveNext())
+        {
+            var currDrawing =  RawDrawingList.Current;
+            var drawingType = currDrawing.GetType();
+            DrawingModelBase drawingModel;
+
+            if (drawingType == typeof(Tekla.Structures.Drawing.AssemblyDrawing))
+            {
+                drawingModel = new FabDrawingModel(currDrawing);
+            }
+            else if (drawingType == typeof(GADrawing))
+            {
+                drawingModel = new GaDrawingModel(currDrawing);
+                
+            }
+            else
+            {
+                drawingModel = NullDrawingModel.Instance;
+            }
+            result.Add(drawingModel);
+            
+        }
+        return result;
+    }
+
+    // TODO create test
+    private List<DrawingModelBase> CreatePartialFilteredDrawingList(Type type)
+    {
+        var drawingList = new List<DrawingModelBase>();
         while (RawDrawingList.MoveNext())
         {
             var currDrawing = RawDrawingList.Current;
-            FilteredDrawingsList = [];
             Type drawingType;
 
             if (type == typeof(Tekla.Structures.Drawing.GADrawing))
@@ -66,14 +99,19 @@ public class DrawingSetModel : IDrawingOperations
             }
             else
             {
-                drawingType = typeof(Tekla.Structures.Drawing.Drawing);
+                drawingType = typeof(NullDrawingModel);
             }
-
-            if (currDrawing.GetType() == type)
-            {
+            
+            if (currDrawing.GetType() != type) continue;
+            var drawingModel = (drawingType == typeof(NullDrawingModel))
+                ? NullDrawingModel.Instance
+                : drawingType.GetConstructor(
+                    [type])?.Invoke([]);
                 
-            }
+            drawingList.Add((DrawingModelBase)drawingModel ?? NullDrawingModel.Instance);
         }
+
+        return drawingList;
     }
     
 
@@ -82,17 +120,13 @@ public class DrawingSetModel : IDrawingOperations
         throw new NotImplementedException();
     }
 
-    public void FilterValid()
+    // TODO create test
+    public void FilterValid(List<DrawingModelBase> drawings)
     {
-        FilteredDrawingsList = new List<DrawingModelBase>();
-        switch (_options)
+        FilteredDrawingsList = [];
+        foreach (var drawing in drawings.Where(drawing => drawing.IsValidForCenter()))
         {
-            case DrawingSetOptions.Fab:
-            case DrawingSetOptions.Ga:
-            case DrawingSetOptions.All:
-            case DrawingSetOptions.Selected:
-            default:
-                break;
+            FilteredDrawingsList.Add(drawing);
         }
     }
 }

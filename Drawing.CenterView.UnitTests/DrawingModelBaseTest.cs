@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Drawing.CenterView.Library;
 using NUnit.Framework;
 using Tekla.Structures.Drawing;
@@ -37,7 +38,7 @@ public class DrawingModelBaseTest : DrawingModelBase
         Assert.DoesNotThrow((Center), "Create Implementation");
     }
 
-    public override void FilterValid()
+    public override void FilterValid(List<DrawingModelBase> drawings)
     {
     }
 }

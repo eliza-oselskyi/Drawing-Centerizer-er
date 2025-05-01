@@ -45,12 +45,12 @@ public abstract class ViewModelBase(Tekla.Structures.Drawing.View view) : IValid
     /// </summary>
     public List<ViewModelBase> ChildViews { get; set; }
 
-    public abstract void IsValidForCenter();
+    public abstract bool IsValidForCenter();
 }
 
 public class FabViewModel(View view) : ViewModelBase(view)
 {
-    public override void IsValidForCenter()
+    public override bool IsValidForCenter()
     {
         throw new NotImplementedException();
     }
@@ -58,7 +58,7 @@ public class FabViewModel(View view) : ViewModelBase(view)
 
 public class GaViewModel(View view) : ViewModelBase(view)
 {
-    public override void IsValidForCenter()
+    public override bool IsValidForCenter()
     {
         throw new NotImplementedException();
     }

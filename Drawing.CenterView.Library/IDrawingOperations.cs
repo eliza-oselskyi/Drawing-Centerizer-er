@@ -2,5 +2,5 @@
 
 public interface IDrawingOperations : IOperations
 {
-    void FilterValid();
+    void FilterValid(List<DrawingModelBase> drawings);
 }

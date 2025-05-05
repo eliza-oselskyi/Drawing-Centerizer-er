@@ -1,0 +1,548 @@
+
+template _tmp_0
+{
+    name = "tpled_template";
+    type = TEXTUAL;
+    width = 80;
+    maxheight = 83;
+    columns = (1, 1);
+    gap = 0;
+    fillpolicy = EVEN;
+    filldirection = HORIZONTAL;
+    fillstartfrom = TOPLEFT;
+    margins = (1, 1, 1, 1);
+    gridxspacing = 1;
+    gridyspacing = 1;
+    version = 4.2;
+    created = "24.04.2025 03:18";
+    modified = "25.04.2025 16:18";
+    notes = "";
+
+    pageheader _tmp_2
+    {
+        name = "PageHeader";
+        height = 2;
+        outputpolicy = NONE;
+
+        text _tmp_3
+        {
+            name = "Centered Drawings Report";
+            x1 = 22;
+            y1 = 1;
+            x2 = 22;
+            y2 = 1;
+            string = "Centered Drawings Report -- v1.0.2";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_9
+        {
+            name = "text_2";
+            x1 = 18;
+            y1 = 0;
+            x2 = 18;
+            y2 = 0;
+            string = "--------------------------------------------------------";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = CENTERED;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+    };
+
+    pageheader _tmp_14
+    {
+        name = "PageHeader_1";
+        height = 3;
+        outputpolicy = NONE;
+
+        text _tmp_15
+        {
+            name = "CENTERED";
+            x1 = 10;
+            y1 = 1;
+            x2 = 10;
+            y2 = 1;
+            string = "MODIFIED";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_16
+        {
+            name = "NOT MODIFIED\n(nothing to do)";
+            x1 = 28;
+            y1 = 1;
+            x2 = 28;
+            y2 = 1;
+            string = "NOT MODIFIED\n(nothing to do)";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_0
+        {
+            name = "text_1";
+            x1 = 0;
+            y1 = 0;
+            x2 = 0;
+            y2 = 0;
+            string = "------------------------------------------------------------------------------";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_1
+        {
+            name = "Title";
+            x1 = 61;
+            y1 = 1;
+            x2 = 61;
+            y2 = 1;
+            string = "Title_2";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_2
+        {
+            name = "|_2";
+            x1 = 26;
+            y1 = 1;
+            x2 = 26;
+            y2 = 1;
+            string = "|";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_3
+        {
+            name = "|_3";
+            x1 = 60;
+            y1 = 1;
+            x2 = 60;
+            y2 = 1;
+            string = "|";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_8
+        {
+            name = "|_6";
+            x1 = 68;
+            y1 = 1;
+            x2 = 68;
+            y2 = 1;
+            string = "|";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_14
+        {
+            name = "Title_1";
+            x1 = 69;
+            y1 = 1;
+            x2 = 69;
+            y2 = 1;
+            string = "Excluded?";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+    };
+
+    row _tmp_4
+    {
+        name = "DRAWING";
+        height = 1;
+        visibility = TRUE;
+        usecolumns = FALSE;
+        rule = "if (GetValue(\"TITLE3\") == \"C\") then\n  Output()\nelse\n  StepOver()\nendif\n";
+        contenttype = "DRAWING";
+        sorttype = COMBINE;
+
+        valuefield _tmp_9
+        {
+            name = "NAME_field";
+            location = (0, 0);
+            formula = "GetValue(\"TITLE1\")";
+            maxnumoflines = 1;
+            datatype = STRING;
+            class = "";
+            cacheable = TRUE;
+            formatzeroasempty = FALSE;
+            justify = LEFT;
+            visibility = TRUE;
+            angle = 0;
+            length = 25;
+            decimals = 1;
+            sortdirection = ASCENDING;
+            fontname = "Arial";
+            fontcolor = 164;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontstyle = 0;
+            fontslant = 0;
+            pen = 0;
+            oncombine = NONE;
+            aligncontenttotop = FALSE;
+        };
+
+        text _tmp_8
+        {
+            name = "|";
+            x1 = 26;
+            y1 = 0;
+            x2 = 26;
+            y2 = 0;
+            string = "|";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        valuefield _tmp_2
+        {
+            name = "TITLE2_field";
+            location = (61, 0);
+            formula = "GetValue(\"TITLE2\")";
+            maxnumoflines = 1;
+            datatype = STRING;
+            class = "";
+            cacheable = TRUE;
+            formatzeroasempty = FALSE;
+            justify = LEFT;
+            visibility = TRUE;
+            angle = 0;
+            length = 7;
+            decimals = 1;
+            sortdirection = ASCENDING;
+            fontname = "Arial";
+            fontcolor = 164;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontstyle = 0;
+            fontslant = 0;
+            pen = 0;
+            oncombine = NONE;
+            aligncontenttotop = FALSE;
+        };
+
+        text _tmp_5
+        {
+            name = "|_4";
+            x1 = 60;
+            y1 = 0;
+            x2 = 60;
+            y2 = 0;
+            string = "|";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_10
+        {
+            name = "|_7";
+            x1 = 68;
+            y1 = 0;
+            x2 = 68;
+            y2 = 0;
+            string = "|";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+    };
+
+    row _tmp_17
+    {
+        name = "DRAWING_1";
+        height = 1;
+        visibility = TRUE;
+        usecolumns = FALSE;
+        rule = "if (GetValue(\"TITLE3\") == \"NC\" || GetValue(\"TITLE3\") == \"X\") then\n  Output()\nelse\n  StepOver()\nendif\n";
+        contenttype = "DRAWING";
+        sorttype = COMBINE;
+
+        valuefield _tmp_18
+        {
+            name = "TITLE1_field";
+            location = (27, 0);
+            formula = "GetValue(\"TITLE1\")";
+            maxnumoflines = 1;
+            datatype = STRING;
+            class = "";
+            cacheable = TRUE;
+            formatzeroasempty = FALSE;
+            justify = LEFT;
+            visibility = TRUE;
+            angle = 0;
+            length = 32;
+            decimals = 1;
+            sortdirection = ASCENDING;
+            fontname = "Arial";
+            fontcolor = 164;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontstyle = 0;
+            fontslant = 0;
+            pen = 0;
+            oncombine = NONE;
+            aligncontenttotop = FALSE;
+        };
+
+        text _tmp_10
+        {
+            name = "|_1";
+            x1 = 26;
+            y1 = 0;
+            x2 = 26;
+            y2 = 0;
+            string = "|";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        valuefield _tmp_5
+        {
+            name = "TITLE2_field_1";
+            location = (61, 0);
+            formula = "GetValue(\"TITLE2\")";
+            maxnumoflines = 1;
+            datatype = STRING;
+            class = "";
+            cacheable = TRUE;
+            formatzeroasempty = FALSE;
+            justify = LEFT;
+            visibility = TRUE;
+            angle = 0;
+            length = 7;
+            decimals = 1;
+            sortdirection = ASCENDING;
+            fontname = "Arial";
+            fontcolor = 164;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontstyle = 0;
+            fontslant = 0;
+            pen = 0;
+            oncombine = NONE;
+            aligncontenttotop = FALSE;
+        };
+
+        text _tmp_9
+        {
+            name = "|_5";
+            x1 = 60;
+            y1 = 0;
+            x2 = 60;
+            y2 = 0;
+            string = "|";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        text _tmp_12
+        {
+            name = "|_8";
+            x1 = 68;
+            y1 = 0;
+            x2 = 68;
+            y2 = 0;
+            string = "|";
+            fontname = "Arial";
+            fontcolor = 161;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontslant = 0;
+            fontstyle = 0;
+            angle = 0;
+            justify = LEFT;
+            pen = 0;
+            isalwaysvisible = TRUE;
+            visibilityrule = "";
+        };
+
+        valuefield _tmp_16
+        {
+            name = "TITLE3_field";
+            location = (69, 0);
+            formula = "if (GetValue(\"TITLE3\") == \"X\") then\n  \"Y\"\nelse\n  \"N\"\nendif\n";
+            maxnumoflines = 1;
+            datatype = STRING;
+            class = "";
+            cacheable = TRUE;
+            formatzeroasempty = FALSE;
+            justify = LEFT;
+            visibility = TRUE;
+            angle = 0;
+            length = 9;
+            decimals = 1;
+            sortdirection = ASCENDING;
+            fontname = "Arial";
+            fontcolor = 164;
+            fonttype = 2;
+            fontsize = 2.38;
+            fontratio = 1;
+            fontstyle = 0;
+            fontslant = 0;
+            pen = 0;
+            oncombine = NONE;
+            aligncontenttotop = FALSE;
+        };
+    };
+};

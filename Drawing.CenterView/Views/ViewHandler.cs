@@ -77,7 +77,10 @@ public class TestProgram
         var drawingHandler = new DrawingHandlerExtension(DrawingHandler.GetDrawings());
         var stopWatch = new Stopwatch();
         
-        DialogResult result =CustomMessageBox.ShowPrompt();
+        //TODO recreate CustomMessageBox Form
+        //DialogResult result = CustomMessageBox.ShowPrompt();
+        var result = DialogResult.Cancel;
+        
         drawingHandler.CenterDriver(result);
     }
 }

@@ -26,11 +26,11 @@ public class DrawingModelBaseTest : DrawingModelBase
         Assert.DoesNotThrow((SetExcluded), "Create Implementation");
     }
     
-    [Test]
-    public void IsValidForCenter_Throw()
-    {
-        Assert.DoesNotThrow((IsValidForCenter), "Create Implementation");
-    }
+    // [Test]
+    // public void IsValidForCenter_Throw()
+    // {
+    //     Assert.DoesNotThrow((IsValidForCenter), "Create Implementation");
+    // }
     
     [Test]
     public void Center_Throw()

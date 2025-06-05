@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing.CenterViewWPF.Cente
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing.CenterViewWPF.Common", "Drawing.CenterViewWPF.Common\Drawing.CenterViewWPF.Common.csproj", "{213BF9D7-A85F-4970-8C2F-354D0D065B46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing.CenterViewWPF.UnitTests", "Drawing.CenterViewWPF.UnitTests\Drawing.CenterViewWPF.UnitTests.csproj", "{65788167-B893-46D2-9761-40B1D58E7BEA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{213BF9D7-A85F-4970-8C2F-354D0D065B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{213BF9D7-A85F-4970-8C2F-354D0D065B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{213BF9D7-A85F-4970-8C2F-354D0D065B46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65788167-B893-46D2-9761-40B1D58E7BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65788167-B893-46D2-9761-40B1D58E7BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65788167-B893-46D2-9761-40B1D58E7BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65788167-B893-46D2-9761-40B1D58E7BEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

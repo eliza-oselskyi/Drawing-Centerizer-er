@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Drawing.CenterViewWPF.Centering.Interfaces;
 using Drawing.CenterViewWPF.Common;
 using Drawing.CenterViewWPF.Common.Enums;
 using Drawing.CenterViewWPF.Common.Interfaces;
@@ -25,7 +27,7 @@ public class DrawingModel
 
     private bool IsValidToCenter()
     {
-        var count = _views.Count;
+        var count = _views.Count(view => view.IsValid);
         return count == 1;
     }
 
@@ -44,6 +46,20 @@ public class DrawingModel
             DrawingType.GeneralArrangement => new GetGaViewTypeStrategy(),
             _ => throw new ArgumentException("Unknown drawing type.")
         };
+    }
+
+    public bool CenterDrawing(IViewCenteringStrategy strategy)
+    {
+        if (!IsValid) return false;
+        foreach (var view in _views.Where(view => view.IsValid))
+        {
+            _drawingOperator.SetUp(this);
+            var result = strategy.Center(view);
+            _drawingOperator.SetUda(this, result ? "C" : "NC");
+            _drawingOperator.Save(this);
+        }
+
+        return true;
     }
 
     public override string ToString()

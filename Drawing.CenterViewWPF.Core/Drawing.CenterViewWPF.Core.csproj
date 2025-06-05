@@ -106,6 +106,8 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="CenterOptionsDialogViewModel.cs" />
+        <Compile Include="Commands\RelayCommand.cs" />
         <Compile Include="MainWindowViewModel.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
@@ -129,6 +131,12 @@
       <Content Include="Resources\prtyp_tree_7.bmp" />
       <Content Include="Resources\prtyp_tree_8.bmp" />
       <Content Include="Resources\prtyp_tree_9.bmp" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Drawing.CenterViewWPF.Centering\Drawing.CenterViewWPF.Centering.csproj">
+        <Project>{445ffd1e-ef3c-4b87-a038-db5ea23f5275}</Project>
+        <Name>Drawing.CenterViewWPF.Centering</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

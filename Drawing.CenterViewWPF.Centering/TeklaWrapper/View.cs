@@ -26,4 +26,29 @@ public class View
 
         IsValid = viewChecker.IsValid(this);
     }
+    
+    public void Shift(string direction, bool isBigShift = false)
+    {
+        double shiftAmount = isBigShift ? 20.0 : 10.0;
+
+        switch (direction.ToLower())
+        {
+            case "up":
+                TeklaView.Origin.Y += shiftAmount;
+                break;
+            case "down":
+                TeklaView.Origin.Y -= shiftAmount;
+                break;
+            case "left":
+                TeklaView.Origin.X -= shiftAmount;
+                break;
+            case "right":
+                TeklaView.Origin.X += shiftAmount;
+                break;
+            default:
+                throw new ArgumentException($"Invalid direction: {direction}");
+        }
+        
+        TeklaView.Modify();
+    }
 }

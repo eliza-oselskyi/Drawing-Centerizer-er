@@ -7,7 +7,7 @@ namespace Drawing.CenterViewWPF.Centering.Strategies;
 
 public class GaViewCenteringStrategy : IViewCenteringStrategy
 {
-    public bool Center(View view)
+    public bool Center(View view, bool isGuiMode = false)
     {
         var sheet = view.TeklaView.GetDrawing().GetSheet();
         double sheetHeightOffset = 0;
@@ -28,6 +28,7 @@ public class GaViewCenteringStrategy : IViewCenteringStrategy
         var originalOriginX = view.TeklaView.Origin.X;
         var originalOriginY = view.TeklaView.Origin.Y;
         view.TeklaView.Origin = sheet.Origin;
+        if (!isGuiMode) view.TeklaView.Modify();
         var viewCenterPoint = view.TeklaView.GetAxisAlignedBoundingBox().GetCenterPoint();
         
         var sheetHeight = sheet.Height / 2;

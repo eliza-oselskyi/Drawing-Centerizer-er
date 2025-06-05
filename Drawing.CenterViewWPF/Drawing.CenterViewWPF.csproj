@@ -82,9 +82,13 @@
             <DependentUpon>MainWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Page Include="CenterOptionsDialog.xaml" />
         <Page Include="Themes\Generic.xaml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="CenterOptionsDialog.xaml.cs">
+          <DependentUpon>CenterOptionsDialog.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Properties\AssemblyInfo.cs">
             <SubType>Code</SubType>
         </Compile>

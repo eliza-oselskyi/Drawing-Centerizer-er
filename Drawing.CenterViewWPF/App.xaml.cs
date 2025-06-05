@@ -28,8 +28,8 @@ namespace Drawing.CenterViewWPF
             }
             else
             {
-                MessageBox.Show("No active drawing");
-                Application.Current.Shutdown();
+                var optionsDialog = serviceProvider.GetService<CenterOptionsDialog>();
+                optionsDialog.Show();
             }
             base.OnStartup(e);
         }
@@ -38,6 +38,9 @@ namespace Drawing.CenterViewWPF
         {
             serviceCollection.AddSingleton<MainWindow>();
             serviceCollection.AddSingleton<MainWindowViewModel>();
+            
+            serviceCollection.AddSingleton<CenterOptionsDialog>();
+            serviceCollection.AddSingleton<CenterOptionsDialogViewModel>();
         }
     }
 }

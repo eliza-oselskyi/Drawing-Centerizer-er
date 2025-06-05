@@ -16,9 +16,11 @@ public class DrawingModel
     private List<View> _views = new();
     private readonly DrawingOperator _drawingOperator = new();
     public bool IsValid {get; private set;}
+    private bool _isGuiMode;
 
-    public DrawingModel(Tekla.Structures.Drawing.Drawing teklaDrawing)
+    public DrawingModel(Tekla.Structures.Drawing.Drawing teklaDrawing, bool isGuiMode = false)
     {
+        _isGuiMode = isGuiMode;
         TeklaDrawing = teklaDrawing;
         DrawingType = Utility.GetValueFromDescription<DrawingType>(teklaDrawing.DrawingTypeStr);
         GetAndAddViews();
@@ -54,12 +56,20 @@ public class DrawingModel
         foreach (var view in _views.Where(view => view.IsValid))
         {
             _drawingOperator.SetUp(this);
-            var result = strategy.Center(view);
+            var result = strategy.Center(view, _isGuiMode);
             _drawingOperator.SetUda(this, result ? "C" : "NC");
-            _drawingOperator.Save(this);
+            if (!_isGuiMode)
+            {
+                _drawingOperator.SaveAndClose(this);
+            }
         }
 
         return true;
+    }
+
+    public List<View> GetViews()
+    {
+        return _views;
     }
 
     public override string ToString()

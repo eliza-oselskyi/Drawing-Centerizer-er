@@ -23,7 +23,7 @@ public class FabViewCenteringStrategy : IViewCenteringStrategy
 
         return dimensionList.Count == 1 ? dimensionList[0].UpDirection : new Vector();
     }
-    public bool Center(View view)
+    public bool Center(View view, bool isGuiMode = false)
     {
         const double DIMENSION_LINE_HEIGHT = 72;
         const double TITLE_BOX_HEIGHT = 22.352; // 7/8"
@@ -34,6 +34,7 @@ public class FabViewCenteringStrategy : IViewCenteringStrategy
         var originalOriginX = view.TeklaView.Origin.X;
         var originalOriginY = view.TeklaView.Origin.Y;
         view.TeklaView.Origin = sheet.Origin;
+        if (!isGuiMode) view.TeklaView.Modify();
         // TODO: At some point, add collision detector if have multiple views on sheet
         var viewCenterPoint = view.TeklaView.GetAxisAlignedBoundingBox().GetCenterPoint();
         

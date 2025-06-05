@@ -10,7 +10,7 @@ public class DrawingOperator : IDrawingOperation
     {
         if (DrawingHandler.Instance.GetActiveDrawing() == null && drawingModel.TeklaDrawing.Title3 != "X")
         {
-            DrawingHandler.Instance.SetActiveDrawing(drawingModel.TeklaDrawing, false);
+            DrawingHandler.Instance.SetActiveDrawing(drawingModel.TeklaDrawing, false); // set to false in production
         }
     }
 
@@ -33,6 +33,7 @@ public class DrawingOperator : IDrawingOperation
 
     public void SaveAndClose(DrawingModel drawingModel) // Gets set in the DrawingModel class
     {
+        DrawingHandler.Instance.SaveActiveDrawing();
         if (DrawingHandler.Instance.GetActiveDrawing() != null) DrawingHandler.Instance.CloseActiveDrawing(true);
     }
 

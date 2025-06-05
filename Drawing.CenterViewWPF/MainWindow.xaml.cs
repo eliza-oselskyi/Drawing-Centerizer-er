@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using Drawing.CenterViewWPF;
+using Drawing.CenterViewWPF.Core;
 
 namespace Drawing.CenterViewWPF
 {
@@ -15,9 +16,9 @@ namespace Drawing.CenterViewWPF
 
         public MainWindow()
         {
-            IsConnected = false;
-            DataContext = this;
             InitializeComponent();
+            IsConnected = false;
+            DataContext = new MainWindowViewModel();
         }
 
         private void ThemeToggle_CheckChanged(object sender, RoutedEventArgs e)

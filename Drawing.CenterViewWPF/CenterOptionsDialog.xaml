@@ -1,0 +1,97 @@
+﻿<Window x:Class="Drawing.CenterViewWPF.CenterOptionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Drawing.CenterViewWPF"
+        mc:Ignorable="d"
+        Title="Center Options" Height="360" Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+        <Window.Resources>
+                <BooleanToVisibilityConverter x:Key="BoolToVis"></BooleanToVisibilityConverter>
+        </Window.Resources>
+        <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <!-- Content that shows when drawings are selected -->
+        <StackPanel x:Name="SelectedDrawingsPanel"
+                    Grid.Row="0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,10"
+                    Visibility="{Binding HasSelectedDrawings, Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="Choose how to center the selected drawings:"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"
+                        Margin="0,0,0,20"
+                        Width="300"/>
+                <Button Content="Center All"
+                        Command="{Binding CenterAllCommand}"
+                        Width="200"
+                        Height="30"
+                        Name="btnCenterAll"
+                        Margin="0,0,0,15"/>
+                <Button Content="Center Fab Only"
+                        Command="{Binding CenterFabCommand}"
+                        Width="200"
+                        Height="30"
+                        Name="btnCenterFab"
+                        Margin="0,0,0,15"/>
+                <Button Content="Center Erection Only"
+                        Command="{Binding CenterGaCommand}"
+                        Width="200"
+                        Height="30"
+                        Name="btnCenterGa"
+                        Margin="0,0,0,5"/>
+        </StackPanel>
+        
+        <!-- Content that shows when no drawings are selected -->
+        <StackPanel x:Name="NoSelectionPanel"
+                    Grid.Row="0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,10"
+                    Visibility="{Binding HasNoSelectedDrawings, Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="No drawings are currently selected. Choose an option to center all matching drawings in the project:"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"
+                        Margin="0,0,0,20"
+                        Width="300"/>
+                <Button Content="Center All"
+                        Command="{Binding CenterAbsolutelyAllCommand}"
+                        Width="200"
+                        Height="30"
+                        Name="btnCenterAllNoSelection"
+                        Margin="0,0,0,15"/>
+                <Button Content="Center All Fabs"
+                        Command="{Binding CenterAllFabsCommand}"
+                        Width="200"
+                        Height="30"
+                        Name="btnCenterAllFabsNoSelection"
+                        Margin="0,0,0,15"/>
+                <Button Content="Center All Erection"
+                        Command="{Binding CenterAllGaCommand}"
+                        Width="200"
+                        Height="30"
+                        Name="btnCenterAllGaNoSelection"
+                        Margin="0,0,0,5"/>
+        </StackPanel>
+        
+        <!-- Cancel button is always visible -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource BackgroundBrush}"
+                Padding="10">
+            <Button Content="Cancel"
+                    Command="{Binding CancelCommand}"
+                    Width="100"
+                    Height="30"
+                    Name="btnCancel"
+                    IsCancel="True"
+                    HorizontalAlignment="Right"/>
+        </Border>
+    </Grid>
+</Window>

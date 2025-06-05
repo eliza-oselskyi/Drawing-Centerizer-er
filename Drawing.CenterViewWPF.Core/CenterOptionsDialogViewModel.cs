@@ -5,6 +5,7 @@ using System.Net.Mime;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Drawing.CenterViewWPF.Centering.Interfaces;
 using Drawing.CenterViewWPF.Centering.Strategies;
 using Drawing.CenterViewWPF.Centering.TeklaWrapper;
 using Drawing.CenterViewWPF.Core.Commands;
@@ -57,169 +58,75 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
         CancelCommand = new RelayCommand(ExecuteCancel, _ => true);
     }
 
-    private async void ExecuteCenterAbsolutelyAll(object obj)
+private async Task CenterDrawingsCore(Func<Tekla.Structures.Drawing.Drawing, bool> drawingFilter, IViewCenteringStrategy strategy, bool useSelectedOnly = false)
+{
+    CloseRequested?.Invoke(this, true);
+
+    await Task.Run(() =>
     {
-        CloseRequested?.Invoke(this, true);
-        await Task.Run(() =>
+        var drawings = useSelectedOnly 
+            ? DrawingHandler.Instance.GetDrawingSelector().GetSelected()
+            : DrawingHandler.Instance.GetDrawings();
+            
+        var count = 1;
+        while (drawings.MoveNext())
         {
-            var drawings = DrawingHandler.Instance.GetDrawings();
-            var count = 1;
-            while (drawings.MoveNext())
-            {
-                var curr = drawings.Current;
-                var drawing = new DrawingModel(curr);
-                SendToTeklaDialog($"Centering drawing {count} of {drawings.GetSize()}...");
-                count++;
-                switch (curr)
-                {
-                    case GADrawing:
-                        drawing.CenterDrawing(new GaViewCenteringStrategy());
-                        break;
-                    case AssemblyDrawing:
-                        drawing.CenterDrawing(new FabViewCenteringStrategy());
-                        break;
-                }
-            }
-        });
-        
-        SendToTeklaDialog($"Done.");
-        
-        QuitRequested?.Invoke(this, false);
-    }
-    
+            var curr = drawings.Current;
+            if (!drawingFilter(curr)) continue;
+            
+            var drawing = new DrawingModel(curr);
+            SendToTeklaDialog($"Centering drawing {count} of {drawings.GetSize()}...");
+            count++;
+            
+            var centeringStrategy = strategy ?? GetAppropriateStrategy(curr);
+            drawing.CenterDrawing(centeringStrategy);
+        }
+    });
 
-    private async void ExecuteCenterAllGa(object obj)
-    {
-        CloseRequested?.Invoke(this, true);
-        await Task.Run(() =>{
-            var drawings = DrawingHandler.Instance.GetDrawings();
-            var count = 1;
-            while (drawings.MoveNext())     
-            {
-                var curr = drawings.Current;
-                if (curr is not GADrawing) continue;
-                var drawing = new DrawingModel(curr);
-                SendToTeklaDialog($"Centering drawing {count} of {drawings.GetSize()}...");
-                count++;
-                drawing.CenterDrawing(new GaViewCenteringStrategy());
-            }
-        });
-        
-        SendToTeklaDialog($"Done.");
-        QuitRequested?.Invoke(this, false);
-    }
+    SendToTeklaDialog("Done.");
+    QuitRequested?.Invoke(this, false);
+}
 
-    private async void ExecuteCenterAllFabs(object obj)
-    {
-        CloseRequested?.Invoke(this, true);
+private static IViewCenteringStrategy GetAppropriateStrategy(Tekla.Structures.Drawing.Drawing drawing) => drawing switch
+{
+    GADrawing => new GaViewCenteringStrategy(),
+    AssemblyDrawing => new FabViewCenteringStrategy(),
+    _ => throw new ArgumentException($"Unsupported drawing type: {drawing.GetType()}")
+};
 
-        await Task.Run(() =>
-        {
-            var drawings = DrawingHandler.Instance.GetDrawings();
-            var count = 1;
-            while (drawings.MoveNext())
-            {
-                var curr = drawings.Current;
-                if (curr is not AssemblyDrawing) continue;
-                var drawing = new DrawingModel(curr);
-                SendToTeklaDialog($"Centering drawing {count} of {drawings.GetSize()}...");
-                count++;
-                drawing.CenterDrawing(new FabViewCenteringStrategy());
-            }
-        });
-        
-        SendToTeklaDialog($"Done.");
-        QuitRequested?.Invoke(this, false);
-    }
+private async void ExecuteCenterAbsolutelyAll(object obj)
+{
+    await CenterDrawingsCore(IsAnyTargetDrawing, null, false);
+}
 
+private async void ExecuteCenterAll(object obj)
+{
+    await CenterDrawingsCore(IsAnyTargetDrawing, null, true);
+}
+
+private async void ExecuteCenterAllGa(object obj)
+{
+    await CenterDrawingsCore(IsGaDrawing, new GaViewCenteringStrategy(), false);
+}
+
+private async void ExecuteCenterAllFabs(object obj)
+{
+    await CenterDrawingsCore(IsFabDrawing, new FabViewCenteringStrategy(), false);
+}
+
+private async void ExecuteCenterGa(object obj)
+{
+    await CenterDrawingsCore(IsGaDrawing, new GaViewCenteringStrategy(), true);
+}
+
+private async void ExecuteCenterFab(object obj)
+{
+    await CenterDrawingsCore(IsFabDrawing, new FabViewCenteringStrategy(), true);
+}
 
     private void ExecuteCancel(object obj)
     {
-        SendToTeklaDialog($"Aborted.");
-        QuitRequested?.Invoke(this, false);
-    }
-
-    private async void ExecuteCenterGa(object obj)
-    {
-        CloseRequested?.Invoke(this, true);
-
-        await Task.Run(() =>
-        {
-            var selector = DrawingHandler.Instance.GetDrawingSelector();
-            var selected = selector.GetSelected();
-            var count = 1;
-
-            while (selected.MoveNext())
-            {
-                var curr = selected.Current;
-                if (curr is not GADrawing) continue;
-                var drawing = new DrawingModel(curr);
-                SendToTeklaDialog($"Centering drawing {count} of {selected.GetSize()}...");
-                count++;
-                drawing.CenterDrawing(new GaViewCenteringStrategy());
-            }
-        });
-        
-        SendToTeklaDialog($"Done.");
-        QuitRequested?.Invoke(this, false);
-    }
-
-    private async void ExecuteCenterFab(object obj)
-    {
-        CloseRequested?.Invoke(this, true);
-
-        await Task.Run(() =>
-        {
-            var selector = DrawingHandler.Instance.GetDrawingSelector();
-            var selected = selector.GetSelected();
-            var count = 1;
-
-            while (selected.MoveNext())
-            {
-                var curr = selected.Current;
-                if (curr is not AssemblyDrawing) continue;
-                var drawing = new DrawingModel(curr);
-                SendToTeklaDialog($"Centering drawing {count} of {selected.GetSize()}...");
-                count++;
-                drawing.CenterDrawing(new FabViewCenteringStrategy());
-            }
-        });
-        
-        SendToTeklaDialog($"Done.");
-        QuitRequested?.Invoke(this, false);
-    }
-
-    private async void ExecuteCenterAll(object obj)
-    {
-        CloseRequested?.Invoke(this, true);
-
-        await Task.Run(() => {
-            var selector = DrawingHandler.Instance.GetDrawingSelector();
-            var selected = selector.GetSelected();
-            var count = 1;
-
-            while (selected.MoveNext())
-            {
-                var curr = selected.Current;
-                if (curr is GADrawing or AssemblyDrawing )
-                {
-                    var drawing = new DrawingModel(curr);
-                SendToTeklaDialog($"Centering drawing {count} of {selected.GetSize()}...");
-                count++;
-                    switch (curr)
-                    {
-                        case GADrawing:
-                            drawing.CenterDrawing(new GaViewCenteringStrategy());
-                            break;
-                        case AssemblyDrawing:
-                            drawing.CenterDrawing(new FabViewCenteringStrategy());
-                            break;
-                    }
-                }
-            }
-        });
-        
-        SendToTeklaDialog($"Done.");
+        SendToTeklaDialog("Aborted.");
         QuitRequested?.Invoke(this, false);
     }
 
@@ -240,4 +147,8 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
         OnPropertyChanged(propertyName);
         return true;
     }
+
+    private static bool IsGaDrawing(Tekla.Structures.Drawing.Drawing drawing) => drawing is GADrawing;
+    private static bool IsFabDrawing(Tekla.Structures.Drawing.Drawing drawing) => drawing is AssemblyDrawing;
+    private static bool IsAnyTargetDrawing(Tekla.Structures.Drawing.Drawing drawing) => drawing is GADrawing or AssemblyDrawing;
 }

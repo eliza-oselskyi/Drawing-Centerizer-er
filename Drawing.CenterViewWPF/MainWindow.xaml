@@ -12,7 +12,7 @@
         MinWidth="500"
         MaxHeight="330"
         MaxWidth="500">
-    <Grid Background="{DynamicResource BackgroundBrush}" Margin="10" ShowGridLines="True">
+    <Grid Background="{DynamicResource BackgroundBrush}" Margin="10" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition> <!--Centering and moving views controls-->
             <RowDefinition Height="Auto"></RowDefinition> <!--Info box-->

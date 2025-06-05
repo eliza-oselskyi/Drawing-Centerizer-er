@@ -1,6 +1,7 @@
 using System;
 using System.Security.Authentication.ExtendedProtection;
 using System.Windows;
+using Drawing.CenterViewWPF.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Drawing.CenterViewWPF
@@ -18,15 +19,25 @@ namespace Drawing.CenterViewWPF
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             serviceProvider = serviceCollection.BuildServiceProvider();
-            
-            var mainWindow = serviceProvider.GetService<MainWindow>();
-            mainWindow.Show();
+
+            var viewModel = serviceProvider.GetService<MainWindowViewModel>();
+            if (viewModel.ShowMainWindow())
+            {
+                var mainWindow = serviceProvider.GetService<MainWindow>();
+                mainWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("No active drawing");
+                Application.Current.Shutdown();
+            }
             base.OnStartup(e);
         }
 
         private void ConfigureServices(ServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<MainWindow>();
+            serviceCollection.AddSingleton<MainWindowViewModel>();
         }
     }
 }

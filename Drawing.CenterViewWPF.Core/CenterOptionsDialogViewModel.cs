@@ -10,6 +10,7 @@ using Drawing.CenterViewWPF.Centering.Strategies;
 using Drawing.CenterViewWPF.Centering.TeklaWrapper;
 using Drawing.CenterViewWPF.Core.Commands;
 using Tekla.Structures.Drawing;
+using Tekla.Structures.Drawing.UI;
 
 namespace Drawing.CenterViewWPF.Core;
 
@@ -18,6 +19,7 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler PropertyChanged;
     public event EventHandler<bool> QuitRequested;
     public event EventHandler<bool> CloseRequested;
+    private Tekla.Structures.Drawing.UI.Events _events;
     private bool _hasSelectedDrawings;
     public bool HasSelectedDrawings
     {
@@ -32,6 +34,7 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
     }
     
     public bool HasNoSelectedDrawings => !HasSelectedDrawings;
+    private readonly DrawingSelector _drawingSelector = DrawingHandler.Instance.GetDrawingSelector();
     
     public ICommand CenterAllCommand { get; set; }
     public ICommand CenterAbsolutelyAllCommand { get; set; }
@@ -43,11 +46,10 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
     
     public CenterOptionsDialogViewModel()
     {
-        var selector = DrawingHandler.Instance.GetDrawingSelector();
-        var selected = selector.GetSelected();
+        InitializeEvents();
 
-        HasSelectedDrawings = selected.GetSize() > 0 && selected.MoveNext();
-        selected.Reset();
+        UpdateSelectionState();
+
         
         CenterAbsolutelyAllCommand = new RelayCommand(ExecuteCenterAbsolutelyAll, _ => true);
         CenterAllCommand = new RelayCommand(ExecuteCenterAll, _ => true);
@@ -56,6 +58,25 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
         CenterFabCommand = new RelayCommand(ExecuteCenterFab, _ => true);
         CenterGaCommand = new RelayCommand(ExecuteCenterGa, _ => true);
         CancelCommand = new RelayCommand(ExecuteCancel, _ => true);
+    }
+
+    private void InitializeEvents()
+    {
+        _events = new Tekla.Structures.Drawing.UI.Events();
+        _events.DrawingListSelectionChanged += DrawingSelector_SelectionChanged;
+        _events.Register();
+    }
+
+    private void DrawingSelector_SelectionChanged()
+    {
+        UpdateSelectionState();
+    }
+
+    private void UpdateSelectionState()
+    {
+        var selected = _drawingSelector.GetSelected();
+        HasSelectedDrawings = selected.GetSize() > 0 && selected.MoveNext();
+        selected.Reset();
     }
 
 private async Task CenterDrawingsCore(Func<Tekla.Structures.Drawing.Drawing, bool> drawingFilter, IViewCenteringStrategy strategy, bool useSelectedOnly = false)
@@ -151,4 +172,9 @@ private async void ExecuteCenterFab(object obj)
     private static bool IsGaDrawing(Tekla.Structures.Drawing.Drawing drawing) => drawing is GADrawing;
     private static bool IsFabDrawing(Tekla.Structures.Drawing.Drawing drawing) => drawing is AssemblyDrawing;
     private static bool IsAnyTargetDrawing(Tekla.Structures.Drawing.Drawing drawing) => drawing is GADrawing or AssemblyDrawing;
+
+    public void Dispose()
+    {
+        _events.UnRegister();
+    }
 }

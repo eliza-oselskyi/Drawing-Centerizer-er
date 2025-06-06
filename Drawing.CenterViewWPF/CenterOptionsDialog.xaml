@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Center Options" Height="360" Width="400"
         WindowStartupLocation="CenterScreen"
+        Topmost="True"
         ResizeMode="NoResize">
         <Window.Resources>
                 <BooleanToVisibilityConverter x:Key="BoolToVis"></BooleanToVisibilityConverter>
@@ -29,7 +30,7 @@
                         TextWrapping="Wrap"
                         Margin="0,0,0,20"
                         Width="300"/>
-                <Button Content="Center All"
+                <Button Content="Center All Selected"
                         Command="{Binding CenterAllCommand}"
                         Width="200"
                         Height="30"

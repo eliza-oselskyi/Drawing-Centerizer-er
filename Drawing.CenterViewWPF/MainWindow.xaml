@@ -8,19 +8,21 @@
         mc:Ignorable="d"
         Title="Drawing Centerizer-er" 
         WindowStartupLocation="CenterScreen"
-        Height="330" Width="500"
+        Height="280" Width="300"
         Topmost="True"
-        MinHeight="330"
-        MinWidth="500"
-        MaxHeight="330"
-        MaxWidth="500">
+        MinHeight="280"
+        MinWidth="300"
+        MaxHeight="280"
+        MaxWidth="300">
     <Grid Background="{DynamicResource BackgroundBrush}" Margin="10" ShowGridLines="False">
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition> <!--Top spacing-->
             <RowDefinition Height="Auto"></RowDefinition> <!--Centering and moving views controls-->
-            <RowDefinition Height="Auto"></RowDefinition> <!--Info box-->
+            <RowDefinition Height="*"></RowDefinition> <!--Bottom spacing-->
             <RowDefinition Height="Auto"></RowDefinition> <!--Version-->
         </Grid.RowDefinitions>
-        <Grid Margin="0,0,0,5" ShowGridLines="False">
+        
+        <Grid Grid.Row="1" ShowGridLines="False" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition> <!-- Top -->
                 <RowDefinition Height="Auto"></RowDefinition> <!-- Top -->
@@ -31,11 +33,11 @@
             
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
                 <ColumnDefinition Width="30"></ColumnDefinition>
                 <ColumnDefinition Width="50"></ColumnDefinition>
                 <ColumnDefinition Width="30"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
@@ -100,16 +102,7 @@
                               PathData="M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z"></local:IconButton>
         </Grid>
         
-        <!--Test Text Block-->
-        <TextBlock Grid.Row="1"
-                   Name="TestBlock"
-                   Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut magna rhoncus, porta eros vitae, vulputate erat. Vestibulum ante ipsum."
-                   TextWrapping="Wrap"
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Stretch"
-                   Margin="0,0,0,2"
-                   Foreground="{DynamicResource ForegroundBrush}"></TextBlock>
-        <Grid Row="2" Margin="0,5,0,0">
+        <Grid Grid.Row="3" Margin="0,5,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -117,7 +110,7 @@
             
             <!--Version-->
             <TextBlock Grid.Column="0"
-                       Text="v0.1.0"
+                       Text="v2.0.0 TEST"
                        FontSize="11"
                        Foreground="Gray"
                        HorizontalAlignment="Left"

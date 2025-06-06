@@ -13,11 +13,22 @@ namespace Drawing.CenterViewWPF.Core
         
         public ICommand CenterViewCommand { get; set; }
         public ICommand ShiftViewCommand { get; set; }
+        public event EventHandler<bool> QuitRequested;
+        private Tekla.Structures.Drawing.UI.Events _events;
 
         public MainWindowViewModel()
         {
+            InitializeEvents();
+
             CenterViewCommand = new RelayCommand(ExecuteCenterView, _ => true);
             ShiftViewCommand = new RelayCommand(ExecuteShiftView, _ => true);
+        }
+
+        private void InitializeEvents()
+        {
+            _events = new Tekla.Structures.Drawing.UI.Events();
+            _events.DrawingEditorClosed += () => QuitRequested?.Invoke(this, false);
+            _events.Register();
         }
 
         private void ExecuteShiftView(object obj)
@@ -62,6 +73,11 @@ namespace Drawing.CenterViewWPF.Core
         public bool ShowMainWindow()
         {
             return DrawingHandler.Instance.GetActiveDrawing() != null;
+        }
+        
+        public void Dispose()
+        {
+            _events.UnRegister();
         }
     }
 }

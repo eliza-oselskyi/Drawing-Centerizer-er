@@ -13,12 +13,18 @@ namespace Drawing.CenterViewWPF
     public partial class MainWindow 
     {
         public bool IsConnected { get; set; }
+        private readonly MainWindowViewModel _viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
             IsConnected = false;
-            DataContext = new MainWindowViewModel();
+            _viewModel = new MainWindowViewModel();
+            DataContext = _viewModel;
+            _viewModel.QuitRequested += (sender, _) =>
+            {
+             Dispatcher.Invoke(() => Application.Current.Shutdown());
+            };
         }
 
         private void ThemeToggle_CheckChanged(object sender, RoutedEventArgs e)

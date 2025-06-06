@@ -1,5 +1,6 @@
 using System;
 using System.Security.Authentication.ExtendedProtection;
+using System.Threading;
 using System.Windows;
 using Drawing.CenterViewWPF.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,9 +14,20 @@ namespace Drawing.CenterViewWPF
     {
 
         private static IServiceProvider serviceProvider;
+        private static Mutex _mutex;
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            const string appName = "Drawing.CenterViewWPF";
+            _mutex = new Mutex(true, appName, out var createdNew);
+
+            if (!createdNew)
+            {
+                // Another instance is already running
+                MessageBox.Show("Application is already running.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Current.Shutdown();
+                return;
+            }
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             serviceProvider = serviceCollection.BuildServiceProvider();
@@ -32,6 +44,16 @@ namespace Drawing.CenterViewWPF
                 optionsDialog.Show();
             }
             base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (_mutex != null)
+            {
+                _mutex.ReleaseMutex();
+                _mutex.Dispose();
+            }
+            base.OnExit(e);
         }
 
         private void ConfigureServices(ServiceCollection serviceCollection)

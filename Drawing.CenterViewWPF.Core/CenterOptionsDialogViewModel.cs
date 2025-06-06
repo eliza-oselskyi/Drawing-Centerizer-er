@@ -65,6 +65,7 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
         _events = new Tekla.Structures.Drawing.UI.Events();
         _events.DrawingListSelectionChanged += DrawingSelector_SelectionChanged;
         _events.DrawingEditorOpened += () => QuitRequested?.Invoke(this, true);
+        _events.DocumentManagerClosed += DrawingSelector_SelectionChanged;
         _events.Register();
     }
 

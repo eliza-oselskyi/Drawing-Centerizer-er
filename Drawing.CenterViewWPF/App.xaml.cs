@@ -24,7 +24,7 @@ namespace Drawing.CenterViewWPF
             if (!createdNew)
             {
                 // Another instance is already running
-                MessageBox.Show("Application is already running.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Application is already running.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 Current.Shutdown();
                 return;
             }

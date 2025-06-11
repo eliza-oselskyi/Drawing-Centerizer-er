@@ -50,24 +50,31 @@ namespace Drawing.CenterViewWPF.Core
 
         private void ExecuteCenterView(object obj)
         {
-            var drawing = DrawingHandler.Instance.GetActiveDrawing();
-            var drawingModel = new DrawingModel(drawing, true);
-            IViewCenteringStrategy strategy;
+            try
+            {
+                var drawing = DrawingHandler.Instance.GetActiveDrawing();
+                var drawingModel = new DrawingModel(drawing, true);
+                IViewCenteringStrategy strategy;
 
-            if (drawing is GADrawing)
-            {
-                strategy = new GaViewCenteringStrategy();
-            }
-            else if (drawing is AssemblyDrawing)
-            {
-                strategy = new FabViewCenteringStrategy();
-            }
-            else
-            {
-                throw new InvalidTypeException($"drawing ({drawing.GetType().Name}) is not of a supported type");
-            }
+                if (drawing is GADrawing)
+                {
+                    strategy = new GaViewCenteringStrategy();
+                }
+                else if (drawing is AssemblyDrawing)
+                {
+                    strategy = new FabViewCenteringStrategy();
+                }
+                else
+                {
+                    throw new InvalidTypeException($"drawing ({drawing.GetType().Name}) is not of a supported type");
+                }
 
-            drawingModel.CenterDrawing(strategy);
+                drawingModel.CenterDrawing(strategy);
+            }
+            catch (Exception _)
+            {
+                Tekla.Structures.Model.Operations.Operation.DisplayPrompt($"Warning: No drawing is active. Cannot perform operation.");
+            }
         }
 
         public bool ShowMainWindow()

@@ -11,6 +11,7 @@ public class FabViewValidator : IViewValidator
 
         if (view.TeklaView is ContainerView && !view.TeklaView.IsSheet)
         {
+            // probably should just return false here
             return true;
         }
         else

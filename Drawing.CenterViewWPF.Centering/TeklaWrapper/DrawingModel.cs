@@ -44,7 +44,6 @@ public class DrawingModel
             return true;
         }
         else
-
         {
             var count = _views.Count(view => view.IsValid);
             return count == 1;

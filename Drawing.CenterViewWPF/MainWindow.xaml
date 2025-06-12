@@ -121,7 +121,7 @@
             <CheckBox Grid.Column="1"
                       Content="Dark Mode"
                       x:Name="ThemeToggle"
-                      IsChecked="True"
+                      IsChecked="{Binding IsDarkMode}"
                       Checked="ThemeToggle_CheckChanged"
                       Unchecked="ThemeToggle_CheckChanged"
                       VerticalAlignment="Center"></CheckBox>

@@ -1,5 +1,6 @@
 ﻿using Drawing.CenterViewWPF.Centering.Interfaces;
-using Drawing.CenterViewWPF.Centering.TeklaWrapper;
+using Tekla.Structures.Drawing;
+using View = Drawing.CenterViewWPF.Centering.TeklaWrapper.View;
 
 namespace Drawing.CenterViewWPF.Centering.Validation;
 
@@ -7,8 +8,16 @@ public class FabViewValidator : IViewValidator
 {
     public bool IsValid(View view)
     {
-        return view.ViewType is not (Tekla.Structures.Drawing.View.ViewTypes.DetailView
-            or Tekla.Structures.Drawing.View.ViewTypes.SectionView
-            or Tekla.Structures.Drawing.View.ViewTypes.UnknownViewType);
+
+        if (view.TeklaView is ContainerView && !view.TeklaView.IsSheet)
+        {
+            return true;
+        }
+        else
+        {
+            return view.ViewType is not (Tekla.Structures.Drawing.View.ViewTypes.DetailView
+                or Tekla.Structures.Drawing.View.ViewTypes.SectionView
+                or Tekla.Structures.Drawing.View.ViewTypes.UnknownViewType);
+        }
     }
 }

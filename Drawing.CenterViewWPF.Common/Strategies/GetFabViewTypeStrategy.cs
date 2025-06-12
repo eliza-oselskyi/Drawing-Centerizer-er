@@ -6,9 +6,16 @@ namespace Drawing.CenterViewWPF.Common.Strategies;
 
 public class GetFabViewTypeStrategy : IGetViewTypeStrategy
 {
-    public Enum GetViewType(View view, out string typeString)
+    public Enum GetViewType(ViewBase view, out string typeString)
     {
-        typeString = "A";
-        return view.ViewType;
+        if (!view.IsSheet && view is ContainerView)
+        {
+            typeString = "A";
+            return View.ViewTypes.TopView;
+        }
+        else {
+            typeString = "A";
+            return ((View)view).ViewType;
+        }
     }
 }

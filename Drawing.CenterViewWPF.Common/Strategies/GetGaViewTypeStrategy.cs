@@ -7,7 +7,7 @@ namespace Drawing.CenterViewWPF.Common.Strategies;
     
 public class GetGaViewTypeStrategy : IGetViewTypeStrategy
 {
-    public Enum GetViewType(View view, out string typeString)
+    public Enum GetViewType(ViewBase view, out string typeString)
     {
         typeString = "G";
         var viewType = string.Empty;

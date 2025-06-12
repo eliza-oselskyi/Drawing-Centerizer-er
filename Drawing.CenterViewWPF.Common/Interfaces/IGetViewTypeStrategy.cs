@@ -5,5 +5,5 @@ namespace Drawing.CenterViewWPF.Common.Interfaces;
 
 public interface IGetViewTypeStrategy
 {
-    Enum GetViewType(View view, out string typeString);
+    Enum GetViewType(ViewBase view, out string typeString);
 }

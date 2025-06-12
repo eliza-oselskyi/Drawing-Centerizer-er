@@ -6,6 +6,7 @@ using Drawing.CenterViewWPF.Common;
 using Drawing.CenterViewWPF.Common.Enums;
 using Drawing.CenterViewWPF.Common.Interfaces;
 using Drawing.CenterViewWPF.Common.Strategies;
+using Tekla.Structures.Drawing;
 
 namespace Drawing.CenterViewWPF.Centering.TeklaWrapper;
 
@@ -29,15 +30,32 @@ public class DrawingModel
 
     private bool IsValidToCenter()
     {
-        var count = _views.Count(view => view.IsValid);
-        return count == 1;
+        if (_views.Exists(v => !v.TeklaView.IsSheet && v.TeklaView is ContainerView))
+        {
+            foreach (var view in _views.ToList())
+            {
+                if (view.TeklaView is ContainerView containerView)
+                {
+                    // Ensure the container view is removed
+                    _views.Remove(view);
+                }
+            }
+
+            return true;
+        }
+        else
+
+        {
+            var count = _views.Count(view => view.IsValid);
+            return count == 1;
+        }
     }
 
     private void GetAndAddViews()
     {
         var v = TeklaDrawing.GetSheet().GetViews();
         var s = GetViewTypeStrategy();
-        while (v.MoveNext()) _views.Add(new View((Tekla.Structures.Drawing.View)v.Current, s));
+        while (v.MoveNext()) _views.Add(new View((Tekla.Structures.Drawing.ViewBase)v.Current, s));
     }
 
     private IGetViewTypeStrategy GetViewTypeStrategy()

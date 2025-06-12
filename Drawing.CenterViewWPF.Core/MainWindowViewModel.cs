@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using Drawing.CenterViewWPF.Centering.Interfaces;
 using Drawing.CenterViewWPF.Centering.Strategies;
@@ -43,9 +44,10 @@ namespace Drawing.CenterViewWPF.Core
 
             bool isBigShift = direction.StartsWith("big", StringComparison.OrdinalIgnoreCase);
             string actualDirection = isBigShift ? direction.Substring(3) : direction;
-            
-            views[0].Shift(actualDirection, isBigShift);
-            views[0].TeklaView.Modify();
+
+            var view = views.Where(v => v.IsValid).Select(v => v).ToList();
+            view[0].Shift(actualDirection, isBigShift);
+            view[0].TeklaView.Modify();
         }
 
         private void ExecuteCenterView(object obj)

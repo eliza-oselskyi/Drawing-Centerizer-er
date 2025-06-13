@@ -6,112 +6,125 @@
         xmlns:local="clr-namespace:Drawing.CenterViewWPF"
         Background="{DynamicResource BackgroundBrush}"
         mc:Ignorable="d"
-        Title="Drawing Centerizer-er" Height="330" Width="500"
+        Title="Drawing Centerizer-er"
+        WindowStartupLocation="CenterScreen"
+        Height="280" Width="300"
         Topmost="True"
-        MinHeight="330"
-        MinWidth="500"
-        MaxHeight="330"
-        MaxWidth="500">
-    <Grid Background="{DynamicResource BackgroundBrush}" Margin="10" ShowGridLines="True">
+        MinHeight="280"
+        MinWidth="300"
+        MaxHeight="280"
+        MaxWidth="300">
+    <Grid Background="{DynamicResource BackgroundBrush}" Margin="10" ShowGridLines="False">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition> <!--Centering and moving views controls-->
-            <RowDefinition Height="Auto"></RowDefinition> <!--Info box-->
-            <RowDefinition Height="Auto"></RowDefinition> <!--Version-->
+            <RowDefinition Height="*" /> <!--Top spacing-->
+            <RowDefinition Height="Auto" /> <!--Centering and moving views controls-->
+            <RowDefinition Height="*" /> <!--Bottom spacing-->
+            <RowDefinition Height="Auto" /> <!--Version-->
         </Grid.RowDefinitions>
-        <Grid Margin="0,0,0,5" ShowGridLines="False">
+
+        <Grid Grid.Row="1" ShowGridLines="False" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition> <!-- Top -->
-                <RowDefinition Height="Auto"></RowDefinition> <!-- Top -->
-                <RowDefinition Height="Auto"></RowDefinition> <!-- Middle -->
-                <RowDefinition Height="Auto"></RowDefinition> <!-- Bottom -->
-                <RowDefinition Height="Auto"></RowDefinition> <!-- Bottom -->
+                <RowDefinition Height="Auto" /> <!-- Top -->
+                <RowDefinition Height="Auto" /> <!-- Top -->
+                <RowDefinition Height="Auto" /> <!-- Middle -->
+                <RowDefinition Height="Auto" /> <!-- Bottom -->
+                <RowDefinition Height="Auto" /> <!-- Bottom -->
             </Grid.RowDefinitions>
-            
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="30"></ColumnDefinition>
-                <ColumnDefinition Width="50"></ColumnDefinition>
-                <ColumnDefinition Width="30"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
+
             <!-- Shift up small button -->
-            <local:IconButton Grid.Row="1" Grid.Column="3" 
-                              PathData="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z" ></local:IconButton>
+            <local:IconButton Grid.Row="1" Grid.Column="3"
+                              Command="{Binding ShiftViewCommand}"
+                              CommandParameter="up"
+                              PathData="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z" />
             <!-- Center button -->
             <local:IconButton Grid.Row="2" Grid.Column="3" Height="40"
-                              PathData="M12 8C8.44 8 6.65 12.31 9.17 14.83C11.69 17.35 16 15.56 16 12C16 9.79 14.21 8 12 8M5 15H3V19C3 20.1 3.9 21 5 21H9V19H5M5 5H9V3H5C3.9 3 3 3.9 3 5V9H5M19 3H15V5H19V9H21V5C21 3.9 20.1 3 19 3M19 19H15V21H19C20.1 21 21 20.1 21 19V15H19"></local:IconButton>
-            
+                              Command="{Binding CenterViewCommand}"
+                              PathData="M12 8C8.44 8 6.65 12.31 9.17 14.83C11.69 17.35 16 15.56 16 12C16 9.79 14.21 8 12 8M5 15H3V19C3 20.1 3.9 21 5 21H9V19H5M5 5H9V3H5C3.9 3 3 3.9 3 5V9H5M19 3H15V5H19V9H21V5C21 3.9 20.1 3 19 3M19 19H15V21H19C20.1 21 21 20.1 21 19V15H19" />
+
             <!-- Shift down small button -->
             <local:IconButton Grid.Row="3" Grid.Column="3"
-                              PathData="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></local:IconButton>
-            
+                              Command="{Binding ShiftViewCommand}"
+                              CommandParameter="down"
+                              PathData="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+
             <!-- Shift Left small button -->
-            <local:IconButton Grid.Row="2" Grid.Column="2" 
+            <local:IconButton Grid.Row="2" Grid.Column="2"
+                              Command="{Binding ShiftViewCommand}"
+                              CommandParameter="left"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Right"
-                              PathData="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></local:IconButton>
-            
+                              PathData="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+
             <!-- Shift Right small button -->
-            <local:IconButton Grid.Row="2" Grid.Column="4" 
+            <local:IconButton Grid.Row="2" Grid.Column="4"
+                              Command="{Binding ShiftViewCommand}"
+                              CommandParameter="right"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
-                              PathData="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></local:IconButton>
-            
-            <!-- Shift Up big button --> 
+                              PathData="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+
+            <!-- Shift Up big button -->
             <local:IconButton Grid.Row="0" Grid.Column="3"
+                              Command="{Binding ShiftViewCommand}"
+                              CommandParameter="bigUp"
                               Width="35"
-                              PathData="M7.41,18.41L6,17L12,11L18,17L16.59,18.41L12,13.83L7.41,18.41M7.41,12.41L6,11L12,5L18,11L16.59,12.41L12,7.83L7.41,12.41Z"></local:IconButton>
-            
-            <!-- Shift Down big button --> 
+                              PathData="M7.41,18.41L6,17L12,11L18,17L16.59,18.41L12,13.83L7.41,18.41M7.41,12.41L6,11L12,5L18,11L16.59,12.41L12,7.83L7.41,12.41Z" />
+
+            <!-- Shift Down big button -->
             <local:IconButton Grid.Row="4" Grid.Column="3"
+                              Command="{Binding ShiftViewCommand}"
+                              CommandParameter="bigDown"
                               Width="35"
-                              PathData="M16.59,5.59L18,7L12,13L6,7L7.41,5.59L12,10.17L16.59,5.59M16.59,11.59L18,13L12,19L6,13L7.41,11.59L12,16.17L16.59,11.59Z"></local:IconButton>
-            
+                              PathData="M16.59,5.59L18,7L12,13L6,7L7.41,5.59L12,10.17L16.59,5.59M16.59,11.59L18,13L12,19L6,13L7.41,11.59L12,16.17L16.59,11.59Z" />
+
             <!-- Shift Left big button -->
             <local:IconButton Grid.Row="2" Grid.Column="1"
+                              Command="{Binding ShiftViewCommand}"
+                              CommandParameter="bigLeft"
                               HorizontalAlignment="Right"
-                              PathData="M18.41,7.41L17,6L11,12L17,18L18.41,16.59L13.83,12L18.41,7.41M12.41,7.41L11,6L5,12L11,18L12.41,16.59L7.83,12L12.41,7.41Z"></local:IconButton>
-            
+                              PathData="M18.41,7.41L17,6L11,12L17,18L18.41,16.59L13.83,12L18.41,7.41M12.41,7.41L11,6L5,12L11,18L12.41,16.59L7.83,12L12.41,7.41Z" />
+
             <!-- Shift Right big button -->
             <local:IconButton Grid.Row="2" Grid.Column="5"
+                              Command="{Binding ShiftViewCommand}"
+                              CommandParameter="bigRight"
                               HorizontalAlignment="Left"
-                              PathData="M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z"></local:IconButton>
+                              PathData="M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z" />
         </Grid>
-        
-        <!--Test Text Block-->
-        <TextBlock Grid.Row="1"
-                   Name="TestBlock"
-                   Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut magna rhoncus, porta eros vitae, vulputate erat. Vestibulum ante ipsum."
-                   TextWrapping="Wrap"
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Stretch"
-                   Margin="0,0,0,2"
-                   Foreground="{DynamicResource ForegroundBrush}"></TextBlock>
-        <Grid Row="2" Margin="0,5,0,0">
+
+        <Grid Grid.Row="3" Margin="0,5,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            
+
             <!--Version-->
             <TextBlock Grid.Column="0"
-                       Text="v0.1.0"
+                       Text="v2.1.1"
                        FontSize="11"
                        Foreground="Gray"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
-                       ToolTip="Created By Eliza Oselskyi"></TextBlock>
-            
+                       ToolTip="Created By Eliza Oselskyi" />
+
             <!--Theme toggle-->
             <CheckBox Grid.Column="1"
                       Content="Dark Mode"
                       x:Name="ThemeToggle"
+                      IsChecked="{Binding IsDarkMode}"
                       Checked="ThemeToggle_CheckChanged"
                       Unchecked="ThemeToggle_CheckChanged"
-                      VerticalAlignment="Center"></CheckBox>
+                      VerticalAlignment="Center" />
         </Grid>
     </Grid>
 </Window>

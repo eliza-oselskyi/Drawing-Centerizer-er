@@ -16,6 +16,11 @@ namespace Drawing.CenterViewWPF
         private static IServiceProvider serviceProvider;
         private static Mutex _mutex;
 
+        /// <summary>
+        /// Handles the startup logic for the application, including initialization of services,
+        /// ensuring single-instance execution, and displaying the appropriate application window.
+        /// </summary>
+        /// <param name="e">Provides data for the <see cref="Application.Startup"/> event.</param>
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -65,6 +70,10 @@ namespace Drawing.CenterViewWPF
             base.OnExit(e);
         }
 
+        /// <summary>
+        /// Configures and registers service dependencies for the application using the specified service collection.
+        /// </summary>
+        /// <param name="serviceCollection">A collection of service descriptors where services will be registered for dependency injection.</param>
         private void ConfigureServices(ServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<MainWindow>();

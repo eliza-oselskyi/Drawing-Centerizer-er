@@ -27,8 +27,8 @@ namespace Drawing.CenterViewWPF.UnitTests
                 v.Modify();
 
                 var drawingModel = new DrawingModel(d);
-                var view = new Drawing.CenterViewWPF.Centering.TeklaWrapper.View(v, new GetGaViewTypeStrategy());
-                
+                var view = new Centering.TeklaWrapper.View(v, new GetGaViewTypeStrategy());
+
                 Assert.That(drawingModel.ToString() == "G", Is.True, "Should be a GA drawing");
                 Assert.That(drawingModel.IsValid, Is.True, "Should be valid");
             }
@@ -37,7 +37,7 @@ namespace Drawing.CenterViewWPF.UnitTests
                 Assert.Inconclusive("Connection to Tekla Structures not established.");
             }
         }
-        
+
         [TestCase("TEST")]
         [TestCase("")]
         public void IsNotValidToCenter_InvalidGaDrawing_ReturnsFalse(string viewType)
@@ -51,8 +51,8 @@ namespace Drawing.CenterViewWPF.UnitTests
                 v.Modify();
 
                 var drawingModel = new DrawingModel(d);
-                var view = new Drawing.CenterViewWPF.Centering.TeklaWrapper.View(v, new GetGaViewTypeStrategy());
-                
+                var view = new Centering.TeklaWrapper.View(v, new GetGaViewTypeStrategy());
+
                 Assert.That(drawingModel.ToString() == "G", Is.True, "Should be a GA drawing");
                 Assert.That(drawingModel.IsValid, Is.False, "Should be invalid");
             }
@@ -61,7 +61,7 @@ namespace Drawing.CenterViewWPF.UnitTests
                 Assert.Inconclusive("Connection to Tekla Structures not established.");
             }
         }
-        
+
         [TestCase("TEST")]
         [TestCase("")]
         public void IsNotValidToCenter_GaDrawingTryCentering_ReturnsFalse(string viewType)
@@ -75,8 +75,8 @@ namespace Drawing.CenterViewWPF.UnitTests
                 v.Modify();
 
                 var drawingModel = new DrawingModel(d);
-                var view = new Drawing.CenterViewWPF.Centering.TeklaWrapper.View(v, new GetGaViewTypeStrategy());
-                
+                var view = new Centering.TeklaWrapper.View(v, new GetGaViewTypeStrategy());
+
                 Assert.That(drawingModel.ToString() == "G", Is.True, "Should be a GA drawing");
                 Assert.That(drawingModel.CenterDrawing(new GaViewCenteringStrategy()), Is.False, "Should be invalid");
             }
@@ -85,7 +85,7 @@ namespace Drawing.CenterViewWPF.UnitTests
                 Assert.Inconclusive("Connection to Tekla Structures not established.");
             }
         }
-        
+
         [TestCase("Cross Section")]
         [TestCase("Crane Beam Plan")]
         public void IsValidToCenter_GaDrawingTryCentering_ReturnsTrue(string viewType)
@@ -99,8 +99,8 @@ namespace Drawing.CenterViewWPF.UnitTests
                 v.Modify();
 
                 var drawingModel = new DrawingModel(d);
-                var view = new Drawing.CenterViewWPF.Centering.TeklaWrapper.View(v, new GetGaViewTypeStrategy());
-                
+                var view = new Centering.TeklaWrapper.View(v, new GetGaViewTypeStrategy());
+
                 Assert.That(drawingModel.ToString() == "G", Is.True, "Should be a GA drawing");
                 Assert.That(drawingModel.CenterDrawing(new GaViewCenteringStrategy()), Is.True, "Should be valid");
             }
@@ -109,10 +109,11 @@ namespace Drawing.CenterViewWPF.UnitTests
                 Assert.Inconclusive("Connection to Tekla Structures not established.");
             }
         }
-        
+
         [TestCase("Cross Section", "Crane Beam Plan")]
         [TestCase("Crane Beam Plan", "Cross Section")]
-        public void IsNotValidToCenter_TwoValidViews_GaDrawingTryCentering_ReturnsFalse(string viewType, string viewType2)
+        public void IsNotValidToCenter_TwoValidViews_GaDrawingTryCentering_ReturnsFalse(string viewType,
+            string viewType2)
         {
             try
             {
@@ -127,7 +128,7 @@ namespace Drawing.CenterViewWPF.UnitTests
                 v2.Modify();
 
                 var drawingModel = new DrawingModel(d);
-                
+
                 Assert.That(drawingModel.ToString() == "G", Is.True, "Should be a GA drawing");
                 Assert.That(drawingModel.CenterDrawing(new GaViewCenteringStrategy()), Is.False, "Should be invalid");
             }
@@ -154,8 +155,8 @@ namespace Drawing.CenterViewWPF.UnitTests
                 beam.Insert();
                 var assembly = beam.GetAssembly();
                 var d = new AssemblyDrawing(assembly.Identifier);
-                var coordinateSystem = new CoordinateSystem(new Point(), new Vector(1,0,0), new Vector(0,1,0));
-                var v = new Tekla.Structures.Drawing.View(d.GetSheet(),
+                var coordinateSystem = new CoordinateSystem(new Point(), new Vector(1, 0, 0), new Vector(0, 1, 0));
+                var v = new View(d.GetSheet(),
                     coordinateSystem,
                     coordinateSystem,
                     new AABB(new Point(0,
@@ -168,7 +169,7 @@ namespace Drawing.CenterViewWPF.UnitTests
                 var drawingModel = new DrawingModel(d);
                 beam.Delete();
                 model.CommitChanges();
-                
+
                 Assert.That(drawingModel.ToString() == "A", Is.True, "Should be a Fab drawing");
                 Assert.That(drawingModel.CenterDrawing(new FabViewCenteringStrategy()), Is.True, "Should be valid");
             }
@@ -186,11 +187,11 @@ namespace Drawing.CenterViewWPF.UnitTests
             if (selectedDrawings.GetSize() != 1) Assert.Inconclusive("More than one drawing selected.");
             selectedDrawings.MoveNext();
             if (selectedDrawings.Current.GetType() != typeof(GADrawing)) Assert.Inconclusive("Should be a GA drawing.");
-            
+
             var drawingModel = new DrawingModel(selectedDrawings.Current);
             drawingModel.CenterDrawing(new GaViewCenteringStrategy());
         }
-        
+
         [Test]
         public void TryCentering_FabDrawingValid()
         {
@@ -198,8 +199,9 @@ namespace Drawing.CenterViewWPF.UnitTests
 
             if (selectedDrawings.GetSize() != 1) Assert.Inconclusive("More than one drawing selected.");
             selectedDrawings.MoveNext();
-            if (selectedDrawings.Current.GetType() != typeof(AssemblyDrawing)) Assert.Inconclusive("Should be a Fab drawing.");
-            
+            if (selectedDrawings.Current.GetType() != typeof(AssemblyDrawing))
+                Assert.Inconclusive("Should be a Fab drawing.");
+
             var drawingModel = new DrawingModel(selectedDrawings.Current);
             drawingModel.CenterDrawing(new FabViewCenteringStrategy());
         }

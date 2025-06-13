@@ -5,8 +5,22 @@ using Drawing.CenterViewWPF.Common.Enums;
 
 namespace Drawing.CenterViewWPF.Centering.Strategies;
 
+/// <summary>
+/// Represents a strategy for centering General Arrangement (GA) views in a drawing application.
+/// </summary>
+/// <remarks>
+/// This strategy is specifically designed to align the view origin and center the content
+/// within a given sheet for General Arrangement drawings. It adjusts the view's position
+/// based on the sheet dimensions and offsets determined by the view type.
+/// </remarks>
 public class GaViewCenteringStrategy : IViewCenteringStrategy
 {
+    /// <summary>
+    /// Centers the provided view based on the specified parameters.
+    /// </summary>
+    /// <param name="view">The view to be centered.</param>
+    /// <param name="isGuiMode">Indicates whether the operation should be performed in GUI mode. Defaults to false.</param>
+    /// <returns>Returns true if the centering operation was successful; otherwise, false.</returns>
     public bool Center(View view, bool isGuiMode = false)
     {
         var sheet = view.TeklaView.GetDrawing().GetSheet();

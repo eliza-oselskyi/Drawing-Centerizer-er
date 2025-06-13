@@ -3,7 +3,9 @@ using Drawing.CenterViewWPF.Centering.TeklaWrapper;
 
 namespace Drawing.CenterViewWPF.Centering.Validation;
 
-
+/// <summary>
+/// The ViewChecker class is responsible for validating a drawing view based on a provided view validation strategy.
+/// </summary>
 public class ViewChecker
 {
 

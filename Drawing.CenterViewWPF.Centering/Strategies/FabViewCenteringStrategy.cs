@@ -7,6 +7,11 @@ using View = Drawing.CenterViewWPF.Centering.TeklaWrapper.View;
 
 namespace Drawing.CenterViewWPF.Centering.Strategies;
 
+/// <summary>
+/// Provides a centering strategy for Fab views in Tekla Structures drawings.
+/// This class implements the IViewCenteringStrategy interface to adjust the
+/// placement of views to align them relative to the center of the drawing sheet.
+/// </summary>
 public class FabViewCenteringStrategy : IViewCenteringStrategy
 {
     private Vector GetDimensionVector(Tekla.Structures.Drawing.View view)
@@ -23,6 +28,12 @@ public class FabViewCenteringStrategy : IViewCenteringStrategy
 
         return dimensionList.Count == 1 ? dimensionList[0].UpDirection : new Vector();
     }
+
+    /// Centers the given view on a drawing sheet by adjusting its origin and modifying its position.
+    /// Optionally operates in GUI or non-GUI mode based on the provided parameter.
+    /// <param name="view">The target view to be centered.</param>
+    /// <param name="isGuiMode">Determines whether the centering is performed in GUI mode. Defaults to false.</param>
+    /// <return>Returns true if the view was successfully centered, or false if no modifications were necessary.</return>
     public bool Center(View view, bool isGuiMode = false)
     {
         const double DIMENSION_LINE_HEIGHT = 72;

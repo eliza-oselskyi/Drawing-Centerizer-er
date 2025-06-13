@@ -95,7 +95,8 @@ public class DrawingModel
         {
             _drawingOperator.SetUp(this);
             var result = strategy.Center(view, _isGuiMode);
-            _drawingOperator.SetUda(this, result ? "C" : "NC");
+            //_drawingOperator.SetUda(this, result ? "C" : "NC");
+            _drawingOperator.SetCommitMessage(this, $"Centering {view.ViewType}");
             if (!_isGuiMode) _drawingOperator.SaveAndClose(this);
         }
 

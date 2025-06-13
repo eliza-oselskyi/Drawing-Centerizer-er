@@ -52,6 +52,11 @@ public class DrawingOperator : IDrawingOperation
         drawingModel.TeklaDrawing.CommitChanges($"Change title_3: {drawingModel.TeklaDrawing.Title3} to {uda}");
     }
 
+    public void SetCommitMessage(DrawingModel drawingModel, string commitMessage)
+    {
+        drawingModel.TeklaDrawing.CommitChanges(commitMessage);
+    }
+
     /// <summary>
     ///     Saves the currently active Tekla drawing and closes it if it is open.
     /// </summary>

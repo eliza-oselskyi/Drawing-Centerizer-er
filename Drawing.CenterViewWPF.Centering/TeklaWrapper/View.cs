@@ -81,5 +81,6 @@ public class View
         }
 
         TeklaView.Modify();
+        TeklaView.GetDrawing().CommitChanges($"Shift {direction} {shiftAmount}");
     }
 }

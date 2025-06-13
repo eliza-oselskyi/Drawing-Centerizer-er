@@ -14,6 +14,10 @@ using Tekla.Structures.Drawing;
 
 namespace Drawing.CenterViewWPF.Core
 {
+    /// <summary>
+    /// Represents the ViewModel for the main window in the application.
+    /// Implements INotifyPropertyChanged for property change notifications.
+    /// </summary>
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         
@@ -25,6 +29,11 @@ namespace Drawing.CenterViewWPF.Core
         private bool _isDarkMode;
         private bool _stayOpen;
 
+        /// <summary>
+        /// Represents the ViewModel for the main application window in the Drawing.CenterViewWPF project.
+        /// Handles commands, configuration loading, event initialization, and interaction logic.
+        /// Implements the INotifyPropertyChanged interface to provide property change notifications.
+        /// </summary>
         public MainWindowViewModel()
         {
             InitializeEvents();
@@ -34,6 +43,10 @@ namespace Drawing.CenterViewWPF.Core
             ShiftViewCommand = new RelayCommand(ExecuteShiftView, _ => true);
         }
 
+        /// <summary>
+        /// Loads application configuration settings using the ConfigurationManager class.
+        /// Initializes property values such as IsDarkMode and StayOpen based on the loaded configuration.
+        /// </summary>
         private void LoadConfiguration()
         {
             ConfigurationManager.LoadConfiguration();
@@ -41,6 +54,11 @@ namespace Drawing.CenterViewWPF.Core
             _stayOpen = ConfigurationManager.Current.StayOpen;
         }
 
+        /// <summary>
+        /// Initializes event handlers related to the Tekla Structures drawing editor.
+        /// Registers the events and attaches custom logic to handle specific events such as when the drawing editor is closed.
+        /// Ensures proper event management for application behavior.
+        /// </summary>
         private void InitializeEvents()
         {
             _events = new Tekla.Structures.Drawing.UI.Events();
@@ -54,6 +72,14 @@ namespace Drawing.CenterViewWPF.Core
             _events.Register();
         }
 
+        /// <summary>
+        /// Executes the logic to shift the current active drawing view in a specified direction.
+        /// The shift can be a large or small movement depending on the specified direction string.
+        /// </summary>
+        /// <param name="obj">
+        /// Represents the direction of the shift as a string.
+        /// Prefix "big" in the direction string indicates a larger shift distance.
+        /// </param>
         private void ExecuteShiftView(object obj)
         {
             if (obj is not string direction) return;
@@ -72,6 +98,13 @@ namespace Drawing.CenterViewWPF.Core
             view[0].TeklaView.Modify();
         }
 
+        /// <summary>
+        /// Executes the logic to center the view for an active drawing in Tekla Structures.
+        /// Selects the appropriate centering strategy based on the type of the active drawing
+        /// (e.g., General Arrangement or Assembly drawing) and performs the centering operation.
+        /// Displays a warning if no active drawing is found.
+        /// </summary>
+        /// <param name="obj">An optional parameter passed by the command, which is not utilized in the implementation.</param>
         private void ExecuteCenterView(object obj)
         {
             try
@@ -101,6 +134,11 @@ namespace Drawing.CenterViewWPF.Core
             }
         }
 
+        /// <summary>
+        /// Determines whether the main window should be displayed based on the active drawing status.
+        /// Returns true if there is an active drawing in the application that can be handled; otherwise, false.
+        /// </summary>
+        /// <returns>A boolean indicating whether the main window should be displayed.</returns>
         public bool ShowMainWindow()
         {
             return DrawingHandler.Instance.GetActiveDrawing() != null;

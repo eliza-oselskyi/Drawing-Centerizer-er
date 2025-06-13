@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -167,11 +168,25 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
     {
         CloseRequested?.Invoke(this, true);
 
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+        
         await Task.Run(() =>
         {
             var drawings = useSelectedOnly
                 ? DrawingHandler.Instance.GetDrawingSelector().GetSelected()
                 : DrawingHandler.Instance.GetDrawings();
+            
+            var totalMatchingDrawings = 0;
+            var tempDrawings = drawings;
+            while (tempDrawings.MoveNext())
+            {
+                if (drawingFilter(tempDrawings.Current))
+                {
+                    totalMatchingDrawings++;
+                }
+            }
+            drawings.Reset();
 
             var count = 1;
             while (drawings.MoveNext())
@@ -180,15 +195,16 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
                 if (!drawingFilter(curr)) continue;
 
                 var drawing = new DrawingModel(curr);
-                SendToTeklaDialog($"Centering drawing {count} of {drawings.GetSize()}...");
+                SendToTeklaDialog($"Centering drawing {count} of {totalMatchingDrawings}...");
                 count++;
 
                 var centeringStrategy = strategy ?? GetAppropriateStrategy(curr);
                 drawing.CenterDrawing(centeringStrategy);
             }
         });
-
-        SendToTeklaDialog("Done.");
+        
+        stopwatch.Stop();
+        SendToTeklaDialog($@"Done. {stopwatch.Elapsed.ToString(@"mm\:ss\:mss")}");
         QuitRequested?.Invoke(this, false);
     }
 

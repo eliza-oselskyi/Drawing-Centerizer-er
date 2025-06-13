@@ -1,7 +1,7 @@
 ﻿namespace Drawing.CenterViewWPF.Core.Configuration;
 
 /// <summary>
-/// Represents the user configuration settings for the application.
+///     Represents the user configuration settings for the application.
 /// </summary>
 public class UserConfiguration
 {

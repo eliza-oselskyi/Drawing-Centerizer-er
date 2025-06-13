@@ -3,7 +3,7 @@
 namespace Drawing.CenterViewWPF.Centering.Interfaces;
 
 /// <summary>
-/// Represents a strategy for centering a view in a drawing.
+///     Represents a strategy for centering a view in a drawing.
 /// </summary>
 public interface IViewCenteringStrategy
 {

@@ -7,9 +7,6 @@ namespace Drawing.CenterViewWPF.Core.Commands;
 /// Implements the ICommand interface to support data binding in a UI framework.
 public class RelayCommand : ICommand
 {
-    private Action<object> _Execute { get; set; }
-    private Predicate<object> _CanExecute { get; set; }
-
     /// Represents a command that can be bound to user interface elements
     /// to execute an action and determine whether it can be executed.
     /// The class allows encapsulation of an action and provides support
@@ -21,10 +18,16 @@ public class RelayCommand : ICommand
         _CanExecute = canExecute;
     }
 
+    private Action<object> _Execute { get; }
+    private Predicate<object> _CanExecute { get; }
+
     /// Determines whether the command can execute in its current state.
     /// This method evaluates a predicate function provided during the initialization
     /// of the command and returns its result.
-    /// <param name="parameter">An optional parameter used by the predicate function to evaluate whether the command can execute.</param>
+    /// <param name="parameter">
+    ///     An optional parameter used by the predicate function to evaluate whether the command can
+    ///     execute.
+    /// </param>
     /// <return>Returns true if the command can execute; otherwise, returns false.</return>
     public bool CanExecute(object parameter)
     {
@@ -33,7 +36,10 @@ public class RelayCommand : ICommand
 
     /// Executes the command logic associated with this instance.
     /// Invokes the action provided during the initialization of the command.
-    /// <param name="parameter">An optional parameter passed to the action method that defines the execution logic of the command.</param>
+    /// <param name="parameter">
+    ///     An optional parameter passed to the action method that defines the execution logic of the
+    ///     command.
+    /// </param>
     public void Execute(object parameter)
     {
         _Execute(parameter);

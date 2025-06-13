@@ -3,7 +3,7 @@
 namespace Drawing.CenterViewWPF.Common.Enums;
 
 /// <summary>
-/// Enum representing various types of General Arrangement (GA) drawing views used in a drawing package.
+///     Enum representing various types of General Arrangement (GA) drawing views used in a drawing package.
 /// </summary>
 public enum GaDrawingViewType
 {

@@ -3,7 +3,7 @@
 namespace Drawing.CenterViewWPF.Centering.Interfaces;
 
 /// <summary>
-/// Provides an interface for performing drawing operations within the Tekla Structures environment.
+///     Provides an interface for performing drawing operations within the Tekla Structures environment.
 /// </summary>
 public interface IDrawingOperation
 {

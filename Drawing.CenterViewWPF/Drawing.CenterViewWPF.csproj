@@ -38,19 +38,19 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="Microsoft.Bcl.AsyncInterfaces">
-          <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.6\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.6\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.DependencyInjection">
-          <HintPath>..\..\..\..\AppData\Local\JetBrains\Installations\Rider251\lib\ReSharperHost\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+            <HintPath>..\..\..\..\AppData\Local\JetBrains\Installations\Rider251\lib\ReSharperHost\Microsoft.Extensions.DependencyInjection.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
-          <HintPath>..\..\..\..\AppData\Local\JetBrains\Installations\Rider251\lib\ReSharperHost\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+            <HintPath>..\..\..\..\AppData\Local\JetBrains\Installations\Rider251\lib\ReSharperHost\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
         </Reference>
-        <Reference Include="mscorlib" />
+        <Reference Include="mscorlib"/>
         <Reference Include="System"/>
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
-        <Reference Include="System.Web.Services" />
+        <Reference Include="System.Web.Services"/>
         <Reference Include="System.Xml"/>
         <Reference Include="System.Xaml">
             <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -72,17 +72,17 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Compile Include="IconButton.cs" />
+        <Compile Include="IconButton.cs"/>
         <Compile Include="MainWindow.xaml.cs">
             <DependentUpon>MainWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Page Include="CenterOptionsDialog.xaml" />
-        <Page Include="Themes\Generic.xaml" />
+        <Page Include="CenterOptionsDialog.xaml"/>
+        <Page Include="Themes\Generic.xaml"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CenterOptionsDialog.xaml.cs">
-          <DependentUpon>CenterOptionsDialog.xaml</DependentUpon>
+            <DependentUpon>CenterOptionsDialog.xaml</DependentUpon>
         </Compile>
         <Compile Include="Properties\AssemblyInfo.cs">
             <SubType>Code</SubType>
@@ -101,17 +101,17 @@
         <None Include="App.config"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Drawing.CenterViewWPF.Core\Drawing.CenterViewWPF.Core.csproj">
-        <Project>{3739e09b-2cdf-42de-99a7-c3df83971c1c}</Project>
-        <Name>Drawing.CenterViewWPF.Core</Name>
-      </ProjectReference>
+        <ProjectReference Include="..\Drawing.CenterViewWPF.Core\Drawing.CenterViewWPF.Core.csproj">
+            <Project>{3739e09b-2cdf-42de-99a7-c3df83971c1c}</Project>
+            <Name>Drawing.CenterViewWPF.Core</Name>
+        </ProjectReference>
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.4" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
-      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
-      <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+        <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.4"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4"/>
+        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2"/>
+        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>

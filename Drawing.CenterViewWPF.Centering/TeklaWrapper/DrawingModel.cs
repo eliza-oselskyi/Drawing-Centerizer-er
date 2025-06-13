@@ -11,17 +11,14 @@ using Tekla.Structures.Drawing;
 namespace Drawing.CenterViewWPF.Centering.TeklaWrapper;
 
 /// <summary>
-/// Represents a model for interacting with Tekla Structures drawings, encapsulating
-/// drawing information, its type, and the validity of its state for centering operations.
+///     Represents a model for interacting with Tekla Structures drawings, encapsulating
+///     drawing information, its type, and the validity of its state for centering operations.
 /// </summary>
 public class DrawingModel
 {
-    public Tekla.Structures.Drawing.Drawing TeklaDrawing { get; private set; }
-    public DrawingType DrawingType { get; private set; }
-    private List<View> _views = new();
     private readonly DrawingOperator _drawingOperator = new();
-    public bool IsValid {get; private set;}
-    private bool _isGuiMode;
+    private readonly bool _isGuiMode;
+    private readonly List<View> _views = new();
 
     /// Represents a wrapper around a Tekla drawing, providing properties and methods
     /// for processing and manipulating drawing views and centering strategies.
@@ -34,25 +31,25 @@ public class DrawingModel
         IsValid = IsValidToCenter();
     }
 
+    public Tekla.Structures.Drawing.Drawing TeklaDrawing { get; }
+    public DrawingType DrawingType { get; }
+    public bool IsValid { get; }
+
     /// Determines if the drawing is valid for centering based on the views it contains
     /// and their associated characteristics. A drawing is considered valid for centering
     /// if it satisfies specific conditions related to the number or type of views it holds.
     /// Invalid or redundant container views are removed during this validation process.
     /// <returns>
-    /// True if the drawing satisfies the conditions to be centered; otherwise, false.
+    ///     True if the drawing satisfies the conditions to be centered; otherwise, false.
     /// </returns>
     private bool IsValidToCenter()
     {
         if (_views.Exists(v => !v.TeklaView.IsSheet && v.TeklaView is ContainerView))
         {
             foreach (var view in _views.ToList())
-            {
                 if (view.TeklaView is ContainerView containerView)
-                {
                     // Ensure the container view is removed
                     _views.Remove(view);
-                }
-            }
 
             return true;
         }
@@ -71,7 +68,7 @@ public class DrawingModel
     {
         var v = TeklaDrawing.GetSheet().GetViews();
         var s = GetViewTypeStrategy();
-        while (v.MoveNext()) _views.Add(new View((Tekla.Structures.Drawing.ViewBase)v.Current, s));
+        while (v.MoveNext()) _views.Add(new View((ViewBase)v.Current, s));
     }
 
     /// Determines and returns the appropriate strategy for identifying the type
@@ -99,10 +96,7 @@ public class DrawingModel
             _drawingOperator.SetUp(this);
             var result = strategy.Center(view, _isGuiMode);
             _drawingOperator.SetUda(this, result ? "C" : "NC");
-            if (!_isGuiMode)
-            {
-                _drawingOperator.SaveAndClose(this);
-            }
+            if (!_isGuiMode) _drawingOperator.SaveAndClose(this);
         }
 
         return true;
@@ -110,7 +104,7 @@ public class DrawingModel
 
     /// Retrieves the list of drawing views contained within the DrawingModel.
     /// <returns>
-    /// A list of views representing Tekla drawing views associated with the model.
+    ///     A list of views representing Tekla drawing views associated with the model.
     /// </returns>
     public List<View> GetViews()
     {

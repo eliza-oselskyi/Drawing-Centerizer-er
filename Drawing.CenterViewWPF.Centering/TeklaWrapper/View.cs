@@ -1,21 +1,17 @@
 ﻿using System;
 using Drawing.CenterViewWPF.Centering.Validation;
-using Drawing.CenterViewWPF.Common;
 using Drawing.CenterViewWPF.Common.Interfaces;
+using Tekla.Structures.Drawing;
 
 namespace Drawing.CenterViewWPF.Centering.TeklaWrapper;
 
 /// <summary>
-/// Represents a Tekla drawing view and provides functionality for validation, type determination,
-/// and position manipulation within the drawing.
+///     Represents a Tekla drawing view and provides functionality for validation, type determination,
+///     and position manipulation within the drawing.
 /// </summary>
 public class View
 {
     private readonly string _viewTypeString;
-    public Tekla.Structures.Drawing.ViewBase TeklaView { get; private set; }
-    public Enum ViewType { get; }
-    
-    public bool IsValid { get; }
 
     /// Represents a Tekla drawing view with associated validation and type identification.
     /// A `View` encapsulates a Tekla drawing view and uses a strategy to determine its type.
@@ -29,7 +25,7 @@ public class View
     /// - Throws an exception for unknown or unsupported view types.
     /// Properties:
     /// - `IsValid`: Indicates whether the view passes validation.
-    public View(Tekla.Structures.Drawing.ViewBase teklaView, IGetViewTypeStrategy viewTypeStrategy)
+    public View(ViewBase teklaView, IGetViewTypeStrategy viewTypeStrategy)
     {
         TeklaView = teklaView;
         ViewType = viewTypeStrategy.GetViewType(teklaView, out _viewTypeString);
@@ -43,17 +39,28 @@ public class View
         IsValid = viewChecker.IsValid(this);
     }
 
+    public ViewBase TeklaView { get; }
+    public Enum ViewType { get; }
+
+    public bool IsValid { get; }
+
     /// Adjusts the position of the associated Tekla drawing view in a specified direction.
     /// Shifts the view either by a small or large increment based on the provided parameters.
     /// The `Shift` method modifies the `Origin` property of the Tekla view to reposition it.
     /// It performs the operation in one of the four cardinal directions: "up", "down", "left", or "right".
     /// The shift magnitude is determined by whether a large shift is requested.
     /// Throws an exception if an invalid direction string is provided.
-    /// <param name="direction">The direction in which to shift the view. Acceptable values are "up", "down", "left", or "right".</param>
-    /// <param name="isBigShift">Determines the magnitude of the shift. `true` indicates a large shift, `false` indicates a small shift. Default is `false`.</param>
+    /// <param name="direction">
+    ///     The direction in which to shift the view. Acceptable values are "up", "down", "left", or
+    ///     "right".
+    /// </param>
+    /// <param name="isBigShift">
+    ///     Determines the magnitude of the shift. `true` indicates a large shift, `false` indicates a
+    ///     small shift. Default is `false`.
+    /// </param>
     public void Shift(string direction, bool isBigShift = false)
     {
-        double shiftAmount = isBigShift ? 20.0 : 10.0;
+        var shiftAmount = isBigShift ? 20.0 : 10.0;
 
         switch (direction.ToLower())
         {
@@ -72,7 +79,7 @@ public class View
             default:
                 throw new ArgumentException($"Invalid direction: {direction}");
         }
-        
+
         TeklaView.Modify();
     }
 }

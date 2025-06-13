@@ -5,12 +5,12 @@ using Tekla.Structures.Drawing;
 namespace Drawing.CenterViewWPF.Common.Strategies;
 
 /// <summary>
-/// Implements a strategy for determining the fabrication view type of a drawing view.
+///     Implements a strategy for determining the fabrication view type of a drawing view.
 /// </summary>
 /// <remarks>
-/// This class is specifically tailored for fabrication (assembly) drawings, as indicated by its connection
-/// to the <see cref="DrawingType.Assembly" /> in the corresponding context. It determines the view type of
-/// a given <see cref="ViewBase" /> and provides an associated type string.
+///     This class is specifically tailored for fabrication (assembly) drawings, as indicated by its connection
+///     to the <see cref="DrawingType.Assembly" /> in the corresponding context. It determines the view type of
+///     a given <see cref="ViewBase" /> and provides an associated type string.
 /// </remarks>
 public class GetFabViewTypeStrategy : IGetViewTypeStrategy
 {
@@ -21,7 +21,8 @@ public class GetFabViewTypeStrategy : IGetViewTypeStrategy
             typeString = "A";
             return View.ViewTypes.TopView;
         }
-        else {
+        else
+        {
             typeString = "A";
             return ((View)view).ViewType;
         }

@@ -104,6 +104,10 @@
         <Project>{213bf9d7-a85f-4970-8c2f-354d0d065b46}</Project>
         <Name>Drawing.CenterViewWPF.Common</Name>
       </ProjectReference>
+      <ProjectReference Include="..\Drawing.CenterViewWPF.Core\Drawing.CenterViewWPF.Core.csproj">
+        <Project>{3739e09b-2cdf-42de-99a7-c3df83971c1c}</Project>
+        <Name>Drawing.CenterViewWPF.Core</Name>
+      </ProjectReference>
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

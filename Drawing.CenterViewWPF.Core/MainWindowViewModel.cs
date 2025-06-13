@@ -28,16 +28,29 @@ namespace Drawing.CenterViewWPF.Core
         public MainWindowViewModel()
         {
             InitializeEvents();
-            ConfigurationManager.LoadConfiguration();
+            LoadConfiguration();
 
             CenterViewCommand = new RelayCommand(ExecuteCenterView, _ => true);
             ShiftViewCommand = new RelayCommand(ExecuteShiftView, _ => true);
         }
 
+        private void LoadConfiguration()
+        {
+            ConfigurationManager.LoadConfiguration();
+            _isDarkMode = ConfigurationManager.Current.IsDarkMode;
+            _stayOpen = ConfigurationManager.Current.StayOpen;
+        }
+
         private void InitializeEvents()
         {
             _events = new Tekla.Structures.Drawing.UI.Events();
-            _events.DrawingEditorClosed += () => QuitRequested?.Invoke(this, false);
+            _events.DrawingEditorClosed += () =>
+            {
+                if (!StayOpen)
+                {
+                    QuitRequested?.Invoke(this, false);
+                }
+            };
             _events.Register();
         }
 

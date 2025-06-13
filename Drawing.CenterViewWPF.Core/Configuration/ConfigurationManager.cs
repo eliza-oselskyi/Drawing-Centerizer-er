@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace Drawing.CenterViewWPF.Core.Configuration;
 
@@ -39,7 +39,8 @@ public static class ConfigurationManager
             if (File.Exists(ConfigFilePath))
             {
                 var json = File.ReadAllText(ConfigFilePath);
-                _currentConfig = JsonSerializer.Deserialize<UserConfiguration>(json) ?? new UserConfiguration();
+                _currentConfig = JsonConvert.DeserializeObject<UserConfiguration>(json);
+                //_currentConfig = JsonSerializer.Deserialize<UserConfiguration>(json) ?? new UserConfiguration();
             }
             else
             {
@@ -54,7 +55,6 @@ public static class ConfigurationManager
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
             _currentConfig = new UserConfiguration();
         }
     }
@@ -65,13 +65,10 @@ public static class ConfigurationManager
         {
             if (!Directory.Exists(ConfigFilePath))
             {
-                File.Create(ConfigFilePath);
+                Directory.CreateDirectory(ConfigFolderPath);
             }
 
-            var json = JsonSerializer.Serialize<UserConfiguration>(_currentConfig, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
+            var json = JsonConvert.SerializeObject(_currentConfig, Formatting.Indented);
             File.WriteAllText(ConfigFilePath, json);
 
         }

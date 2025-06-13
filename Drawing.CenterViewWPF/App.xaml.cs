@@ -18,6 +18,8 @@ namespace Drawing.CenterViewWPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+            
             const string appName = "Drawing.CenterViewWPF";
             _mutex = new Mutex(true, appName, out var createdNew);
 
@@ -28,22 +30,29 @@ namespace Drawing.CenterViewWPF
                 Current.Shutdown();
                 return;
             }
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-            serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var viewModel = serviceProvider.GetService<MainWindowViewModel>();
-            if (viewModel.ShowMainWindow())
-            {
-                var mainWindow = serviceProvider.GetService<MainWindow>();
-                mainWindow.Show();
+            try {
+                var serviceCollection = new ServiceCollection();
+                ConfigureServices(serviceCollection);
+                serviceProvider = serviceCollection.BuildServiceProvider();
+
+                var viewModel = serviceProvider.GetRequiredService<MainWindowViewModel>();
+                if (viewModel.ShowMainWindow())
+                {
+                    var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
+                    mainWindow.Show();
+                }
+                else
+                {
+                    var optionsDialog = serviceProvider.GetRequiredService<CenterOptionsDialog>();
+                    optionsDialog.Show();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var optionsDialog = serviceProvider.GetService<CenterOptionsDialog>();
-                optionsDialog.Show();
+                MessageBox.Show($"Failed to start application: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Current.Shutdown();
             }
-            base.OnStartup(e);
         }
 
         protected override void OnExit(ExitEventArgs e)

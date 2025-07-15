@@ -48,12 +48,11 @@ public class MainWindowViewModel : INotifyPropertyChanged
         get => _isDarkMode;
         set
         {
-            if (_isDarkMode != value)
-            {
-                _isDarkMode = value;
-                ConfigurationManager.Current.IsDarkMode = value;
-                OnPropertyChanged();
-            }
+            if (_isDarkMode == value) return;
+            _isDarkMode = value;
+            ConfigurationManager.Current.IsDarkMode = value;
+            ConfigurationManager.SaveConfiguration();
+            OnPropertyChanged();
         }
     }
 
@@ -66,6 +65,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             {
                 _stayOpen = value;
                 ConfigurationManager.Current.StayOpen = value;
+                ConfigurationManager.SaveConfiguration();
                 OnPropertyChanged();
             }
         }

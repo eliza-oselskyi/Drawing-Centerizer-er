@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using Newtonsoft.Json;
 
 namespace Drawing.CenterViewWPF.Core.Configuration;
@@ -15,12 +16,13 @@ namespace Drawing.CenterViewWPF.Core.Configuration;
 /// </remarks>
 public static class ConfigurationManager
 {
-    private static readonly string TeklaFirmPath = @"C:\TeklaStructuresFirm\NBGM\2023.4";
+    private static readonly string ConfigFolderPath =
+        Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty,
+            "config");
 
-    private static readonly string ConfigFolderPath = Path.Combine(TeklaFirmPath,
-        @"TeklaApplications\Drawing_Center_Release\config");
-
-    private static readonly string ConfigFilePath = Path.Combine(ConfigFolderPath, "config.json");
+    private const string ConfigFileName = "config.json";
+    private static readonly string ConfigFilePath = Path.Combine(ConfigFolderPath, ConfigFileName);
+    
     private static UserConfiguration _currentConfig;
 
     public static UserConfiguration Current
@@ -63,8 +65,7 @@ public static class ConfigurationManager
             if (File.Exists(ConfigFilePath))
             {
                 var json = File.ReadAllText(ConfigFilePath);
-                _currentConfig = JsonConvert.DeserializeObject<UserConfiguration>(json);
-                //_currentConfig = JsonSerializer.Deserialize<UserConfiguration>(json) ?? new UserConfiguration();
+                _currentConfig = JsonConvert.DeserializeObject<UserConfiguration>(json) ?? new UserConfiguration();
             }
             else
             {

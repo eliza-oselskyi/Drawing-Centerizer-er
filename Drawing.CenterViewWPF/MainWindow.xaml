@@ -110,7 +110,7 @@
 
             <!--Version-->
             <TextBlock Grid.Column="0"
-                       Text="v2.1.2"
+                       Text="v2.1.3"
                        FontSize="11"
                        Foreground="Gray"
                        HorizontalAlignment="Left"

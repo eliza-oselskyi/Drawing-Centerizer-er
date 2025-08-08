@@ -79,6 +79,7 @@ public class DrawingModel
         {
             DrawingType.Assembly => new GetFabViewTypeStrategy(),
             DrawingType.GeneralArrangement => new GetGaViewTypeStrategy(),
+            DrawingType.SinglePartDrawing => new GetFabViewTypeStrategy(),
             _ => throw new ArgumentException("Unknown drawing type.")
         };
     }

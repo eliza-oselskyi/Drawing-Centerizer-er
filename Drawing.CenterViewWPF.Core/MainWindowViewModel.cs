@@ -139,14 +139,13 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             var drawing = DrawingHandler.Instance.GetActiveDrawing();
             var drawingModel = new DrawingModel(drawing, true);
-            IViewCenteringStrategy strategy;
 
-            if (drawing is GADrawing)
-                strategy = new GaViewCenteringStrategy();
-            else if (drawing is AssemblyDrawing)
-                strategy = new FabViewCenteringStrategy();
-            else
-                throw new InvalidTypeException($"drawing ({drawing.GetType().Name}) is not of a supported type");
+            IViewCenteringStrategy strategy = drawing switch
+            {
+                GADrawing => new GaViewCenteringStrategy(),
+                AssemblyDrawing or SinglePartDrawing => new FabViewCenteringStrategy(),
+                _ => throw new InvalidTypeException($"drawing ({drawing.GetType().Name}) is not of a supported type")
+            };
 
             drawingModel.CenterDrawing(strategy);
         }

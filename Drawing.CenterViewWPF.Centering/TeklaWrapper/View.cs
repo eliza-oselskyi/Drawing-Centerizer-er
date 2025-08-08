@@ -33,6 +33,7 @@ public class View
         {
             "A" => new ViewChecker(new FabViewValidator()),
             "G" => new ViewChecker(new GaViewValidator()),
+            "W" => new ViewChecker(new FabViewValidator()),
             _ => throw new ArgumentException("Unknown view type")
         };
 

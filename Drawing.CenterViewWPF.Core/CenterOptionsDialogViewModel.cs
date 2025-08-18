@@ -219,7 +219,7 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
         return drawing switch
         {
             GADrawing => new GaViewCenteringStrategy(),
-            AssemblyDrawing => new FabViewCenteringStrategy(),
+            AssemblyDrawing or SinglePartDrawing => new FabViewCenteringStrategy(),
             _ => throw new ArgumentException($"Unsupported drawing type: {drawing.GetType()}")
         };
     }
@@ -285,12 +285,12 @@ public class CenterOptionsDialogViewModel : INotifyPropertyChanged
 
     private static bool IsFabDrawing(Tekla.Structures.Drawing.Drawing drawing)
     {
-        return drawing is AssemblyDrawing;
+        return drawing is AssemblyDrawing or SinglePartDrawing;
     }
 
     private static bool IsAnyTargetDrawing(Tekla.Structures.Drawing.Drawing drawing)
     {
-        return drawing is GADrawing or AssemblyDrawing;
+        return drawing is GADrawing or AssemblyDrawing or SinglePartDrawing;
     }
 
     public void Dispose()

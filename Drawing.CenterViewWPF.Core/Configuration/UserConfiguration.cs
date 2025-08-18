@@ -7,4 +7,6 @@ public class UserConfiguration
 {
     public bool IsDarkMode { get; set; } = true;
     public bool StayOpen { get; set; } = false;
+    public int CoarseAdjustment { get; set; } = 20;
+    public int FineAdjustment { get; set; } = 10;
 }

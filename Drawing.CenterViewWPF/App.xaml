@@ -40,6 +40,11 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
+        <Style TargetType="TextBlock">
+            <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
+        </Style>
 
         <Style TargetType="local:IconButton">
             <Setter Property="Background" Value="Transparent" />

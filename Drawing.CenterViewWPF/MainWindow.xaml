@@ -18,7 +18,7 @@
     <DockPanel Background="{DynamicResource BackgroundBrush}">
         <!-- Version text at the bottom -->
         <TextBlock DockPanel.Dock="Bottom"
-                  Text="v2.1.4"
+                  Text="v2.2.0"
                   FontSize="11"
                   Foreground="Gray"
                   HorizontalAlignment="Right"

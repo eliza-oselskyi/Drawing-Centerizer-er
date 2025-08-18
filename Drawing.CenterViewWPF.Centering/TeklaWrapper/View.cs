@@ -59,9 +59,9 @@ public class View
     ///     Determines the magnitude of the shift. `true` indicates a large shift, `false` indicates a
     ///     small shift. Default is `false`.
     /// </param>
-    public void Shift(string direction, bool isBigShift = false)
+    public void Shift(string direction, int amount)
     {
-        var shiftAmount = isBigShift ? 20.0 : 10.0;
+        var shiftAmount = amount;
 
         switch (direction.ToLower())
         {

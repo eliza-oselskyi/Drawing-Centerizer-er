@@ -25,6 +25,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     private bool _isDarkMode;
     private bool _stayOpen;
+    private int _coarseAdjustment;
+    private int _fineAdjustment;
 
     /// <summary>
     ///     Represents the ViewModel for the main application window in the Drawing.CenterViewWPF project.
@@ -71,6 +73,32 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
+    public int CoarseAdjustment
+    {
+        get => _coarseAdjustment;
+        set
+        {
+            if (_coarseAdjustment == value) return;
+            _coarseAdjustment = value;
+            ConfigurationManager.Current.CoarseAdjustment = value < 1 ? 1 : value;
+            ConfigurationManager.SaveConfiguration();
+            OnPropertyChanged();
+        }
+    }
+
+    public int FineAdjustment
+    {
+        get => _fineAdjustment;
+        set
+        {
+            if (_fineAdjustment == value) return;
+            _fineAdjustment = value;
+            ConfigurationManager.Current.FineAdjustment = value < 1 ? 1 : value;
+            ConfigurationManager.SaveConfiguration();
+            OnPropertyChanged();
+        }
+    }
+
     public event PropertyChangedEventHandler PropertyChanged;
     public event EventHandler<bool> QuitRequested;
 
@@ -83,6 +111,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
         ConfigurationManager.LoadConfiguration();
         _isDarkMode = ConfigurationManager.Current.IsDarkMode;
         _stayOpen = ConfigurationManager.Current.StayOpen;
+        _coarseAdjustment = ConfigurationManager.Current.CoarseAdjustment;
+        _fineAdjustment = ConfigurationManager.Current.FineAdjustment;
     }
 
     /// <summary>
@@ -121,8 +151,10 @@ public class MainWindowViewModel : INotifyPropertyChanged
         var isBigShift = direction.StartsWith("big", StringComparison.OrdinalIgnoreCase);
         var actualDirection = isBigShift ? direction.Substring(3) : direction;
 
+        var amount = isBigShift ? CoarseAdjustment : FineAdjustment;
+
         var view = views.Where(v => v.IsValid).Select(v => v).ToList();
-        view[0].Shift(actualDirection, isBigShift);
+        view[0].Shift(actualDirection, amount);
         view[0].TeklaView.Modify();
     }
 

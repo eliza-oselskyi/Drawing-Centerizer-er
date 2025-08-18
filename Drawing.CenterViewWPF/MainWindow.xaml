@@ -14,8 +14,7 @@
         MinWidth="300"
         MaxHeight="400"
         SizeToContent="Height"
-        ResizeMode="NoResize"
-        >
+        ResizeMode="NoResize">
     <Grid Background="{DynamicResource BackgroundBrush}" Margin="10" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" /> <!--Top spacing-->
@@ -120,7 +119,7 @@
                        ToolTip="Created By Eliza Oselskyi" />
 
             <!--Theme toggle-->
-            <DockPanel Grid.Column="1" >
+            <DockPanel Grid.Column="1">
                 <Expander DockPanel.Dock="Top"
                           Header="Advanced Settings"
                           Margin="0"
@@ -131,15 +130,18 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Text="Fine adjustment"></TextBlock>
+                            <TextBlock Text="Fine adjustment"
+                                       ToolTip="Adjusts the shift amount for the fine (single arrow) buttons">
+                            </TextBlock>
                             <xctk:IntegerUpDown Grid.Row="1"
-                                Watermark="Fine adjustment"
-                                Width="50"
-                                DefaultValue="10"
-                                DisplayDefaultValueOnEmptyText="True"
-                                AllowSpin="True"
-                                Minimum="1" 
-                                Value="{Binding FineAdjustment}">
+                                                Watermark="Fine adjustment"
+                                                ToolTip="Adjusts the shift amount for the fine (single arrow) buttons"
+                                                Width="50"
+                                                DefaultValue="10"
+                                                DisplayDefaultValueOnEmptyText="True"
+                                                AllowSpin="True"
+                                                Minimum="1"
+                                                Value="{Binding FineAdjustment}">
                             </xctk:IntegerUpDown>
                         </Grid>
                         <Grid>
@@ -147,16 +149,20 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Text="Coarse adjustment"></TextBlock>
+                            <TextBlock Text="Coarse adjustment"
+                                       ToolTip="Adjusts the shift amount for the coarse (double arrow) buttons">
+                            </TextBlock>
                             <xctk:IntegerUpDown Grid.Row="1"
-                                Watermark="Coarse adjustment"
-                                Width="50"
-                                DefaultValue="20"
-                                DisplayDefaultValueOnEmptyText="True"
-                                AllowSpin="True"
-                                Minimum="1"
-                                Value="{Binding CoarseAdjustment}">
-                            </xctk:IntegerUpDown></Grid>
+                                                Watermark="Coarse adjustment"
+                                                ToolTip="Adjusts the shift amount for the coarse (double arrow) buttons"
+                                                Width="50"
+                                                DefaultValue="20"
+                                                DisplayDefaultValueOnEmptyText="True"
+                                                AllowSpin="True"
+                                                Minimum="1"
+                                                Value="{Binding CoarseAdjustment}">
+                            </xctk:IntegerUpDown>
+                        </Grid>
                     </StackPanel>
                 </Expander>
                 <CheckBox DockPanel.Dock="Right"

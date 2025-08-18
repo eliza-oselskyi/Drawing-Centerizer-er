@@ -163,6 +163,9 @@
                                                 Value="{Binding CoarseAdjustment}">
                             </xctk:IntegerUpDown>
                         </Grid>
+                        <CheckBox Content="Stay Open"
+                                  IsChecked="{Binding StayOpen}"
+                                  ToolTip="Keep this main window open when exiting the drawing editor"></CheckBox>
                     </StackPanel>
                 </Expander>
                 <CheckBox DockPanel.Dock="Right"

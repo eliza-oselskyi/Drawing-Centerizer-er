@@ -92,6 +92,9 @@ public class DrawingModel
     public bool CenterDrawing(IViewCenteringStrategy strategy)
     {
         if (!IsValid) return false;
+        var isOneView = _views.Count(view => view.IsValid) == 1;
+        if (!isOneView) return false;
+        
         foreach (var view in _views.Where(view => view.IsValid))
         {
             _drawingOperator.SetUp(this);

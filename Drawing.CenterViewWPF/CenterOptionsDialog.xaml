@@ -83,16 +83,20 @@
         </StackPanel>
 
         <!-- Cancel button is always visible -->
-        <Border Grid.Row="1"
-                Background="{DynamicResource BackgroundBrush}"
-                Padding="10">
-            <Button Content="Cancel"
-                    Command="{Binding CancelCommand}"
-                    Width="100"
-                    Height="30"
-                    Name="btnCancel"
-                    IsCancel="True"
-                    HorizontalAlignment="Right" />
-        </Border>
+            <Border Grid.Row="1"
+                    Background="{DynamicResource BackgroundBrush}"
+                    Padding="10">
+                <Grid>
+                    <TextBlock Text="v2.2.1"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"/>
+                    <Button Content="Cancel"
+                            Command="{Binding CancelCommand}"
+                            Width="100"
+                            Height="30"
+                            Name="btnCancel"
+                            IsCancel="True"
+                            HorizontalAlignment="Right" /></Grid>
+            </Border>
     </Grid>
 </Window>

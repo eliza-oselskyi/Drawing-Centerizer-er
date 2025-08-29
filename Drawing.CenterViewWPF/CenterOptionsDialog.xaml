@@ -87,7 +87,7 @@
                     Background="{DynamicResource BackgroundBrush}"
                     Padding="10">
                 <Grid>
-                    <TextBlock Text="v2.2.1"
+                    <TextBlock Text="v2.2.2"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"/>
                     <Button Content="Cancel"

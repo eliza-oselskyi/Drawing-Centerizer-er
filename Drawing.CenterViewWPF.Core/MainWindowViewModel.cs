@@ -154,6 +154,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         var amount = isBigShift ? CoarseAdjustment : FineAdjustment;
 
         var view = views.Where(v => v.IsValid).Select(v => v).ToList();
+        if (view.Count > 1) return;
         view[0].Shift(actualDirection, amount);
         view[0].TeklaView.Modify();
     }
